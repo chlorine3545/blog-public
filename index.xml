@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sun, 16 Feb 2025 14:57:57 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello，Forgejo</title><link>https://chlor.me/hello-forgejo/</link><pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-forgejo/</guid><category>Forgejo</category><category>开源</category><category>哲学</category><description>本文讲述了自托管 Git 服务 Forgejo，以及作者由此引发的对开源社区治理的思考。Forgejo 是 Gitea 成立商业公司后，Codeberg 创立的坚守自由理念的分叉。作者首先梳理了从 Gogs 到 Gitea 再到 Forgejo 的演化过程，然后通过亲身部署，指出 Forgejo 与 Gitea 现阶段功能差异不大，但更契合理想主义者的精神诉求。文章后半部展开深度思辨，将开源运动与国际共运类比，剖析「分叉自由」背后的治理困境：去中心化理想与制度化需求的矛盾，理念纯洁性与现实可行性的冲突，以及技术乌托邦愿景在人类社会组织规律前的局限性。作者以乐观、充满希望的笔触收尾，坚信开源社区将不断进步，理想的「技术天国」也会越来越近。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 17 Feb 2025 12:17:52 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello，Forgejo</title><link>https://chlor.me/hello-forgejo/</link><pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-forgejo/</guid><category>Forgejo</category><category>开源</category><category>哲学</category><description>本文讲述了自托管 Git 服务 Forgejo，以及作者由此引发的对开源社区治理的思考。Forgejo 是 Gitea 成立商业公司后，Codeberg 创立的坚守自由理念的分叉。作者首先梳理了从 Gogs 到 Gitea 再到 Forgejo 的演化过程，然后通过亲身部署，指出 Forgejo 与 Gitea 现阶段功能差异不大，但更契合理想主义者的精神诉求。文章后半部展开深度思辨，将开源运动与国际共运类比，剖析「分叉自由」背后的治理困境：去中心化理想与制度化需求的矛盾，理念纯洁性与现实可行性的冲突，以及技术乌托邦愿景在人类社会组织规律前的局限性。作者以乐观、充满希望的笔触收尾，坚信开源社区将不断进步，理想的「技术天国」也会越来越近。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-forgejo-cover.webp" alt="Hello，Forgejo" />
         </figure>
@@ -3296,7 +3296,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3210</span>
+            <span class="tabular-nums">3214</span>
         </div>
 
         
@@ -3365,7 +3365,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7174</span>
+            <span class="tabular-nums">7180</span>
         </div>
 
         
@@ -5970,7 +5970,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1853</span>
+            <span class="tabular-nums">1863</span>
         </div>
 
         
