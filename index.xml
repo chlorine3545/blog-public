@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Wed, 19 Feb 2025 15:39:29 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（2）：Hello，Céfiro</title><link>https://chlor.me/hello-cefiro/</link><pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-cefiro/</guid><category>邮件</category><category>博客</category><description>本文介绍了作者对个人域名邮箱、临时邮箱和事务性邮件的需求及最终选择方案。在个人域名邮箱方面，作者详细对比了国内外多种服务，最终选择了iCloud+ Mail，主要看重其与Apple生态的集成、相对较低的价格以及基本够用的功能和隐私性。对于临时邮箱，作者选择了Cloudflare Email Route，利用其便捷性和可扩展性，将邮件转发至现有邮箱。事务性邮件方面，作者选择了Resend，因其提供每日100封的免费额度和易用的API。文章也提到了配置iCloud+ Mail的一些细节和注意事项，以及对邮件隐私性的深入思考，强调了技术隐私的重要性。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Thu, 20 Feb 2025 12:23:43 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（2）：Hello，Céfiro</title><link>https://chlor.me/hello-cefiro/</link><pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-cefiro/</guid><category>邮件</category><category>博客</category><description>本文介绍了作者对个人域名邮箱、临时邮箱和事务性邮件的需求及最终选择方案。在个人域名邮箱方面，作者详细对比了国内外多种服务，最终选择了iCloud+ Mail，主要看重其与Apple生态的集成、相对较低的价格以及基本够用的功能和隐私性。对于临时邮箱，作者选择了Cloudflare Email Route，利用其便捷性和可扩展性，将邮件转发至现有邮箱。事务性邮件方面，作者选择了Resend，因其提供每日100封的免费额度和易用的API。文章也提到了配置iCloud+ Mail的一些细节和注意事项，以及对邮件隐私性的深入思考，强调了技术隐私的重要性。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-cefiro-cover.webp" alt="理想乡构筑手记（2）：Hello，Céfiro" />
         </figure>
@@ -170,7 +170,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3224</span>
+            <span class="tabular-nums">3231</span>
         </div>
 
         
@@ -3556,7 +3556,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3224</span>
+            <span class="tabular-nums">3231</span>
         </div>
 
         
@@ -3625,7 +3625,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7196</span>
+            <span class="tabular-nums">7202</span>
         </div>
 
         
@@ -6230,7 +6230,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1876</span>
+            <span class="tabular-nums">1884</span>
         </div>
 
         
