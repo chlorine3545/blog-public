@@ -1,4 +1,396 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Thu, 20 Feb 2025 12:40:47 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（2）：Hello，Céfiro</title><link>https://chlor.me/hello-cefiro/</link><pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-cefiro/</guid><category>邮件</category><category>博客</category><description>本文介绍了作者对个人域名邮箱、临时邮箱和事务性邮件的需求及最终选择方案。在个人域名邮箱方面，作者详细对比了国内外多种服务，最终选择了iCloud+ Mail，主要看重其与Apple生态的集成、相对较低的价格以及基本够用的功能和隐私性。对于临时邮箱，作者选择了Cloudflare Email Route，利用其便捷性和可扩展性，将邮件转发至现有邮箱。事务性邮件方面，作者选择了Resend，因其提供每日100封的免费额度和易用的API。文章也提到了配置iCloud+ Mail的一些细节和注意事项，以及对邮件隐私性的深入思考，强调了技术隐私的重要性。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Fri, 21 Feb 2025 01:02:13 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
+        <figure>
+          <img src="https://img.clnya.fun/cover/hello-nieve-cover.webp" alt="理想乡构筑手记（3）：Hello，Nieve" />
+        </figure>
+        <p>诸位老友，上午好，这里是 Chlorine。</p>
+<p>本期是「理想乡构筑手记」的第三篇，实际也是最早进行的一篇，主题是园子的图片服务系统——Nieve。本来是想放到新的一期周报里面讲的（<del>没想到吧，园子的周报还活着</del>），但是这部分内容实在是太琐碎了，遂单题一篇。<del>水，你接着水</del>。</p>
+<p>Nieve 这个名字，也是很久以前就想好的。这个词是西班牙语，意思是「雪」。</p>
+<h2 id="tl--dr">TL ; DR</h2>
+<ul>
+<li>在 Obsidian 写作时直接粘贴图片，使用 Image Converter 插件自动压缩和重命名</li>
+<li>使用 Shell Commands 的自定义脚本上传博客图片到又拍云和 Cloudflare R2</li>
+<li>又拍云作为主图床，Cloudflare R2 作为对外的图片服务和备份图床</li>
+</ul>
+<h2 id="前言">前言</h2>
+<p>作为 Vercel 上的静态博客，园子的图片当然使用的是图床。小氯使用的图床服务几经变易，从免费图床的良心之作 <a href="https://smms.app">SMMS</a> 到牢巴（Alibaba）的阿里云 OSS，再到缤纷云，期间甚至还写了[[Markdown图片管理实践|一篇将近一万字的文章]]去讲 Markdown 图片管理（当然那篇文章其实挺水的）。缤纷云提供了相当慷慨的免费额度，具体来说是：</p>
+<ul>
+<li>前 50 GiB 存储</li>
+<li>每月前 10*3 GB HTTP/HTTPS 流量（每日每项限 5 GB）
+<ul>
+<li>S4 出口流量 10GB/月</li>
+<li>内置 CDN 回源 S4 流量 10GB/月</li>
+<li>内置 CDN 出口流量 10GB/月</li>
+</ul>
+</li>
+<li>每月前 10*3 万次请求（每日每项限 1 万次）
+<ul>
+<li>S4 请求数 10 万次/月</li>
+<li>内置 CDN 回源 S4 请求数 10 万次/月</li>
+<li>内置 CDN 请求数 10 万次/月</li>
+</ul>
+</li>
+</ul>
+<p>回来。小氯使用缤纷云已经有快一年了，总体而言速度和稳定性还算可以，有了备案之后还可以用他家的 CDN，可以省一些回源流量之类的（没错，速度其实没快多少）。当然，为了避免免费服务的传统艺能——跑路。小氯也把图片在赛博活佛 Cloudflare 的 R2 上存了一份。和国内的各大对象存储以及 Amazon S3 等同行相比，Cloudflare 的免费额度简直多得不像话，一个月有 10G 的免费空间，1M 次的 A 类操作（存储和删除等），10M 次的 B 类操作（读取等），无限流量。如果不在意国内速度慢一点，那么 Cloudflare R2 堪称是对象存储中的椎间盘——为何你如此突出。</p>
+<p>插一句话，小氯写到这里的时候，习惯性地希望使用中文，然后发现自己似乎不知道 Cloudflare 的中文名字……等等，Cloudflare 有中文名字吗？</p>
+<p>这个还真难说。Cloudflare 的官网在调为简中后，还是叫作 Cloudflare；而 <code>cloudflare-cn.com</code> 使用的是「科赋锐」（注意：小氯不清楚这个网站和 Cloudflare 官方是否有关，请谨慎），说实话，这个名字……真的让小氯很不满意，就和把 Google 翻译为「谷歌」一样。小氯还没有找到一个被 Cloudflare 官方认可的中文名字，但是从社区来看，似乎有一个不错的选择：<strong>云帆</strong>。</p>
+<p>「云」对应 cloud，由于「云计算」「云存储」这些词汇的广泛使用，所以用这个词代表相关的技术领域没什么问题；而「帆」是 flare 的音译（其原意为火焰）。这个词整体读起来还比较顺口，而且寓意也很好，「直挂云帆济沧海」。不过如果在正式的技术讨论里面，还是用 Cloudflare 为好。</p>
+<p>回来。不过最近（其实离文章发出来已经是几个月之前了），小氯接到了一些老友的反映，博客的图片加载明显变慢了，甚至很多裂掉了（即无法加载）。直接用 URL 看一下，发现 403。奇怪的是，小氯并没有为这种情况加任何的访问限制，而图片也都好好地在那。而当我希望将新的自定义 URL 添加到 CDN 中时，也是一直提示「未备案」（实际上 ICP 和公安备案已经过了快一个月了）。这可不是什么好兆头，说明缤纷云的后端设施可能出了一些问题。此外，小氯发现自己的流量似乎也出了点差错，其用量比实际应该有的流量高。而其分布也比较均匀，不像是攻击（<del>而且谁闲着没事去攻击小氯酱这条杂鱼啊</del>）。</p>
+<p>总而言之，种种因素作用吧，小氯打算换个图片服务了。</p>
+<h2 id="图片服务的选择">图片服务的选择</h2>
+<p>市面上的图片服务——准确来说，能直接或者间接作为图片服务的服务不胜枚举。虽然说小氯不介意花点小钱，但是如果是像流量费这种很可能让人倾家荡产的服务，小氯还是希望尽可能避免的。于是小氯开始收集各种有免费额度的服务，当然这里指的是国内的。我没备案用的是国外的图片服务，备案了用得还是国外的图片服务，那我这不是白备案了嘛。</p>
+<p>具体过程不多说了，极其曲折。小氯甚至想过用服务器 + 一些 CDN 搭一个，但一是没有合适的服务器，二是这种方式相当不稳定。举个例子：<a href="https://dusays.com">杜老师</a>的<a href="https://7bu.top">去不图床</a>，可以说是博友圈最著名的自建图床了（甚至没有之一），也时常会出现许多奇奇怪怪的问题，小氯可不认为自己的运维能力和服务器集群的质量比杜老师强。所以还是老老实实地找对象存储去了。</p>
+<p>几番搜索，小氯找到了一个看起来还可以的选择。这个家伙大家也都不陌生：<a href="https://upyun.com">又拍云</a>（这个链接不带 AFF，放心点击）。</p>
+<p>牢拍也算是小有名气的商家了，跑路的风险不大，而且也没有大到像套路云、凉心云那样令人讨厌的规模。此外牢拍有一个著名的 League，简单来说就是在自己网站底下挂上牢拍的 logo 可以持续领到代金券，均摊一下也就是每个月 10G 的空间和 15G 的流量，基本上够用一段时间了。而且牢拍的代金券是和账户而不是域名挂钩的，这意味着你只需要找一个备案过的域名挂一下，然后就可以随便用了。</p>
+<p>那么……就是你了。</p>
+<h2 id="使用-rclone-备份图片">使用 <code>rclone</code> 备份图片</h2>
+<p>在转移到牢拍之前，我们当然需要把整个图片目录备份下来。这里小氯打算试一下新玩具 <a href="https://rclone.org">rclone</a>。</p>
+<p>rsync 咱都知道，一个有趣的文件传输（这里说的是上传、下载和同步）工具。rsync 的花样很多，甚至可以用它部署静态博客到服务器（这可能是最好的方案之一，不需要装 Gitea 等一堆东西）。rclone 大体可以理解为云存储版的 rsync，支持一大堆各种各样的云存储和云盘。</p>
+<pre><code class="language-bash">brew update &amp;&amp; brew install rclone
+</code></pre>
+<p>先创建一下配置：</p>
+<pre><code class="language-bash">rclone config
+</code></pre>
+<p>下一步输入 n，新建一个配置，选择 S3 - 其他，把 Access Key ID 和 Secret Key ID 之类的参数扔进去就行。</p>
+<p>配置好以后，运行：</p>
+<pre><code class="language-bash">rclone ls your-service-name:your-bucket
+</code></pre>
+<p>如果能输出你的桶目录结构那就配置成功了，可以下载了：</p>
+<pre><code class="language-bash">rclone copy your-service-name:your-bucket /your/path
+</code></pre>
+<p>完工。</p>
+<h2 id="又拍云的配置">又拍云的配置</h2>
+<h3 id="申请又拍云联盟">申请又拍云联盟</h3>
+<p>略。注册之后在<a href="https://www.upyun.com/league">这里</a>申请即可。一般来说审核会有 1 ~ 3 天，小氯的用了大概二十分钟，相当快。</p>
+<h3 id="创建存储服务">创建存储服务</h3>
+<p>和缤纷云不同的是，牢拍的云存储自带 CDN，所以只创建一个存储服务即可。</p>
+<h3 id="使用-rclone-重新上传图片">使用 <code>rclone</code> 重新上传图片</h3>
+<p>USS 兼容 S3，这就意味着我们可以用我们熟悉的各种小道具去把玩 USS。这里为了方便，我们还是使用 rclone 吧。这里小氯踩了点坑，因此说得详细一些。</p>
+<p>首先我们需要获得 USS 的 S3 兼容凭据。这可不是你那个操作员的操作凭据，需要在存储服务的控制界面 - 存储管理里面找这里：</p>
+<p><figure class="my-8">
+    <img src="https://img.clnya.fun/20250220-upyun-uss-s3.avif" alt="upyun-uss-s3" 
+        class="mx-auto rounded-lg block" loading="lazy"  />
+    
+</figure></p>
+<p>把东西记好喽。</p>
+<p>回到终端，创建一个 rclone 配置：</p>
+<pre><code class="language-bash">rclone config
+</code></pre>
+<p>输入 n 新建配置，名字随便起，这里我使用 <code>test</code> 作为演示。</p>
+<p>下面依次跟随指示，键入以下配置。这里的数字是以 <code>v1.69.0</code> 为基础的，在键入前，请检查你的版本的相应配置对应于哪个数字：</p>
+<ul>
+<li><code>Storage</code>：4（Amazon S3 及其兼容服务）</li>
+<li><code>provider</code>：34（其他 S3 兼容服务提供商）</li>
+<li><code>env_auth</code>：直接回车，使用默认配置即可。</li>
+<li><code>access_key_id</code>：你刚才获取的那个 <code>access_key_id</code>。</li>
+<li><code>secret_access_key</code>：还是刚才那个。</li>
+<li><code>region</code>：直接回车，使用默认配置即可。</li>
+<li><code>endpoint</code>：<code>s3.api.upyun.com</code></li>
+<li><code>location_constraint</code>：直接回车，使用默认配置即可。</li>
+<li><code>acl</code>：直接回车，使用默认配置即可。</li>
+<li>高级设置：直接回车，使用默认配置即可。</li>
+</ul>
+<p>最后保存后，使用 <code>rclone ls test:</code> 即可测试是否成功配置。</p>
+<h2 id="obsidian-配置">Obsidian 配置</h2>
+<p>小氯在 Obsidian 的配置上花了很多的时间，终于找到了一个自己满意的方案。下面我把思路整理一下。</p>
+<p>小氯的需求大概是：</p>
+<ul>
+<li>图片重命名（语义化命名）</li>
+<li>使用相对链接</li>
+<li>自动压缩为 WebP 或者 AVIF</li>
+<li>发布博客时上传到图床并替换博客文件的链接，而原本的文件保持不变</li>
+</ul>
+<p>为了方便，我们就叫粘贴处理和发布处理好了。</p>
+<h3 id="粘贴处理">粘贴处理</h3>
+<p>能实现一部分功能的 Obsidian 的图片插件有很多，例如 Paste Image Rename，Unique Attachments 等。不过小氯最喜欢的还是这个：</p>
+
+
+
+
+
+
+
+
+<div class="plain-link p-6 rounded-xl
+    bg-card/50 dark:bg-card-dark/50 backdrop-blur
+    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
+    ring-1 ring-accent/20 dark:ring-accent-dark/20
+    hover:(ring-accent/30 dark:ring-accent-dark/30
+    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
+    bg-card/70 dark:bg-card-dark/70
+    transition duration-300)">
+    <div class="flex items-center justify-between mb-3">
+        <a href="https://github.com/xRyul/obsidian-image-converter" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
+            text-foreground hover:text-primary transition-colors">
+            <div class="i-carbon-logo-github w-5 h-5"></div>
+            <span>xRyul/obsidian-image-converter</span>
+        </a>
+        
+    </div>
+
+    
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+        ⚡️ Convert, compress, resize, annotate, markup, draw, crop, rotate, flip, align images directly in Obsidian. Drag-resize, rename with variables, batch process. WEBP, JPG, PNG, HEIC, TIF.
+    </p>
+    
+
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+        
+        <div class="inline-flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
+                style="background-color: #2b7489">
+            </span>
+            <span>TypeScript</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="Star 数">
+            <div class="i-carbon-star w-4 h-4"></div>
+            <span class="tabular-nums">315</span>
+        </div>
+
+        
+        <div class="inline-flex items-center gap-1.5" title="开源协议">
+            <div class="i-carbon-license w-4 h-4"></div>
+            <span>MIT License</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="最后更新时间">
+            <div class="i-carbon-time w-4 h-4"></div>
+            <span class="tabular-nums">2025-02-18</span>
+        </div>
+    </div>
+</div>
+<p>这个插件的功能非常全面，从压缩、格式转换、自定义附件位置到标注、裁剪、缩放、对齐都有。而作者也是位乐于听从社区意见的开发者，更新迭代和 Issue / PR 回复都很勤。小氯给这个插件提了个小小的 PR（改了一个拼写错误），混到了人生中第一个 Contributor 认证 (/ω＼)</p>
+<p>不过插件的功能虽多，但是小氯主要是用其中的压缩和自定义附件位置，因此整体的功能也有些冗余了。而且，其会和我常用的 Attachflow 插件冲突。至于压缩问题，Image Converter 插件在 1.3.7 版本加入了 AVIF 压缩功能，不过有一个问题：<strong>它异常耗内存</strong>，经常转换着转换着就内存不足崩掉了（虽然说 FFmpeg AVIF 这玩意本来就吃资源）。虽然可以回退到 WebP，但是总归不是最优的解决方案。</p>
+<p>那看来只有发挥主观能动性了。那么纵观 Obsidian 的插件，能让小氯在这个意义上发挥主观能动性的插件似乎只有一个：</p>
+
+
+
+
+
+
+
+
+<div class="plain-link p-6 rounded-xl
+    bg-card/50 dark:bg-card-dark/50 backdrop-blur
+    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
+    ring-1 ring-accent/20 dark:ring-accent-dark/20
+    hover:(ring-accent/30 dark:ring-accent-dark/30
+    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
+    bg-card/70 dark:bg-card-dark/70
+    transition duration-300)">
+    <div class="flex items-center justify-between mb-3">
+        <a href="https://github.com/Taitava/obsidian-shellcommands" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
+            text-foreground hover:text-primary transition-colors">
+            <div class="i-carbon-logo-github w-5 h-5"></div>
+            <span>Taitava/obsidian-shellcommands</span>
+        </a>
+        
+    </div>
+
+    
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+        Execute system commands via hotkeys or command palette in Obsidian (https://obsidian.md). Some automated events are also supported, and execution via URI links.
+    </p>
+    
+
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+        
+        <div class="inline-flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
+                style="background-color: #2b7489">
+            </span>
+            <span>TypeScript</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="Star 数">
+            <div class="i-carbon-star w-4 h-4"></div>
+            <span class="tabular-nums">392</span>
+        </div>
+
+        
+        <div class="inline-flex items-center gap-1.5" title="开源协议">
+            <div class="i-carbon-license w-4 h-4"></div>
+            <span>GNU General Public License v3.0</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="最后更新时间">
+            <div class="i-carbon-time w-4 h-4"></div>
+            <span class="tabular-nums">2025-01-01</span>
+        </div>
+    </div>
+</div>
+<p>Obsidian Shell Commands，我愿称之为 Ob 可玩性的 Top3 之一（另外两个小氯认为是 Local REST API 和 Quickadd）。这个插件的功能就是让你在 Obsidian 中调用系统的 Shell 执行命令，支持自定义变量、预输入和自动触发等。说到这里，大家应该也能想象到这个插件的可玩性有多强了。</p>
+<p>而且，小氯本身也要用 Shell Commands，既然我们能少装一个插件，那么「如非必要，勿增实体」，自然是极好的。</p>
+<p>首先，由于小氯的图片使用的是相对路径，因此需要先获取图片相对于当前笔记的路径。笔记路径有 <code>{{file_path}}</code> 变量，图片由于是我们自己规定的，因此也不难获得。问题在于路径的计算。macOS 没有现成的命令行工具计算相对路径，于是小氯写了个 Python 脚本：</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+
+import os
+import sys
+import argparse
+
+
+def get_relpath(base_dir, tar_file):
+    try:
+        relative_path = os.path.relpath(tar_file, base_dir)
+        return relative_path
+    except ValueError:
+        return None
+
+
+def main():
+    parser = argparse.ArgumentParser(description=&quot;计算 target 相对于 base 的相对路径&quot;)
+    parser.add_argument(&quot;base&quot;, help=&quot;起始目录）&quot;)
+    parser.add_argument(&quot;target&quot;, help=&quot;目标文件&quot;)
+    args = parser.parse_args()
+
+    base_dir = os.path.abspath(args.base)
+    tar_file = os.path.abspath(args.target)
+
+    if not os.path.isabs(base_dir) or not os.path.isabs(tar_file):
+        print(&quot;Err: Please input absolute path.&quot;, file=sys.stderr)
+        sys.exit(1)
+
+    relative_path = get_relpath(base_dir, tar_file)
+
+    if relative_path is not None:
+        print(relative_path)
+    else:
+        print(&quot;Err: Please input correct path.&quot;, file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</code></pre>
+<p>然后赋予执行权限，移动到 <code>~/.local/bin</code> 了事。</p>
+<p>下面我们需要读取剪贴板的图片，这里由于是 macOS，我们使用最原生的 AppleScript 即可。</p>
+<pre><code class="language-applescript">on run args
+    set outputFile to POSIX file (first item of args)
+    try
+        write (the clipboard as «class PNGf») to outputFile
+        return POSIX path of outputFile
+    on error
+        return &quot;ERROR: 剪贴板中没有图片&quot;
+    end try
+end run
+</code></pre>
+<p>然后把图片存储到临时文件 <code>TMPFILE=&quot;$(mktemp &quot;/tmp/pasteboard-XXXXXX.jpg&quot;)&quot;</code> 中。当然不要忘了加一个 trap 自动清理。</p>
+<p>然后我们需要获取新图片的名字。为了满足小氯的需求，我们加一个 Preaction，让我们可以自己输入文件名。</p>
+<p><figure class="my-8">
+    <img src="https://img.clnya.fun/20250220-compress-preaction.avif" alt="compress-preaction" 
+        class="mx-auto rounded-lg block" loading="lazy" width="520"  />
+    
+</figure></p>
+<p>然后我们就要开始压缩了。小氯第一个想到的自然是古神 FFmpeg，不过大家也知道，FFmpeg 尊者是出了名地脾气古怪，只要你稍微不慎，就会让他老人家掀桌不干。小氯反反复复调了好几次，遇到的问题包括但是不限于：</p>
+<ul>
+<li>压缩极慢。</li>
+<li>都把输出重定向到 <code>/dev/null</code> 了，还是莫名其妙地冒日志。</li>
+<li>好不容易能压缩了，结果透明度数据没了，告诉我 libaom-av1 不支持 YUVA 编码。</li>
+</ul>
+<p>……好好好。</p>
+<p>那我不用 FFmpeg 还不行吗？！</p>
+<pre><code class="language-bash">rustup update
+cargo install cavif
+</code></pre>
+<p>这玩意也不是不能用，而且比 FFmpeg 快多了。</p>
+<p>压缩之后，我们就可以把图片移动到对应的附件文件夹，并且向剪贴板写入我们的相对路径链接了。小氯也尝试过把数据写入剪贴板，但是 macOS 似乎不直接支持写入 AVIF。</p>
+<p>完整版的脚本放在<a href="https://gist.viento.cc/chlorine/e644da399d2d48c29bc9177622233ef6">这里</a>了，大家按需取用。</p>
+<h3 id="发布处理">发布处理</h3>
+<p>由于小氯的 Hermeneutics 支持 Wikilink 和 Alert，所以我们只需要上传图片并替换即可。这里我们还是写脚本解决问题。</p>
+<p>这个脚本比较简单，使用 ripgrep 查找图片，再通过文件的路径构建出图片路径，然后一个循环把图片送上去即可。小氯用了 Cloudflare R2 测试成功后就放心地把脚本归档了。直到小氯写[[理想乡构筑手记（2）：Hello，Céfiro|上一篇文章]]，希望调用脚本上传图片时，才发现：</p>
+
+
+<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
+    bg-card/20 dark:bg-card-dark/20">
+    <p>你根本没在又拍云！你在哪呢？</p>
+</blockquote>
+<p>图片并没有被上传到又拍云。于是，小氯开始了兵荒马乱的排查过程，最终在单独测试 <code>rclone copyto</code> 时发现了一大堆奇奇怪怪的报错，不是超时就是缺少 Key 或者各种万泉部诗人的奇怪报错。这可能是因为牢拍的存储空间不完全符合 AWS S3 的标准，所以说 rclone 没办法很好地兼容。</p>
+<p>好好好。支持，但是不完全支持。</p>
+<p>万般无奈之下小氯开始寻找替代方案，在把又拍云的文档翻了个底朝天之后，小氯终于找到了这个东西：</p>
+
+
+
+
+
+
+
+
+<div class="plain-link p-6 rounded-xl
+    bg-card/50 dark:bg-card-dark/50 backdrop-blur
+    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
+    ring-1 ring-accent/20 dark:ring-accent-dark/20
+    hover:(ring-accent/30 dark:ring-accent-dark/30
+    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
+    bg-card/70 dark:bg-card-dark/70
+    transition duration-300)">
+    <div class="flex items-center justify-between mb-3">
+        <a href="https://github.com/upyun/upx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
+            text-foreground hover:text-primary transition-colors">
+            <div class="i-carbon-logo-github w-5 h-5"></div>
+            <span>upyun/upx</span>
+        </a>
+        
+    </div>
+
+    
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+        UPYUN Storage Command Tool
+    </p>
+    
+
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+        
+        <div class="inline-flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
+                style="background-color: #00ADD8">
+            </span>
+            <span>Go</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="Star 数">
+            <div class="i-carbon-star w-4 h-4"></div>
+            <span class="tabular-nums">198</span>
+        </div>
+
+        
+        <div class="inline-flex items-center gap-1.5" title="开源协议">
+            <div class="i-carbon-license w-4 h-4"></div>
+            <span>MIT License</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="最后更新时间">
+            <div class="i-carbon-time w-4 h-4"></div>
+            <span class="tabular-nums">2025-02-11</span>
+        </div>
+    </div>
+</div>
+<p>这个东西不能用 Homebrew 安装（或许小氯可以自己维护一个？），同时小氯的系统里已经有一个叫 <code>upx</code> 的家伙了（一个压缩可执行文件的工具，可以把 C++ 编译出的 <code>./hello-world</code> 大小压缩一半<del>并且使得其报错</del>）。所以，我们采取一下自定义安装策略。</p>
+<p>首先把东西下载下来：</p>
+<pre><code class="language-bash">wget https://collection.b0.upaiyun.com/softwares/upx/upx_0.4.8_darwin_arm64.tar.gz
+</code></pre>
+<p>然后解压缩（或者直接用命令行解压缩也行，看您方便），再移动到 PATH 里面：</p>
+<pre><code class="language-bash">sudo mv /path/to/upx /usr/local/bin/upyun
+</code></pre>
+<p>然后验证一下就可以了。</p>
+<p>这个命令行工具不支持使用文件验证，所以我们把凭据写到环境变量里面就好。</p>
+<pre><code class="language-bash">alias upyun=&quot;/usr/local/bin/upyun&quot;
+upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
+</code></pre>
+<p>然后上传完成退出就好了。</p>
+<p>这个方法非常别扭，但是没办法，这是目前小氯找到的唯一一个能跑起来的方法了。</p>
+<p>同样的，老友们可以<a href="https://gist.viento.cc/chlorine/4f9d0a497ca647e5ab35154fb2408693">自取脚本</a>。</p>
+<p>Shell Commands 真的是太强大了，小氯写了若干个脚本，几乎完全替代了 Image Converter、Git 等插件。如果再配合一下 Local REST API 和 Obsidian URI，大概可以把目前小氯的大部分插件都替代掉了。</p>
+<h2 id="后记">后记</h2>
+<p>又清掉了一篇草稿，好耶 ～(∠・ω&lt; )⌒☆​</p>
+
+      ]]></content:encoded></item><item><title>理想乡构筑手记（2）：Hello，Céfiro</title><link>https://chlor.me/hello-cefiro/</link><pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-cefiro/</guid><category>邮件</category><category>博客</category><description>本文介绍了作者对个人域名邮箱、临时邮箱和事务性邮件的需求及最终选择方案。在个人域名邮箱方面，作者详细对比了国内外多种服务，最终选择了iCloud+ Mail，主要看重其与Apple生态的集成、相对较低的价格以及基本够用的功能和隐私性。对于临时邮箱，作者选择了Cloudflare Email Route，利用其便捷性和可扩展性，将邮件转发至现有邮箱。事务性邮件方面，作者选择了Resend，因其提供每日100封的免费额度和易用的API。文章也提到了配置iCloud+ Mail的一些细节和注意事项，以及对邮件隐私性的深入思考，强调了技术隐私的重要性。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-cefiro-cover.webp" alt="理想乡构筑手记（2）：Hello，Céfiro" />
         </figure>
@@ -170,7 +562,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3231</span>
+            <span class="tabular-nums">3235</span>
         </div>
 
         
@@ -540,7 +932,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（14）：泡沫箱里的宣纸</title><link>https://chlor.me/weekly-14/</link><pubDate>Sun, 08 Dec 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-14/</guid><category>博客</category><category>出游</category><category>Fediverse</category><category>哲学</category><description>本文是作者周报的第十四期，涵盖了生活琐事、技术探索、思想转变等多个方面。作者以北京初雪开篇，由此引发出对过去时光的怀念。文章详细记录了购买新域名`viento.cc` 的过程，并解释了其含义和未来用途。作者还探讨了开源个人财务管理软件的可能性，指出由于银行API的限制，实现完全自主化管理存在困难。文章随后记录了作者在天津参加雅思考试的经历以及与朋友的聚会。在技术探索方面，作者推荐了一些基于Tauri框架的应用，并尝试使用Deno Deploy部署项目。此外，作者还分享了新购置VPS的经验，并探讨了自托管社交媒体平台的可能性，对GoToSocial、Mitra和Bluesky等平台进行了比较分析。由于对现有邮件客户端的不满，作者计划自行开发一个新的邮件客户端，并开始学习Rust语言。文章也简要提到了域名备案问题，并反思了自身情绪变化和压力下的“迟钝”状态。最后，作者反思了自身“谨言慎行”的写作风格，认为合理的争议是进步的催化剂，自己未来将尝试在保持温和基调的前提下，在博客中融入更多具有思辨性的内容。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-14-cover.webp" alt="Ephemeralis-Weekly（14）：泡沫箱里的宣纸" />
+          <img src="https://img.clnya.fun/cover/weekly-14-cover.webp" alt="Ephemeralis-Weekly（14）：泡沫箱里的宣纸" />
         </figure>
         <p>各位老友们好，我是 Chlorine。新的一期周报，双手奉上。</p>
 <p>现在浮生散记都快变成半月刊了……没办法，苦命的牢针学生是这样的。<del>不过放心，小氯还没似呢，一时半会不会断更。</del></p>
@@ -808,7 +1200,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（13）：生活的起伏</title><link>https://chlor.me/weekly-13/</link><pubDate>Sun, 24 Nov 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-13/</guid><category>博客</category><category>周报</category><category>VPS</category><category>域名</category><category>日常</category><description>本文是作者周报的第十三期。文章开篇，作者承认自己情绪存在波动，具体可以从不同的部分看出变化。作者提到为个人博客购买了新域名 `chloryn.com`，并详细阐述了选择这个域名的理由和过程。接着，作者讨论了“自设”的概念，并诙谐地表达自己无力创作视觉自设的无奈。在生活方面，作者描述了申请中行Mastercard信用卡的经历，还分享了一封遭遇勒索邮件的经历，并指出这类邮件只是毫无根据的恐吓，不应理会。技术方面，作者首次尝试刷机，将一台旧的小米 CC 9 手机刷成 LineageOS。此外，作者提到购买了新的 VPS，用于网站服务的部署。最后，作者以自己在宿舍中重拾睡前喝热牛奶的习惯为结尾，以平和的口吻描述了这种简单日常为其带来的宁静与满足感。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-13-cover.webp" alt="Ephemeralis-Weekly（13）：生活的起伏" />
+          <img src="https://img.clnya.fun/cover/weekly-13-cover.webp" alt="Ephemeralis-Weekly（13）：生活的起伏" />
         </figure>
         <p>各位老友们好，我是 Chlorine。很抱歉因为个人的情绪波动和生活状态问题落下了一期周报。</p>
 <p>这半个月小氯遇到了许多事情（<del>但是长度还是比较短</del>），经历了从颓废到宁静和充实再到极度焦虑再到略为缓解的多次起伏。个中原因小氯不希望多说，但是各位老友应该能从我文字风格的变化窥见一二。《热牛奶》那一章是我精神最安宁的时候写下的，而最近更新的 now 页面则是我最焦虑的时候写的。本期的标题也体现了这一状态（以及本期应该是第一期副标题不是四个字的周报？虽说对强迫症的老友不太友好吧，但是也跳出了一层文字的限制）。</p>
@@ -979,7 +1371,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（12）：浮沫之下</title><link>https://chlor.me/weekly-12/</link><pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-12/</guid><category>周报</category><category>Newsletter</category><category>日常</category><category>域名</category><category>随机性</category><description>本文是作者周报的第十二期，涵盖了从日常生活到技术探索到哲学思考的多方面内容。文章开始分享了《功利主义》的读书报告以及期中考试周的繁忙，展现了在学业压力下的时间管理和学习策略。接着，文章转向了对个人技术栈的更新和调整，讨论了更换 Newsletter 服务的需求，同时还分享了更换静态资源 CDN 的尝试以及字体分发策略的调整，此外还涉及邮件管理以及希望更换更贴合个人形象的域名。在消费行为上，分享了因冲动购买 VPS 而后悔的经历，引发了对理性消费和冷静期的讨论。此外，文章记述了校园内咖啡店即将停业的消息，表达了自己的感伤。此外，作者表达了对 ColorOS 的强烈批评和更换更加纯净的安卓系统的愿望。最后，作者从用 Python 占卜开始，深入讨论了从伪随机数到量子现象的随机性，引申出对世界决定论和随机性的哲思。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-12-cover.webp" alt="Ephemeralis-Weekly（12）：浮沫之下" />
+          <img src="https://img.clnya.fun/cover/weekly-12-cover.webp" alt="Ephemeralis-Weekly（12）：浮沫之下" />
         </figure>
         <p>各位老友们好，我是 Chlorine。新的一期周报，双手奉上。</p>
 <p>本期的标题主要来自于对文中几个主题的引申，依然很抽象。同时本期内容时间跨度比较长（原因请见文中），内容冗长且杂乱（本来这期周报会更长的，但是被小氯砍掉了两个还没想好的话题），希望各位老友不要嫌弃 qaq</p>
@@ -1252,7 +1644,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（11）：案几之上</title><link>https://chlor.me/weekly-11/</link><pubDate>Sun, 27 Oct 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-11/</guid><category>周报</category><category>日常</category><category>人文社科</category><category>Follow</category><category>Omnivore</category><description>本文是作者周报的第十一期。文章开始描述了完成中微作业的过程，展现了忙碌的学生生活，接着介绍了新购买的域名 `chlor.in`，并探讨了对 GPG 和 IPFS 作为 Hugo 图床的兴趣。随后，作者表示对 1024 程序员节无感，并分享了一些有趣的代码片段。通过讨论 `/dev/zero`，作者分享了对“空”的哲学思考，而软件“一言”的使用则让作者思考了脱离语境欣赏句子的局限性，展现了作者扎实的人文素养。在网络安全方面，作者进行了密码升级和账户、软件等的清理，希望能够逐步“与互联网脱轨”，减少对闭源软件和外部服务的依赖。此外，作者结合 Omnivore 和 Follow 等工具探讨了理想的信息聚合系统，表达了对统一、高效的信息管理方式的需求。文章以一个假设性的问题结束：如果生命只剩三天，作者的第一反应是回家陪伴家人，体现了家人和亲情在作者生命中的重要地位。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-11-cover.webp" alt="Ephemeralis-Weekly（11）：案几之上" />
+          <img src="https://img.clnya.fun/cover/weekly-11-cover.webp" alt="Ephemeralis-Weekly（11）：案几之上" />
         </figure>
         <p>各位老友们好，我是 Chlorine。新的一期周报，双手奉上。小氯这周比较忙，今天写了一天的 DSA，晚上疯狂码字，总算是在睡前把周报发出来了 qaq。</p>
 <p>本期的标题依旧和内容有联系但是不明显，欢迎各位老友自行解读 OωO</p>
@@ -1445,7 +1837,7 @@ public:
 
       ]]></content:encoded></item><item><title>Obsidian与开源</title><link>https://chlor.me/obsidian-and-open-source/</link><pubDate>Tue, 22 Oct 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/obsidian-and-open-source/</guid><category>Obsidian</category><category>开源</category><category>批判性思维</category><description>本文探讨了Obsidian这款个人知识管理软件的开源问题。Obsidian是一款优秀的笔记软件，但其闭源特性让一些FOSS支持者感到顾虑。文章从Obsidian社区对开源的激烈讨论入手，详尽且具体地分析了开源对收入、隐私、安全性、开发效率、社区管理、知识产权和法律等方面的影响，同时还涉及到实质性开源，Obsidian与一些闭源产品及团队的本质区别，开源与源代码公共可见等概念的区别等问题。文章认为先开源部分核心组件是好的实践，同时强调开源与否是Obsidian团队的自由。文章认为开源将具有重要的象征意义，并表达了对Obsidian开源的期望。文章通过理性而详尽的分析，表达了作者对开源的深入思考和对Obsidian未来的期待。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/obsidian-and-open-source-cover.webp" alt="Obsidian与开源" />
+          <img src="https://img.clnya.fun/cover/obsidian-and-open-source-cover.webp" alt="Obsidian与开源" />
         </figure>
         <p>各位老友们好，我是 Chlorine。鸽了许久的一篇文章，双手奉上。</p>
 <p>本文属于对一个话题比较集中的探讨，因此被我归到了尘封许久的「小氯说」系列，大家当个杂文看看即可。</p>
@@ -1657,7 +2049,7 @@ public:
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（10）：方寸之外</title><link>https://chlor.me/weekly-10/</link><pubDate>Sun, 20 Oct 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-10/</guid><category>周报</category><category>日常</category><category>博客</category><description>本文是作者周报的第十期。文章开头提到本期周报内容较少，作者计划多读书以拓展知识边界。接着，作者详细描述了本周的两场defense（答辩），包括学推计划的中期报告和奖学金答辩的准备和经历。意外的是，作者的手机掉进了马桶，引发了一系列的处理和反思，包括手机的应急处理和对生活中数字依赖的思考。文章还探讨了在缺失大量智能手机功能的生活状态下，作者反思了数字生活的必要性，并借助了“零基预算”的概念来审视数字工具的使用。最后，作者回答了关于博客的9个问题，涉及博客的起源、创作过程、动力维持、博客运营成本以及个人兴趣和未来计划等方面。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-10-cover.webp" alt="Ephemeralis-Weekly（10）：方寸之外" />
+          <img src="https://img.clnya.fun/cover/weekly-10-cover.webp" alt="Ephemeralis-Weekly（10）：方寸之外" />
         </figure>
         <p>各位老友们好，我是 Chlorine。新的一期周报，双手奉上。</p>
 <p>感觉最近可写的东西蛮少的，周报也越来越短了。看来应该再多读点书，拓展一下知识的边界了。Obsidian 的那篇文章还在写……到底还要鸽多久啊 qaq</p>
@@ -1812,7 +2204,7 @@ my voice, the hum of machines.</p>
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（9）：寒露清秋</title><link>https://chlor.me/weekly-9/</link><pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-9/</guid><category>周报</category><category>博客</category><category>日常</category><description>本文是作者周报的第九期。文章开篇讲述了作者回京的曲折经历，突显了生活中的不可预见性。接着，作者描述了秋季的凉意，表现了对季节变迁的细腻感受。在健康问题上，作者求助于中医，分享了痛苦的喝药经历。同时讲述了自己周末生病和写论文的经历，并提出了战损反而能提高自己学习效率的有趣观点。作者还分享了博客 300 天的感受，讲述了通过沟通解冻 X 账号的经历，同时反思了自己中文写作时的奇特表达，认为这是一种有趣的文化融合现象。随后作者回答了独立博客自省问卷 15 题，表现了对博客运营的总结思考。最后作者表示本期没有哲学思考，因为自己关于 Obsidian 和开源的随笔还在书写中。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-9-cover.webp" alt="Ephemeralis-Weekly（9）：寒露清秋" />
+          <img src="https://img.clnya.fun/cover/weekly-9-cover.webp" alt="Ephemeralis-Weekly（9）：寒露清秋" />
         </figure>
         <p>各位老友们好，我是 Chlorine。新的一期周报，双手奉上。</p>
 <p>本期和<a href="/weekly-8/">上一期</a>一样，都是以本周碎碎念为主，主打低质高量。<del>我甚至在想这种碎碎念合集要不干脆拆成日记得了</del>。</p>
@@ -2066,7 +2458,7 @@ if (element) {
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（8）：七日漫谈</title><link>https://chlor.me/weekly-8/</link><pubDate>Sun, 06 Oct 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-8/</guid><category>周报</category><category>去中心化</category><category>Artalk</category><category>日常</category><category>RSS</category><description>本文是作者周报的第八期，涵盖了从日常生活琐事到技术尝试，再到哲学思考的广泛内容。文章从图书馆体验、意外受伤、回家旅程等琐事开始，展现了作者的日常状态。作者还分享了对旧衣物的独特情感，体现出对时间和记忆的深层思考。在技术领域，作者尝试了 Artalk 评论系统，对其功能和用户体验进行了详细评估，并与现有的 Twikoo 进行了比较。此外，作者还体验了 Follow 这一新兴的RSS阅读工具，分析了其对信息获取习惯的影响。社交方面，作者收到了中文博客圈的邀请，在喜悦之余也引发了对社交活动的复杂情绪；同时从一段家庭闲聊开始，表达了对家庭支持的感激之情。文章的最后，作者从「是否能构建一个非中心化的 Pixiv」开始，深入探讨了非中心化时代的社区基本准则，探讨了自由、隐私和必要监管之间的平衡等话题，展现了其对社区治理和运行模式的深刻思考。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-8-cover.webp" alt="Ephemeralis-Weekly（8）：七日漫谈" />
+          <img src="https://img.clnya.fun/cover/weekly-8-cover.webp" alt="Ephemeralis-Weekly（8）：七日漫谈" />
         </figure>
         <p>各位老友们好，我是 Chlorine。新的一期周报，双手奉上。</p>
 <p>一如小氯<a href="/weekly-7/">之前所说的</a>，感觉写周报应该更多地写一写这一周「自己的感知和经历」，本期算是一个小小的初探吧。因此本期的内容较为琐碎和冗长，<del>主打一个低质高量</del>，我甚至都找不出一个合适的标题，只能（从形式上）仿造薄伽丘的《十日谈》（甚至 「七日漫谈」这个名字都可以当作周报名称了，太宽泛了）。当然，副标题并不一定要是四个字，只是前面碰巧都是而已。</p>
@@ -2248,7 +2640,7 @@ if (element) {
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（7）：唯有时光</title><link>https://chlor.me/weekly-7/</link><pubDate>Sat, 28 Sep 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-7/</guid><category>周报</category><category>博客</category><category>Swup</category><description>本文是作者周报的第七期，主要包括园子的装修工作，如 Swup 的修复、whisper 代码美化、Twikoo 表情链接的调整、解析线路切换等。此外，还探讨了不同语言中对“小氯”这一昵称的翻译，涉及英语、西班牙语、日语、法语、俄语和韩语/朝鲜语等。文章最后分享了对时间和生活感知的哲学思考，提倡通过记录日常小事来增强对时间流逝的感知，强调生活经历对个人记忆和身份的重要性。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-7-cover.webp" alt="Ephemeralis-Weekly（7）：唯有时光" />
+          <img src="https://img.clnya.fun/cover/weekly-7-cover.webp" alt="Ephemeralis-Weekly（7）：唯有时光" />
         </figure>
         <p>各位老友们好，我是 Chlorine。<del>鸽了一期</del>的周报再次回归。本期又是一篇蛮矫情且没营养的怪东西，如果吵到您的眼睛了，小氯提前跟您道个歉。红豆泥私密马赛。</p>
 <p>本文为园子周报——Ephemeralis Weekly（浮生散记）的第七期，日期范围为公历 2024 年 9 月 23 日至 用愉快。</p>
@@ -2429,7 +2821,7 @@ swup.hooks.on('page:view', () =&gt; init());
 
       ]]></content:encoded></item><item><title>升级系统那点事</title><link>https://chlor.me/upgrading-systems/</link><pubDate>Wed, 18 Sep 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/upgrading-systems/</guid><category>macOS</category><category>Linux</category><category>折腾</category><description>本文介绍了作者更新系统的经历。macOS Sequoia 的更新过程虽然遇到了一些问题，但新功能如 Markdown 预览对其有帮助。接着，作者提到了 iOS 18 和 iPadOS 18 的顺利升级，期待苹果能够专注于产品体验的优化。随后，作者讲述了 Ubuntu Server 24.04.1 LTS 的更新经历，解决了 SSH 连接中断的问题。最后，作者表达了对全面拥抱开源的兴趣，尤其是 Fedora 和 Manjaro 发行版，以及 Framework Laptop 的潜在购买计划。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/upgrading-systems-cover.avif" alt="升级系统那点事" />
+          <img src="https://img.clnya.fun/cover/upgrading-systems-cover.avif" alt="升级系统那点事" />
         </figure>
         <p>各位老友们好，我是 Chlorine。今天给我的设备们更新了系统，咱们大体讲讲。</p>
 <h2 id="前置">前置</h2>
@@ -2494,7 +2886,7 @@ sudo apt upgrade
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（6）：无可热爱</title><link>https://chlor.me/weekly-6/</link><pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-6/</guid><category>周报</category><category>Zen</category><category>Matrix</category><category>AIGC</category><description>本文是作者周报的第六期，以轻松幽默的语气分享了自己对多种主题的思考和体验。首先，作者介绍了Zen Browser这款新浏览器，虽然其界面设计精致、性能较好，但由于bug频繁且仅处于Alpha阶段，作者对其当前表现略有保留。接着，作者描述了用Rust编写的Matrix服务器实现Conduit的部署体验，指出其轻量高效的优点。随后，作者简评了豆包AI的绘画功能，并分享了自己使用AI生成头像的经历。最后，文章逐渐转向深刻的个人反思，讨论了生活中无谓的琐事、理想与现实的冲突，以及意义感的缺失，表达了对时代与个体生活的质疑、困惑与思考。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-6-cover.webp" alt="Ephemeralis-Weekly（6）：无可热爱" />
+          <img src="https://img.clnya.fun/cover/weekly-6-cover.webp" alt="Ephemeralis-Weekly（6）：无可热爱" />
         </figure>
         <p>各位老友们好，我是 Chlorine。一别旷日，心下甚念。</p>
 <p>本文为园子周报——Ephemeralis Weekly（浮生散记）的第六期，日期范围为公历 2024 年 9 月 9 日至 9 月 15 日。祝食用愉快。</p>
@@ -2632,7 +3024,7 @@ volumes:
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（5）：只是去做</title><link>https://chlor.me/weekly-5/</link><pubDate>Sun, 01 Sep 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-5/</guid><category>周报</category><category>Vaultwarden</category><category>Gitea</category><category>Obsidian</category><description>本文是作者周报的第五期，详细记录了自己在技术折腾、笔记软件选择以及生活琐事中的思考与实践。主要内容包括部署Vaultwarden和Gitea的经验分享，笔记软件的使用和选择中的感悟，高效率完成一次准备任务以及在健康问题下的饮食调整。文章风格轻松幽默，体现了作者对技术和生活的热爱与反思。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-5-cover.webp" alt="Ephemeralis-Weekly（5）：只是去做" />
+          <img src="https://img.clnya.fun/cover/weekly-5-cover.webp" alt="Ephemeralis-Weekly（5）：只是去做" />
         </figure>
         <p>各位老友们好，我是 Chlorine。水篇文章。</p>
 <p>本期已经不能称作「周报」了，因为时间跨度长得我自己都不知道是多少。各位当个乐子看就好。</p>
@@ -2807,7 +3199,7 @@ grep &quot;Invalid user&quot; $LOGIN_RECORD_FILE | awk '{print $10}' | sort -u &
 
       ]]></content:encoded></item><item><title>园子装修日志（2）</title><link>https://chlor.me/yuanzi-decorating-2/</link><pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/yuanzi-decorating-2/</guid><category>博客</category><category>折腾</category><description>本文记录了作者最近优化 Hugo 博客的过程，包括优化 GitHub 卡片、重构 CSS 和侧边栏等。优化包括样式、API 逻辑、错误处理等，重构 CSS 采用 SCSS 方法，导入特定页面样式。侧边栏优化了公告、目录、移动端显示和图标，使得代码结构更加整洁。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/yuanzi-decorating-2-cover.webp" alt="园子装修日志（2）" />
+          <img src="https://img.clnya.fun/cover/yuanzi-decorating-2-cover.webp" alt="园子装修日志（2）" />
         </figure>
         <p>各位老友们好，我是 Chlorine。继续水文，讲讲这几天摸鱼的经历。</p>
 <p>准确来说应该是我能记得的经历，因为我记性一向不好，而且这几天的 Git commit 也异常多：</p>
@@ -3064,7 +3456,7 @@ export default defineConfig({
 
       ]]></content:encoded></item><item><title>Hello，Shiki</title><link>https://chlor.me/hello-shiki/</link><pubDate>Sun, 18 Aug 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-shiki/</guid><category>博客</category><category>折腾</category><description>本文介绍了如何在Hugo中使用Shiki进行代码高亮，Shiki在服务端执行，提供了更好的性能和样式，适合构建静态网站，需满足特定前置条件和安装依赖，步骤包括配置Hugo、创建rehyperc文件和修改CSS等。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-shiki-cover.webp" alt="Hello，Shiki" />
+          <img src="https://img.clnya.fun/cover/hello-shiki-cover.webp" alt="Hello，Shiki" />
         </figure>
         <p>各位老友们好，我是 Chlorine。继续高强度水文。</p>
 <p>本期的主题是 Hugo 的代码高亮，主要参考了<a href="https://www.eallion.com">蜗牛大神</a>的教程：<a href="https://www.eallion.com/hugo-syntax-highlight-shiki/">在 Hugo 中使用 Shiki</a>。感谢前辈的付出。</p>
@@ -3214,7 +3606,7 @@ html.dark .shiki span {
 
       ]]></content:encoded></item><item><title>Hello，SearXNG</title><link>https://chlor.me/hello-searxng/</link><pubDate>Fri, 16 Aug 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-searxng/</guid><category>hello</category><category>折腾</category><description>本文讨论如何在内地服务器上使用 1Panel 和 OpenResty 搭建开源的 SearXNG 私有搜索引擎。SearXNG 是一个元搜索引擎，不收集用户数据，并支持本地偏好设置。只需一台服务器、代理和基本配置，便可顺利部署。一些设置包括修改访问密钥、环境变量和代理配置，最终可以将其设置为默认搜索引擎。总体来说，SearXNG 速度可接受，但搜索结果有时不够精准，建议与 DuckDuckGo 搭配使用。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-searxng-cover.webp" alt="Hello，SearXNG" />
+          <img src="https://img.clnya.fun/cover/hello-searxng-cover.webp" alt="Hello，SearXNG" />
         </figure>
         <p>各位老友们好，我是 Chlorine。今天继续水文。</p>
 <p>其实本期正确的标题应该是：</p>
@@ -3503,7 +3895,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
       ]]></content:encoded></item><item><title>近期折腾简记</title><link>https://chlor.me/recent-tinkering-summary/</link><pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/recent-tinkering-summary/</guid><category>博客</category><category>折腾</category><category>备案</category><description>本文分享了作者近期一些折腾的简记，包括使用 CloudFlare 的临时邮箱、DeepLX 翻译服务的搭建及使用，以及阿里云服务器的开荒笔记。临时邮箱可以保护隐私，DeepLX 提供免注册的 DeepL API，而阿里云则通过合租解决了服务器问题。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/recent-tinkering-summary-cover.webp" alt="近期折腾简记" />
+          <img src="https://img.clnya.fun/cover/recent-tinkering-summary-cover.webp" alt="近期折腾简记" />
         </figure>
         <p>各位老友们好，我是 Chlorine。继续水文章，讲讲最近摸鱼期间折腾的一些事情。</p>
 <p>封面：用 AI 搓出来的（不太完善的）小氯酱</p>
@@ -3556,7 +3948,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3231</span>
+            <span class="tabular-nums">3235</span>
         </div>
 
         
@@ -4185,7 +4577,7 @@ sudo ufw allow 114514
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（4）：缝隙之间</title><link>https://chlor.me/weekly-4/</link><pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-4/</guid><category>博客</category><category>周报</category><category>RSS</category><description>浮生散记第四期。作者回顾了自己的假期和工作情况，还介绍了RSS和独立博客的意义。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-4-cover.avif" alt="Ephemeralis-Weekly（4）：缝隙之间" />
+          <img src="https://img.clnya.fun/cover/weekly-4-cover.avif" alt="Ephemeralis-Weekly（4）：缝隙之间" />
         </figure>
         <h1 id="ephemeralis-weekly4缝隙之间">Ephemeralis-Weekly（4）：缝隙之间</h1>
 <p>各位老友们好，我是 Chlorine。</p>
@@ -4311,7 +4703,7 @@ sudo ufw allow 114514
 
       ]]></content:encoded></item><item><title>Hello，Sink</title><link>https://chlor.me/hello-sink/</link><pubDate>Mon, 29 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-sink/</guid><category>CloudFlare</category><description>本文介绍了 Sink 项目的部署过程。Sink 是一个基于 CloudFlare 的短链接项目，支持数据分析和链接截止日期等功能。本文详细介绍了使用 CloudFlare 部署 Sink 的过程。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-sink-cover.webp" alt="Hello，Sink" />
+          <img src="https://img.clnya.fun/cover/hello-sink-cover.webp" alt="Hello，Sink" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <p>最近在重拾 TypeScript（<del>小氯你到底还要开多少个语言的坑啊</del>），同时热衷于薅带善人 CloudFlare 的羊毛，于是盯上了 CloudFlare Workers&amp;Pages，然后找到了一个有趣的项目：<a href="https://sink.cool">Sink</a>。</p>
@@ -4468,7 +4860,7 @@ swup.hooks.on(&quot;page:view&quot;, ()=&gt;init())
 
       ]]></content:encoded></item><item><title>macOS配置GPG签名Git提交</title><link>https://chlor.me/macos-gpg-sign-git-commit/</link><pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/macos-gpg-sign-git-commit/</guid><category>Git</category><category>折腾</category><category>GPG</category><description>本文详细介绍了如何在macOS上使用GPG签名来验证提交者身份的过程。作者从GPG的历史和功能开始，讲述了其加密和签名的重要性，接着指导读者如何在Mac上安装和配置GPG，包括生成密钥对、在GitHub上设置GPG密钥，以及如何配置Git和VS Code以支持GPG签名。文章还提到了Obsidian Git的配置，并分享了一些解决常见问题的经验。通过这些步骤，用户可以确保他们的Git提交是经过验证的，增强了提交的安全性和可信度。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/macos-gpg-sign-git-commit-cover.webp" alt="macOS配置GPG签名Git提交" />
+          <img src="https://img.clnya.fun/cover/macos-gpg-sign-git-commit-cover.webp" alt="macOS配置GPG签名Git提交" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <p>闲来无事水篇文章，记录一下我刚刚解决的一个心头大患。</p>
@@ -4582,7 +4974,7 @@ git config --global gpg.program /opt/homebrew/bin/gpg
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（3）：执笔衔书</title><link>https://chlor.me/weekly-3/</link><pubDate>Mon, 22 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-3/</guid><category>博客</category><category>周报</category><category>开源</category><category>日常</category><description>本文是作者周报的第三期，作者分享了他参与小学期课程的大作业开发新闻客户端的经历。他通过学习教程、魔改代码，克服了时间紧迫和自身知识短缺的困难，最终成功完成了作业。此外，作者还谈到了他的梦想是成立一个自己的开源基金会，并介绍了自己最近想学习的新的编程语言Rust以及他喜欢的美食烤冷面。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-3-cover.webp" alt="Ephemeralis-Weekly（3）：执笔衔书" />
+          <img src="https://img.clnya.fun/cover/weekly-3-cover.webp" alt="Ephemeralis-Weekly（3）：执笔衔书" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <p>本文为园子周报——Ephemeralis Weekly（浮生散记）的第三期，日期范围为公历 2024 年 7 月 15 日至 7 月 21 日。祝食用愉快。</p>
@@ -4679,7 +5071,7 @@ int main()
 
       ]]></content:encoded></item><item><title>Twikoo更新惊魂</title><link>https://chlor.me/twikoo-update-shock/</link><pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/twikoo-update-shock/</guid><category>Twikoo</category><description>本文介绍了Twikoo评论系统更新导致评论丢失，作者尝试重新部署并成功恢复评论，但未备份数据。作者决定重新创建数据库并导入新的评论，并增加多数据库备份。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/twikoo-update-shock-cover.webp" alt="Twikoo更新惊魂" />
+          <img src="https://img.clnya.fun/cover/twikoo-update-shock-cover.webp" alt="Twikoo更新惊魂" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <p>今天讲一个挺抽象的事，就是关于 Twikoo 评论的更新。请做好血压飙升的准备。</p>
@@ -4741,7 +5133,7 @@ int main()
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（2）：生日快乐</title><link>https://chlor.me/weekly-2/</link><pubDate>Mon, 08 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-2/</guid><category>周报</category><description>本文是作者周报的第二期，这是非常值得记录的一周，作者过了自己的19岁生日，并分享了在农历生日和公历生日的庆祝活动。他还提到博客迎来了200天的生日，给博客接入了Quail作为Newsletter，并谈到备案和其他一些想法。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-2-cover.webp" alt="Ephemeralis-Weekly（2）：生日快乐" />
+          <img src="https://img.clnya.fun/cover/weekly-2-cover.webp" alt="Ephemeralis-Weekly（2）：生日快乐" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <p>本文为园子周报——Ephemeralis Weekly（浮生散记）的第二期，日期范围为公历 2024 年 7 月 1 日至 7 月 7 日。</p>
@@ -4822,7 +5214,7 @@ int main()
 
       ]]></content:encoded></item><item><title>Hello，Quail</title><link>https://chlor.me/hello-quail/</link><pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-quail/</guid><category>Newsletter</category><category>Quail</category><category>博客</category><category>周报</category><description>Quail是一个免费且对大陆友好的Newsletter服务，帮助作者与读者保持联系并筹集资金。它支持多种推送方式，具有优秀的编辑器和后台，并计划支持更多功能。作者对Quail表示满意，并将在Quail上发布文章。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-quail-cover.webp" alt="Hello，Quail" />
+          <img src="https://img.clnya.fun/cover/hello-quail-cover.webp" alt="Hello，Quail" />
         </figure>
         
 
@@ -5041,7 +5433,7 @@ int main()
 
       ]]></content:encoded></item><item><title>Hugo博客迁移日志（4）</title><link>https://chlor.me/migrating-to-hugo-4/</link><pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/migrating-to-hugo-4/</guid><category>Hugo</category><category>博客</category><category>Efímero</category><category>折腾</category><description>本文详细介绍了Hugo主题定制过程中的四个主要组件：公告、目录、简历和糖果雨特效。通过具体的代码示例和配置方法，文章指导读者如何实现这些组件的添加和功能扩展。包括了HTML模板的编辑、TOML配置文件的编写、CSS样式的调整以及JavaScript特效的实现。适合希望深入了解Hugo主题开发和自定义功能的读者。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/migrating-to-hugo-4-cover.webp" alt="Hugo博客迁移日志（4）" />
+          <img src="https://img.clnya.fun/cover/migrating-to-hugo-4-cover.webp" alt="Hugo博客迁移日志（4）" />
         </figure>
         <p>芜湖，各位老友们好啊，我是 Chlorine。接着上一回，继续为您说。</p>
 <h2 id="公告组件">公告组件</h2>
@@ -5477,7 +5869,7 @@ cursorSpecialEffects.init()
 
       ]]></content:encoded></item><item><title>Ephemeralis-Weekly（1）：总要启程</title><link>https://chlor.me/weekly-1/</link><pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-1/</guid><category>周报</category><category>备案</category><category>学习</category><description>本文是作者的博客周报「浮生散记」（Ephemeralis Weekly）的第一期，内容是作者重开周报的考虑、作者本周的生活情况，包括写各种大作业的过程、重启 Hugo 博客的过程，以及与家人分别的不舍和思考。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/weekly-1-cover.webp" alt="Ephemeralis-Weekly（1）：总要启程" />
+          <img src="https://img.clnya.fun/cover/weekly-1-cover.webp" alt="Ephemeralis-Weekly（1）：总要启程" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <p>本文是沉寂已久的周报——Ephemeralis Weekly（浮生散记）重启后的第一期，日期范围为公历 2024 年 6 月 24 日至 6 月 30 日。</p>
@@ -5590,7 +5982,7 @@ cursorSpecialEffects.init()
 
       ]]></content:encoded></item><item><title>Hugo博客迁移日志（3）</title><link>https://chlor.me/migrating-to-hugo-3/</link><pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/migrating-to-hugo-3/</guid><category>博客</category><category>Hugo</category><category>浮光</category><category>折腾</category><description>作者对于从NotionNext迁移到Hugo的具体过程的简要叙述，包含GitHub、GitLab、Codeberg短代码的构建与Callout块的处理。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/migrating-to-hugo-3-cover.webp" alt="Hugo博客迁移日志（3）" />
+          <img src="https://img.clnya.fun/cover/migrating-to-hugo-3-cover.webp" alt="Hugo博客迁移日志（3）" />
         </figure>
         <p>芜湖，各位老友们好啊，我是 Chlorine。接着上一回，继续为您说。</p>
 <h2 id="githubgitlabcodeberg-短代码">GitHub/GitLab/Codeberg 短代码</h2>
@@ -5692,7 +6084,7 @@ This is a warning.
 
       ]]></content:encoded></item><item><title>Hugo博客迁移日志（2）</title><link>https://chlor.me/migrating-to-hugo-2/</link><pubDate>Sat, 29 Jun 2024 21:30:00 +0800</pubDate><author>Chlorine</author><guid>https://chlor.me/migrating-to-hugo-2/</guid><category>博客</category><category>Hugo</category><category>浮光</category><category>折腾</category><description>本文介绍了作者对于从NotionNext迁移到Hugo的具体过程的简要叙述，包含对项目的总览、友链页面的构建、说说页面的构建等</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/migrating-to-hugo-2-cover.webp" alt="Hugo博客迁移日志（2）" />
+          <img src="https://img.clnya.fun/cover/migrating-to-hugo-2-cover.webp" alt="Hugo博客迁移日志（2）" />
         </figure>
         <p>芜湖，各位老友们好啊，我是 Chlorine。接着上一回，咱们开始讲我从 NotionNext 迁移到 Hugo 的旅程。</p>
 <h2 id="项目整体结构">项目整体结构</h2>
@@ -6180,7 +6572,7 @@ help:
 
       ]]></content:encoded></item><item><title>Hugo博客迁移日志（1）</title><link>https://chlor.me/migrating-to-hugo-1/</link><pubDate>Sat, 29 Jun 2024 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/migrating-to-hugo-1/</guid><category>博客</category><category>Hugo</category><category>Efímero</category><category>折腾</category><description>本文介绍了作者关于从 NotionNext 再一次迁移到 Hugo 的一些原因的叙述，主要原因是喜欢 Hugo Landscape 主题的外观和构建速度。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/migrating-to-hugo-1-cover.webp" alt="Hugo博客迁移日志（1）" />
+          <img src="https://img.clnya.fun/cover/migrating-to-hugo-1-cover.webp" alt="Hugo博客迁移日志（1）" />
         </figure>
         <p>芜湖，各位老友们好，我是 Chlorine。几天不见，我又回来水文章了。</p>
 <p>本期开一个新坑，主要讲我从 NotionNext 又回到 Hugo 的原因。</p>
@@ -6342,7 +6734,7 @@ help:
 
       ]]></content:encoded></item><item><title>警告！</title><link>https://chlor.me/i-am-dying/</link><pubDate>Wed, 22 May 2024 08:11:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/i-am-dying/</guid><category>公告</category><description>希望大家还能看到活着的小氯。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/i-am-dying-cover.webp" alt="警告！" />
+          <img src="https://img.clnya.fun/cover/i-am-dying-cover.webp" alt="警告！" />
         </figure>
         <p>就本周而言，我需要做一点不会的图论作业，和搭档一起练我亲手写的又长又难的西班牙语，当然还有霉耗的微积分作业。同时我还需要和组员们定下来暑期实践的专业调研内容，和班委一起搞甲团答辩，以及在今天之内搞好学推项目的申请。</p>
 <p>同时今天是 5 月 22 日了，马上就要到你清半年一度的鬼哭狼嚎芥末烤柿寄（期末考试季）。我必须尽快开始复习（预习）我的各种考试，由于本学期上半部分<del>以及下半部分</del>持之以恒的大摆特摆，我预计期末考试会是一场艰苦的战争 <del>指考试对我单方面碾压</del> 。同时我还抽出时间写中国文明、史纲、OOP、图论的大作业。哦对了，差点忘了六级了。</p>
@@ -6351,7 +6743,7 @@ help:
 
       ]]></content:encoded></item><item><title>Hello，VSCodium</title><link>https://chlor.me/hello-vscodium/</link><pubDate>Sun, 19 May 2024 19:52:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-vscodium/</guid><description>本文介绍了 VSCodium，这是一个完全开源且不包含数据收集的 VS Code 替代品。作者讨论了转向 VSCodium 的原因，包括对开源软件和隐私的关注，并提供了安装、设置迁移和扩展换源的指南。最后，作者指出 VSCodium 和 VS Code 在界面和使用上非常相似。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-vscodium-cover.webp" alt="Hello，VSCodium" />
+          <img src="https://img.clnya.fun/cover/hello-vscodium-cover.webp" alt="Hello，VSCodium" />
         </figure>
         <p>各位老友们好，我是 Chlorine。</p>
 <h2 id="前言">前言</h2>
@@ -6501,7 +6893,7 @@ origin  https://github.com/ohmyzsh/ohmyzsh.git (push)
 
       ]]></content:encoded></item><item><title>Hello，iTerm2</title><link>https://chlor.me/hello-iterm2/</link><pubDate>Sun, 05 May 2024 20:18:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-iterm2/</guid><category>折腾</category><category>iTerm2</category><description>本文介绍了作者使用 iTerm2 作为终端模拟器的过程及配置。作者最初因担心兼容性问题放弃了 Hyper，尝试了多个终端，包括默认终端、Warp、Wave、Wind 和 Tabby，但各自都有不足，最终选择了 iTerm2。文章详细介绍了通过 Homebrew 安装 iTerm2，并推荐了 Oh-my-zsh、zsh 插件、tmux 等工具来提升使用体验。此外，作者分享了如何自定义 iTerm2 的配色、字体、状态栏及图标等美化步骤，推荐了 Starship 作为终端美化插件，并展示了最终配置效果。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-iterm2-cover.webp" alt="Hello，iTerm2" />
+          <img src="https://img.clnya.fun/cover/hello-iterm2-cover.webp" alt="Hello，iTerm2" />
         </figure>
         <h1 id="hello-iterm2">Hello, iTerm2</h1>
 <p>各位老友们好，我是 Chlorine。</p>
@@ -6799,7 +7191,7 @@ int bell(int N)
 
       ]]></content:encoded></item><item><title>Hello，Rime</title><link>https://chlor.me/hello-rime/</link><pubDate>Wed, 10 Apr 2024 20:34:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-rime/</guid><category>折腾</category><category>Rime</category><description>本文介绍了开源输入法Rime，它是一个高度可定制的输入引擎。作者分享了从其他输入法转向Rime的原因，并详细说明了在macOS上安装和配置Rime的过程，包括键位调整、自定义短语、外观修改和自动中英文切换。文章还提供了相关资源链接和个性化配置示例。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/hello-rime-cover.webp" alt="Hello，Rime" />
+          <img src="https://img.clnya.fun/cover/hello-rime-cover.webp" alt="Hello，Rime" />
         </figure>
         <h1 id="hellorime">Hello，Rime</h1>
 <p>各位老友们好，我是 Chlorine。</p>
@@ -7788,7 +8180,6 @@ $$<p>发现也没正确渲染。</p>
 
 </code></pre>
 <p>然后就可以正确进行渲染了~</p>
-<p>[[独立博客选什么域名后缀？.md|ceui]]</p>
 <h2 id="ps">PS</h2>
 <ol>
 <li>Hugo 官方推荐的方案与这里有所不同，如果你希望能使用 front matter 来控制渲染与否，可以参考<a href="https://gohugo.io/content-management/mathematics/">这里</a>。</li>
@@ -8106,7 +8497,7 @@ $$<p>其真实效果应该是：</p>
 
       ]]></content:encoded></item><item><title>Obsidian+Hugo建站教程：1-Markdown，Obsidian与图床</title><link>https://chlor.me/how-to-build-a-blog-1/</link><pubDate>Fri, 16 Feb 2024 20:28:25 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/how-to-build-a-blog-1/</guid><category>博客</category><category>Obsidian</category><category>教程</category><description>Obsidian + Hugo 建站教程——Markdown 语法介绍，Obsidian 配置，使用缤纷云对象存储搭建图床。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/how-to-build-a-blog-1-cover.webp" alt="Obsidian&#43;Hugo建站教程：1-Markdown，Obsidian与图床" />
+          <img src="https://img.clnya.fun/cover/how-to-build-a-blog-1-cover.webp" alt="Obsidian&#43;Hugo建站教程：1-Markdown，Obsidian与图床" />
         </figure>
         <p>各位老友好啊，我是 Chlorine。本期开始，我们进入独立博客建站之旅。</p>
 <h2 id="markdown-与-obsidian">Markdown 与 Obsidian</h2>
@@ -8204,7 +8595,7 @@ $$<p>其真实效果应该是：</p>
 
       ]]></content:encoded></item><item><title>Obsidian+Hugo建站教程：0-前言</title><link>https://chlor.me/how-to-build-a-blog-0/</link><pubDate>Fri, 16 Feb 2024 18:49:34 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/how-to-build-a-blog-0/</guid><category>博客</category><category>教程</category><category>Obsidian</category><description>本文是作者关于从 NotionNext 迁移到 Hugo 博客系统的系列文章的开端。文章首先解释了静态博客和独立博客的概念，强调了独立博客的自主性、自由度以及与读者互动的紧密性，同时也指出了其成本、技术要求等缺点。接着，作者提出了独立博客写作的最佳实践，并列出了进行博客写作和管理所需的基本技能和工具。文章最后以一个博物馆的比喻预告了后续将详细讲解博客搭建的各个步骤，旨在为读者提供一个全面的指南。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/how-to-build-a-blog-0-cover.webp" alt="Obsidian&#43;Hugo建站教程：0-前言" />
+          <img src="https://img.clnya.fun/cover/how-to-build-a-blog-0-cover.webp" alt="Obsidian&#43;Hugo建站教程：0-前言" />
         </figure>
         <p>声明：</p>
 <p>细心如你，应该已经发现了，本期的链接，build 变成了 bulid……</p>
@@ -8307,7 +8698,7 @@ $$<p>更新：在修改 MongoDB 数据库之后，链接正常了（</p>
 
       ]]></content:encoded></item><item><title>Spring Festival Greeting：Embracing and Rebirth</title><link>https://chlor.me/happy-spring-festival-2024/</link><pubDate>Fri, 09 Feb 2024 19:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/happy-spring-festival-2024/</guid><category>公告</category><description>除夕快乐！</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/IMG-20240209190000-0.webp" alt="Spring Festival Greeting：Embracing and Rebirth" />
+          <img src="https://img.clnya.fun/cover/happy-spring-festival-2024-cover.webp" alt="Spring Festival Greeting：Embracing and Rebirth" />
         </figure>
         <p>嗨，大家好。</p>
 <p>我目前的坐标是我的家乡。窗外离散地响着噼啪的爆竹声，不时有着绚丽的烟花照亮夜空。</p>
@@ -9157,7 +9548,7 @@ hr {
 
       ]]></content:encoded></item><item><title>2023年度总结</title><link>https://chlor.me/farewell-to-2023/</link><pubDate>Sun, 31 Dec 2023 23:59:59 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/farewell-to-2023/</guid><category>公告</category><description>本文记录了作者在2023年至2024年交替之际的反思和感想。作者首先表达了对跨年的淡然态度，指出生活和时间的连续性，不会因新年到来而自动改变。接着回顾了2023年，称其为个人生命中的高光年份，提到了上半年的模糊记忆、六月的高考、被清华大学录取以及最终选择了计金专业的决定。作者还分享了暑假的完美时光和大学生活的适应过程。文章末尾以一段简单的Go语言代码迎接2024年，表达了对新一年的期许，同时也含蓄地表达了对过去的遗憾以及对未来的希望。</description><content:encoded><![CDATA[
         <figure>
-          <img src="https://img.clnya.fun/IMG-20231231235959-0.webp" alt="2023年度总结" />
+          <img src="https://img.clnya.fun/cover/farewell-to-2023-cover.webp" alt="2023年度总结" />
         </figure>
         <p>转眼间，就到了 2023 的最后一天了。</p>
 <p>和大多数人不一样，我对「跨年」并没有什么概念。今早起来，也没有感受到什么特别的神圣感或者仪式感。该吃吃该喝喝该学学该玩玩，和一年中普通的一天没什么区别。</p>
