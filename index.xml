@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Fri, 21 Feb 2025 01:02:13 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Fri, 21 Feb 2025 05:55:52 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-nieve-cover.webp" alt="理想乡构筑手记（3）：Hello，Nieve" />
         </figure>
@@ -562,7 +562,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3235</span>
+            <span class="tabular-nums">3238</span>
         </div>
 
         
@@ -3948,7 +3948,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3235</span>
+            <span class="tabular-nums">3238</span>
         </div>
 
         
@@ -4017,7 +4017,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7202</span>
+            <span class="tabular-nums">7204</span>
         </div>
 
         
@@ -6622,7 +6622,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1884</span>
+            <span class="tabular-nums">1885</span>
         </div>
 
         
