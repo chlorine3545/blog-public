@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 22 Feb 2025 04:34:11 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 22 Feb 2025 09:28:01 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-nieve-cover.webp" alt="理想乡构筑手记（3）：Hello，Nieve" />
         </figure>
@@ -144,7 +144,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">316</span>
+            <span class="tabular-nums">315</span>
         </div>
 
         
@@ -557,7 +557,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3239</span>
+            <span class="tabular-nums">3241</span>
         </div>
 
         
@@ -569,7 +569,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-19</span>
+            <span class="tabular-nums">2025-02-22</span>
         </div>
     </div>
 </div>
@@ -3879,7 +3879,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3239</span>
+            <span class="tabular-nums">3241</span>
         </div>
 
         
@@ -3891,7 +3891,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-19</span>
+            <span class="tabular-nums">2025-02-22</span>
         </div>
     </div>
 </div>
@@ -3947,7 +3947,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7212</span>
+            <span class="tabular-nums">7213</span>
         </div>
 
         
@@ -4802,7 +4802,7 @@ swup.hooks.on(&quot;page:view&quot;, ()=&gt;init())
 </blockquote>
 <p>嗯，好像懂了，又好像没懂，听君一席话，如听一席话。</p>
 <p>简单来说吧。这个故事要从 1991 年开始讲起。那个时候有一个程序员大神，名叫Phil Zimmermann。PZ 这人呢，是个极其看重隐私的「偏执狂」（注：这个词没有贬义）。为了躲避烦人的监管，他自己写了一个名叫 PGP 的东西。PGP，全称是Pretty Good Privacy，是一个用来给 Email 和各种信息加密的东西。</p>
-<p>这玩意有什么用呢？比方说，你给你的朋友写了一封邮件并且使用 GPG 进行了加密，内容是：</p>
+<p>这玩意有什么用呢？比方说，你给你的朋友写了一封邮件并且使用 PGP 进行了加密，内容是：</p>
 
 
 <blockquote class="my-6 border-l-4 border-border/60 pl-4">
@@ -4818,7 +4818,7 @@ swup.hooks.on(&quot;page:view&quot;, ()=&gt;init())
 <p>但是你拥有「钥匙」的朋友，却能完整地读到你的邮件。这样就保证了隐私的安全。</p>
 <p>那这个功能难道不能破解吗？理论上当然可以，但是难度基本相当于让你一粒一粒捡完现在撒哈拉沙漠的沙子。</p>
 <p>听起来是个好东西，对吧？很可惜，PGP 是个商业软件。</p>
-<p>这就有点坑爹了。所幸，万能的开源社区早就帮我们搓出来了一个完美的替代品，那就是 GNU Privacy Guard，简称 GNUPG 或者 GPG。这中间还有很多困难，但是已经被我们伟大的前辈们一一克服了。咱们这群后辈只要坐享其成就可以了。</p>
+<p>这就有点坑爹了。所幸，万能的开源社区早就帮我们搓出来了一个符合 OpenPGP 标准的完美替代品，那就是 GNU Privacy Guard，简称 GNUPG 或者 GPG。这中间还有很多困难，但是已经被我们伟大的前辈们一一克服了。咱们这群后辈只要坐享其成就可以了。</p>
 <p>GPG 的应用极其广泛，包括但是不限于邮件加密、文件完整性验证等。当然了，今天我们只讲 Git commit signing。</p>
 <h2 id="安装-gpg">安装 GPG</h2>
 <p>OK，废话讲完了，咱们正式开始配置 GPG。</p>
@@ -6526,7 +6526,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1889</span>
+            <span class="tabular-nums">1890</span>
         </div>
 
         
