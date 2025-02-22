@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Fri, 21 Feb 2025 08:42:20 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 22 Feb 2025 00:53:30 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-nieve-cover.webp" alt="理想乡构筑手记（3）：Hello，Nieve" />
         </figure>
@@ -7,8 +7,8 @@
 <p>Nieve 这个名字，也是很久以前就想好的。这个词是西班牙语，意思是「雪」。</p>
 <h2 id="tl--dr">TL ; DR</h2>
 <ul>
-<li>在 Obsidian 写作时直接粘贴图片，使用 Image Converter 插件自动压缩和重命名</li>
-<li>使用 Shell Commands 的自定义脚本上传博客图片到又拍云和 Cloudflare R2</li>
+<li>在 Obsidian 写作时粘贴图片前使用 Shell Commands 的自定义脚本压缩图片为 AVIF，并获取压缩后链接。</li>
+<li>使用 Shell Commands 的另一个自定义脚本上传博客图片到又拍云和 Cloudflare R2</li>
 <li>又拍云作为主图床，Cloudflare R2 作为对外的图片服务和备份图床</li>
 </ul>
 <h2 id="前言">前言</h2>
@@ -145,7 +145,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">315</span>
+            <span class="tabular-nums">316</span>
         </div>
 
         
@@ -207,7 +207,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">392</span>
+            <span class="tabular-nums">391</span>
         </div>
 
         
@@ -615,7 +615,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 <p>事务性邮件提供商也很多，例如 SendGrid，Mailgun，AWS SES 等。小氯用的是 <a href="https://resend.com">Resend</a> 。Resend 提供每天 100 封的免费额度，大体来说还算够用（<del>够用：指用量不到 5 %</del>）。</p>
 <p>Resend 的配置没有太多好说的，注册账户，配置 DNS 记录再创建 API Key 即可。对于 Twikoo 来说，其使用的 Pushoo 没有对 Resend 的原生支持，因此需要手动配置各项信息。</p>
 <ul>
-<li><code>SENDER_EMAIL</code>： <code>username@your.domain</code></li>
+<li><code>SENDER_EMAIL</code>： <code>username@yourdomain.tld</code></li>
 <li><code>SMTP_SERVICE</code>：留空</li>
 <li><code>SMTP_HOST</code>：<code>smtp.resend.com</code></li>
 <li><code>SMTP_PORT</code>：465</li>
@@ -4017,7 +4017,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7206</span>
+            <span class="tabular-nums">7211</span>
         </div>
 
         
@@ -6622,7 +6622,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1886</span>
+            <span class="tabular-nums">1889</span>
         </div>
 
         
