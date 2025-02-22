@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 22 Feb 2025 00:53:30 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 22 Feb 2025 04:34:11 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>理想乡构筑手记（3）：Hello，Nieve</title><link>https://chlor.me/hello-nieve/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/hello-nieve/</guid><category>博客</category><category>图床</category><category>Obsidian</category><description>本文介绍了作者构建名为 Nieve 的图片服务系统的过程。由于原先使用的缤纷云图床出现加载问题，博主决定迁移至又拍云作为主图床，并以 Cloudflare R2 作为备份。迁移过程中，使用了 `rclone` 工具进行图片备份和上传。为了优化 Obsidian 中的写作体验，博主弃用了原先的 Image Converter 插件，转而利用 Shell Commands 插件调用自定义脚本。这些脚本实现了图片粘贴时的自动压缩（使用 `cavif`）、重命名、相对路径计算，以及发布文章时查找图片、上传至又拍云（使用官方工具 `upx`）并替换链接的功能。整个过程涉及了多种工具，包括 Python 脚本、AppleScript、`ripgrep` 等，最终构建了一个自动化、高效的图片处理与发布流程。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/hello-nieve-cover.webp" alt="理想乡构筑手记（3）：Hello，Nieve" />
         </figure>
@@ -110,17 +110,16 @@
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/xRyul/obsidian-image-converter" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>xRyul/obsidian-image-converter</span>
         </a>
@@ -128,12 +127,12 @@
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         ⚡️ Convert, compress, resize, annotate, markup, draw, crop, rotate, flip, align images directly in Obsidian. Drag-resize, rename with variables, batch process. WEBP, JPG, PNG, HEIC, TIF.
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -172,17 +171,16 @@
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/Taitava/obsidian-shellcommands" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>Taitava/obsidian-shellcommands</span>
         </a>
@@ -190,12 +188,12 @@
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         Execute system commands via hotkeys or command palette in Obsidian (https://obsidian.md). Some automated events are also supported, and execution via URI links.
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -305,8 +303,7 @@ cargo install cavif
 <p>这个脚本比较简单，使用 ripgrep 查找图片，再通过文件的路径构建出图片路径，然后一个循环把图片送上去即可。小氯用了 Cloudflare R2 测试成功后就放心地把脚本归档了。直到小氯写[[理想乡构筑手记（2）：Hello，Céfiro|上一篇文章]]，希望调用脚本上传图片时，才发现：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>你根本没在又拍云！你在哪呢？</p>
 </blockquote>
 <p>图片并没有被上传到又拍云。于是，小氯开始了兵荒马乱的排查过程，最终在单独测试 <code>rclone copyto</code> 时发现了一大堆奇奇怪怪的报错，不是超时就是缺少 Key 或者各种万泉部诗人的奇怪报错。这可能是因为牢拍的存储空间不完全符合 AWS S3 的标准，所以说 rclone 没办法很好地兼容。</p>
@@ -320,17 +317,16 @@ cargo install cavif
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/upyun/upx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>upyun/upx</span>
         </a>
@@ -338,12 +334,12 @@ cargo install cavif
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         UPYUN Storage Command Tool
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -527,17 +523,16 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/dreamhunter2333/cloudflare_temp_email" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>dreamhunter2333/cloudflare_temp_email</span>
         </a>
@@ -545,12 +540,12 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         CloudFlare free temp domain email 免费收发 临时域名邮箱 支持附件 IMAP SMTP TelegramBot
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -562,7 +557,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3238</span>
+            <span class="tabular-nums">3239</span>
         </div>
 
         
@@ -697,15 +692,13 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 <p>Codeberg 的原话是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Luckily Codeberg is in a unique position to reconnect the Gitea community in one place, independent and out of control of Gitea Ltd. And so we did.</p>
 </blockquote>
 <p>有时候不得不感叹，历史不会重复，却永远押着同样的韵脚。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>彼时彼刻，恰如此时此刻。</p>
 </blockquote>
 <p>后面的故事我们就不详细说了，Forgejo 当然延续了下来，并且开始积极地开发新功能、修复旧问题。如今的 Forgejo 虽然还没办法取代 Gitea 的地位，但是也已经有了一批忠实的追随者和热闹的社区，也凭借自己「永远自由」的承诺，成为了 FOSS Forge 的扛旗者之一。</p>
@@ -817,24 +810,21 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>那么既然考完了，报仇雪恨般的摆烂自然是必不可少的。当然，小氯的摆烂不是打游戏或者刷一天的视频，而是折腾自己喜欢的东西，例如小氯心爱的园子，或者是（后续）学一学 Rust、Python，或者是机器学习和统计学。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>你这哪叫什么摆烂？</p>
 </blockquote>
 <p>你说得对。小氯不知道，节奏不快的自我提升什么时候都成了摆烂了。</p>
 <p>好的，回来。既然有了充足的时间，那么园子的一周年庆典就要提上日程了。小氯打算开一个新系列，仔细说一说小氯装修园子的过程，以及一些有的没的的感想。由于没有找到什么好的名字，就随便起了一个「理想乡构筑手记」。构筑和手记都明显，而这里的「理想乡」，来自于园子英文名的直译。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Chlorine&rsquo;s Eutopia</p>
 </blockquote>
 <p>本期是「 <a href="/series/%E7%90%86%E6%83%B3%E4%B9%A1%E6%9E%84%E7%AD%91%E6%89%8B%E8%AE%B0">理想乡构筑手记</a> 」的第一篇，主题是园子的新主题——「Hermeneutics」（中文直译：解释学 / 诠释学）。</p>
 <p>这篇文章还可以有一个更加学术化的名字：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>基于 Cursor 的野心开发模式——以 Hugo 主题为例</p>
 </blockquote>
 <p>不过就其详细程度而言，其远远担不起这个名字。</p>
@@ -887,8 +877,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>下面的解释引自 Wikipedia：<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>解释学（英语：hermeneutics），又称诠释学、阐释学，是关于文本解释的理论。在中世纪欧洲，主要是对于《圣经》的解释。18世纪施莱尔马赫把解释学扩展到解释文本意义和文化意义的一般规则的理论。</p>
 <p>广义的解释为意义之理解(understanding)或诠释(interpretation)的理论或哲学。由于意义经常有许多歧义，须透过理解诠释方能把握全部涵意，诠释学即是探究如何形成理解及如何实践理解之科学理论。</p>
 </blockquote>
@@ -896,8 +885,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>OK，事情是这样的：小氯在期末季的时候偶然听到了一首歌：《<a href="https://www.bilibili.com/video/BV18S4y1v7gV">解释学 Hermeneutics</a>》:</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>If it comes first, they call that true love</p>
 <p>If it comes second, they call that infatuation</p>
 <p>They call that memory when it is over</p>
@@ -979,8 +967,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>这个词实际上出自小氯常用的个签：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Como el viento.</p>
 </blockquote>
 <p>这句话允许自由解读。</p>
@@ -1049,8 +1036,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>其实说实话，尽管 Follow 在博友圈中的声望相当高，其水平也确实担得起这声望，但是<strong>小氯并不喜欢 Follow 的社交元素</strong>。严格来说，对于这类软件，小氯不喜欢任何形式的社交元素。原因无他，就如我在<a href="/weekly-11/">第十一期周报</a>里面说的：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>小氯只希望安安静静地读点东西，没有任何人能闯进我的书房。</p>
 </blockquote>
 <p>Tauriverse 还有很多有趣的应用，如果感兴趣，去 <a href="https://github.com/tauri-apps/awesome-tauri">Awesome Tauri</a> 自己翻去吧。</p>
@@ -1066,17 +1052,16 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/chlorine3545/gh-proxy-deno" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>chlorine3545/gh-proxy-deno</span>
         </a>
@@ -1084,12 +1069,12 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         一个 GitHub Release 和 Archive 等的加速项目，可部署于 Deno 上。
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -1141,8 +1126,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>作者的原话：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Integrations with non-free services are not allowed, but if fully open-source implementations of S3 object storage exist, then we can support them.</p>
 </blockquote>
 <p>……所以，S3 现在不应该说只是一个协议（事实标准）吗？能兼容 MinIO，就不能兼容 Cloudflare R2 或者 AWS S3（这里的能指的是事实上的可行性）？难道我们连协议也要「纯正的自由」吗？至少现在，小氯没办法理解这一点。</p>
@@ -1173,8 +1157,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>小氯最近在听一首歌，名叫《Chinggis Khaan》（<del>元神，启动！</del>）。正好小氯最近在看西里尔字母（注：西里尔是蒙文的拼法之一），于是就试着<del>拿着字典和 AI</del>翻译了一下其中的一段。不过说实话，这个版本的歌词很奇怪，比如 арал（aral）是「岛屿」的意思，但是草原上显然不会有岛屿，因此只好理解为是一个不太恰当的比喻义。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Хөх тэнгэрээс заясан</p>
 <p>沐浴长生天之祝愿</p>
 <p>Хөдөө аралд мэндэлсэн</p>
@@ -1232,8 +1215,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>而且，小氯也不希望过多地局限各位老友对小氯虚拟形象的印象。引用我在<a href="/weekly-10/">回答 Dayu 的博客问卷时</a>的话：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>你可以把小氯当成现实中的清华大学学生，也可以当成一只很萌的元素娘，也可以当成一个被捏成这样的人工智能，或者干脆就当成一个会讲故事的原子也行——随意。</p>
 </blockquote>
 <p>「——那你侧边栏放的那个是什么？」</p>
@@ -1268,8 +1250,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>事情的起因是，小氯闲着没事翻自己的 Tutamail 的时候，突然看到了垃圾邮件里面有一封奇怪的邮件。好奇心驱使着我点开看了下，结果是开幕雷击：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Good day.</p>
 <p>Your system has been hacked with a Trojan virus.</p>
 </blockquote>
@@ -1291,8 +1272,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <h2 id="hellolineageos">Hello，LineageOS</h2>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>来来来！全体目光向我看齐！看我看我！我宣布个事！我会刷机了！</p>
 </blockquote>
 <p>没错，就在今天，小氯完成了人生中第一次刷机 ヾ(≧∇≦*)ゝ</p>
@@ -1436,8 +1416,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>其中一个比较重要的点是：域名。前几天，<a href="https://i.duckxu.com">DuckXu</a> 老友在评论中提到：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>感觉这个新域名比 yoghurtlee 更能突出【小氯】这个形象，我现在在备忘录里看到 yoghurtlee. com 经常反应不过来是谁（</p>
 </blockquote>
 <p>小氯对此深以为然。那 <code>yoghurtlee.com</code> 这个有一点奇怪的域名是怎么来的呢？</p>
@@ -1550,8 +1529,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>园子一向只有 Hello 系列，从未有过 Farewell 系列，也不会有这个系列。因为小氯从不喜欢告别，虽然我们<a href="/weekly-1/">总要启程</a>，但如果不是迫不得已，谁会愿意分开呢。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>人生不相见，动如参与商。</p>
 <p>今夕复何夕，共此灯烛光。</p>
 </blockquote>
@@ -1572,8 +1550,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>Omnivore 的本意是「杂食者」，对于一个稍后读软件而言，这是个很好的名字。Omnivore 的 slogan 是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Read-it-later for serious readers.</p>
 </blockquote>
 <p>我最初是从公众号「维客笔记」了解到这一应用的。当时小氯酱刚刚接触 Obsidian 和 PKM 不久，酷爱折腾各种<del>花里胡哨的</del>工作流，而 Omnivore 免费、开源、跨平台、大陆可用、支持浏览器插件、支持和 Obsidian 联动的特性无疑是一连串的王炸。小氯火速注册了 Omnivore，并开始将其作为主力的 Read-It-Later 工具。虽说这一年小氯本身也没存几篇文章，也并没有使用过几次 Omnivore Syncing to Obsidian 的功能，在实用层面对 Omnivore 没什么依赖，但是潜意识中，小氯早就把 Omnivore 当成了自己「理想工作流」的一部分，甚至是一个理想的信息聚合系统的「原型机」。</p>
@@ -1587,15 +1564,13 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>当时小氯的反应大概是和 GitHub Issue 上的第一条的标题一样：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Seriously?</p>
 </blockquote>
 <p>然后小氯去了 Omnivore 的官方博客，看到了他们<a href="https://blog.omnivore.app/p/omnivore-is-joining-elevenlabs">刚发布不久的文章</a>，最终确认这是真的。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>小氯小氯，你在这内心独白了半天，到底发生什么了？</p>
 </blockquote>
 <p>简单来说，就是：</p>
@@ -1606,8 +1581,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>或者再说得直白（尽管不算很准确）点：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Omnivore Team 把自己的产品卖了。</p>
 </blockquote>
 <p>issue 里面，大家的反应不一。有人嘲讽，有人指责，更多的是遗憾和祝福，抑或是非常实用地开始讨论和推荐替代品。</p>
@@ -1623,8 +1597,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>或许小氯应该庆幸，Omnivore 在小氯的工作流中还不是一个完全不可或缺的角色，实际上小氯将 Omnivore 整合到 Obsidian 的行为也并不常用。这可能也是在<a href="/obsidian-and-open-source/">之前那篇文章</a>中提到的那个巨大的线程中，一位网友的一个观点：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>对于无法用最确切的手段保证持续开发的开源项目要保持最低限度的信任，因为你不知道它们什么时候就会停止开发，而你大部分时候都无能为力。</p>
 </blockquote>
 <p>那么小氯日后会用什么呢？或许是 Shiori，或许是 Wallabag，或许是 Hoarder，或许是 Linkwarden，或许是 Readeck，或许是 Obsidian Web Clipper，或许是别的什么优秀的开源项目。然而，这已经不是小氯当前要考虑的问题了。</p>
@@ -1635,8 +1608,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>就这样吧，衷心希望这个标头不要有第二篇。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>十觞亦不醉，感子故意长。</p>
 <p>明日隔山岳，世事两茫茫。</p>
 </blockquote>
@@ -1655,24 +1627,21 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 <p>上周日下午和晚上小氯是闲暇的。小氯本想摆烂，反正 DDL 还剩六天。不过小氯酱嘴上说着不要（学习），身体却很诚实呢（看了一下午中微的 PPT，并且在晚上写了一道半的题目）（大雾）。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>一晚上就写了一道半？你看这个小氯就是逊啦~</p>
 </blockquote>
 <p>你说得对，但是中微的一道题有十个问，而且是全英文书写的作业（标准微笑）。</p>
 <p>然后第二天起来，趁着去上<del>寄膝盖</del>计系概之前，写了一道；然后在下午上课时勇敢地扔下了电脑而带着 iPad，于是又写了不少，晚上再补一补剩下的部分，终于是把作业交上去了，没有成为 DDL 战神。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>中级微观经济学，你看你领的内几个贵物，还有你，人不人鬼不鬼滴，就你还要抓我嗷？在学堂路，别让我看到你，看到你效用函数必须给你拽掉，必须打你脸！我告诉你啊，中微。到学堂路了，指定没有你好果汁吃啊，你记住了啊。
 ——《计金往事》（大二上）</p>
 </blockquote>
 <p>于是小氯星期二就光明正大地开摆了，写完了积攒很久的<a href="/obsidian-and-open-source/">超级长文</a>。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我们之所以今天能够共同摆烂，都是因为最初做出最困难的决断，带领我们走向胜利的，小氯同学的明断。来，我们祝小氯同学健康，干杯吧！来，我来致辞：祝小氯同学，健康常胜！</p>
 </blockquote>
 <h2 id="新域名">新域名</h2>
@@ -1731,8 +1700,7 @@ public:
 <p>当时小氯想到了一句话：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>空不是无，空是一种存在，你得用空这种存在填满自己。</p>
 </blockquote>
 <p>这句话是《三体》中，长老对魏成说的。不知道这能否算是比较准确的佛教思想，但是至少是比较接近的。</p>
@@ -1744,23 +1712,20 @@ public:
 <p>而且，如果离开语境，含义不仅会发生弱化和变形，甚至有可能完全扭曲，乃至形成一种刻板印象，影响公众对作品整体的判断。再举个例子吧。东坡有句流传甚广的词，大概是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>且将新火试新茶，诗酒趁年华。</p>
 </blockquote>
 <p>听着真是无比的浪漫、雅致而自由。</p>
 <p>可是这句词真的是这样吗？不用多，我们稍微多看一下前面的一句：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>休对故人思故国，且将新火试新茶，诗酒趁年华。</p>
 </blockquote>
 <p>再多一点：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>寒食后，酒醒却咨嗟。休对故人思故国，且将新火试新茶。诗酒趁年华。</p>
 </blockquote>
 <p>现在还觉得这首词很浪漫雅致且自由吗？</p>
@@ -1768,8 +1733,7 @@ public:
 <p>以及，如果只是反反复复地赏玩和传播少数乃至一个句子，对作品中其他同样优秀的句子其实也有点不公平。还是拿上面那首《望江南》为例。那首词还有上阕：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>春未老，风细柳斜斜。试上超然台上看，半壕春水一城花。烟雨暗千家。</p>
 </blockquote>
 <p>小氯当年在读这首词时，其实相当喜欢上阕，反而可能是因为下阕听得太多了，产生了一些逆反心理，而对下阕并不感兴趣。</p>
@@ -1822,8 +1786,7 @@ public:
 <p>写到这，小氯有点疲惫，不自觉地抬起头活动了下颈部，然后视线就撞上了书架上摆着的全家福——那是高三那年过年时拍的。我们穿着喜庆的红色衣服，在明亮的灯光下，笑得无比灿烂和幸福。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>若世上有神明，我向您祈愿，愿我们阖家团圆，平安喜乐，天长地久。</p>
 </blockquote>
 <div class="footnotes" role="doc-endnotes">
@@ -1855,8 +1818,7 @@ public:
 <p>同时，很显然，Obsidian 团队即便再有耐心，面对这么多讨论也会不胜其烦。<a href="https://forum.obsidian.md/u/ryanjamurphy">@ryanjamurphy</a> 甚至直接来了一句：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Logseq is open source. Bye!</p>
 </blockquote>
 <p>能看出来是真的很不想继续说了。也确实，小氯这个闲人看了这么多回复都感觉很累了，何况是还有开发工作的 Obsidian 团队呢。</p>
@@ -1910,8 +1872,7 @@ public:
 <p>一个非常常见的策略是：承诺在无法继续维护时开源。Erica 似乎也在这方面有一定的兴趣，其<a href="https://forum.obsidian.md/t/open-sourcing-of-obsidian/1515/11">原文</a>是：<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>In summary, I think having a privacy statement and a pledge to open up code access if Obsidian discontinues are good ideas, but open sourcing does not make sense given the current circumstances.</p>
 </blockquote>
 <p>对于最后一个问题……这是个非常严肃的事，尽管现在 Obsidian 的开发团队已经有了<a href="https://obsidian.md/about">九个人</a>（准确来说，八个人加一只猫），但是即使对于一个上百人的大团队，如果其主理人真的很不幸出了什么意外，除非这个团队是非中心化的，否则这真的是个非常棘手的问题。在这种情况下，开源至少不会造成什么损失，毕竟多几个对项目有一定了解的热心社区成员（可以肯定其存在）总归对恢复开放不会有任何负面影响。</p>
@@ -1921,8 +1882,7 @@ public:
 <p>此外，在 thread 中有这么一条回复，提到了另一个广受赞誉的软件—— <a href="https://logseq.com">Logseq</a>。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>for everybody that wants an open source obsidian, check out logseq:</p>
 <p><a href="https://github.com/logseq/logseq/">https://github.com/logseq/logseq/</a></p>
 <p>I just started migrating. Its still in beta and early, but looks really promising and the community grows well. i love it so far. my guess is that because of them being os and having all the benefits that come with it, that they will surpass obsidian in the near future in popularity (fast dev cycles, pull requests, …)</p>
@@ -1934,8 +1894,7 @@ public:
 <p>很遗憾，这个事情必然存在，只是负担的大小。开源的确不是把代码扔到 GitHub 上就完事了，用 Silver 的话来说：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Doing open source right is a significant effort; it’s not just “putting code on GitHub”. There’s work in documentation, reply to issues, code reviews, help fellow developers get up to speed with the code base, etc. The cost to benefit ratio is very low for our small team of 2, and our plate is already full.</p>
 </blockquote>
 <p>那如果不接受 PR 这类的社区协作呢？这的确可以摆脱许多负担，虽然说可能还会有一些极端的 FOSSist 质问「为什么不接受」，但是小氯相信大部分的开发者都不会揪着这一件事喋喋不休。当然，严格来说，这并不是开源。</p>
@@ -1948,8 +1907,7 @@ public:
 <p>这个问题应当在世界各地都很普遍，只是程度不同。Licat 的原话是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>As a business, it’s really stressful if competitors can take your work, copy it and sell it as their own. Licenses don’t prevent copying, and lawsuits are expensive and time consuming.</p>
 </blockquote>
 <p>这件事确实难办——无论现在窃取 Obsidian 代码的难度如何（小氯没有试过（这是当然的 🤣），所以不能发表意见），开源确实会降低窃取代码的难度。就算是一扇有点单薄和破旧的门，也比没有门要好。所以说，在考虑要不要开源或者是源代码公开时，法务是一个值得考虑的风险，尽管其期望并不如许多人想象的那么高。</p>
@@ -1957,21 +1915,18 @@ public:
 <p>小氯在线程中，不止一次看到这样或者与之相关的论述：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>XXX 软件在业界享有盛誉，无数人都在使用它，但是 XXX 是闭源的。</p>
 </blockquote>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>各位有时间在这里争辩 Obsidian 的开源问题，那为什么不去问问 Google / Apple / MS / …… 他们为什么不开源？</p>
 </blockquote>
 <p>前面一个论调的支持者甚至包括 Licat，其<a href="https://forum.obsidian.md/t/open-sourcing-of-obsidian/1515/39">原文</a>是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>The most popular, well designed, well tested, and well supported consumer applications are almost always close sourced:（下面的例子省略）</p>
 </blockquote>
 <p>我们分别回答两个问题。</p>
@@ -1987,8 +1942,7 @@ public:
 <p>小氯对这个说法持保留态度。引用 Obsidian 官方论坛（引用）的一句评论：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>The code is minified/obfuscated/packed so most keys and words are replaced by numbers, one letter variables, self-calling functions etc (as it should for production code for performence reasons alone). So it would be little help to assess anything :wink: at most it can help debug stuff when things go wrong.</p>
 </blockquote>
 <p>这感觉有点像是现在的 Thino（以前叫 Obsidian Memos），如果你查看其 <code>main.js</code>，你可以看到这个插件到底在做什么；但是如果你希望从 <code>main.js</code> 中获取到一个完整的执行逻辑或者是 UML 图，或者是希望用其进行二次开发，那小氯祝您好运。这种 dist 化的代码虽然是可见的，但是几乎不具备任何人类可读性，这就意味着其很难用于公开和审查，更别提是协作、分叉之类的更进一步的开源开发活动。</p>
@@ -2124,13 +2078,11 @@ public:
 <p>尊敬的旅行者，如果您路过这座小岛，又恰好感到有些疲惫，不妨就在此处驻足停留一会儿吧。去找小氯喝一杯热茶，吃一些点心，听上一两个故事，然后再踏上自己的旅程。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>「柴门闻犬吠，风雪夜归人。」故事、热茶与点心，送给每一位路过的老友。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>把一路的风景，都静静地讲与你听。</p>
 </blockquote>
 <p>——《<a href="/about">关于</a>》</p>
@@ -2165,8 +2117,7 @@ public:
 <p>小氯有很多「喜欢去」的博客，但是「喜欢去」和「喜欢读」并不完全一样。而且，「博客」和「个人网站」和「个人文字作品展示网站」和其他的许多概念并不是一回事。举一个非常有名的例子：阮一峰老师的博客。小氯不清楚阮一峰老师过去的博客是什么样的，但是至少就现在而言，阮老师的博客更像是一本<strong>电子杂志</strong>。你可以从阮老师每周一更的周刊中获取到许多有用的信息，也能感受到阮老师丰富的知识、广博的阅历和编写周刊的用心认真，也偶尔可以从一些字句中窥见阮老师的思想和好恶。<strong>但是，你不能从周刊中看出来，阮老师具体是一个什么样的人</strong>。在小氯看来，这实在是太正常了，因为，就如<a href="https://www.geedea.pro">极客死亡计划</a>的作者 Eltrac 写下的：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我和「极客死亡计划」更像是创作者和作品的关系，作品本身尽管会反映作者的个性，但并不会明目张胆地把自己整个人写满在自己的创作上（就算是畅销书，书页里也只有一句话的作者简介）。所以，关于我是什么样的人，在这里不会多说，如果你感兴趣，我希望你能读一读我写的东西。</p>
 </blockquote>
 <p>偏向「文字作品集」的个人网站，会更多地致力于让你通过文字，了解创作者的思想、见地和情感，创作者本身只是一个（甚至有时候无关紧要的）信源；而偏向「个人博客」的个人网站，会更多地致力于让你了解创作者本身，文字只是其最主要的手段。当然，这些类型的网站并无高下之分，其界限也并不分明——世界上本就不存在什么绝对的分野。</p>
@@ -2186,8 +2137,7 @@ public:
 <p>本诗的创作部分求助了 AI。小氯的文学功底不够，因此如有文法不通、含义怪异、佶屈聱牙之处，烦请各位老友海涵。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Of vivid scenes, I cannot paint,<br>
 nor sing with heaven’s grace.<br>
 So I stitched with bits and numbers,<br>
@@ -2264,8 +2214,7 @@ my voice, the hum of machines.</p>
 <p>去简单看了下 X 的帮助文档，发现可以发工单（我习惯这么叫）。于是我就发了个简单的工单，内容不太正式，大概是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>I&rsquo;ve had my account for some time but recently found it suspended. I just updated my profile some time ago and haven&rsquo;t been active in any other way, so this suspension seems like a mistake. I use a （此处略掉这个工具名称） due to my location, which might have triggered this. Could you please check on this for me? Thanks a lot!</p>
 </blockquote>
 <p>发送过去，等着。</p>
@@ -2285,8 +2234,7 @@ my voice, the hum of machines.</p>
 <p>有时候看一些我曾经写过的文字，会感觉语言风格有些奇怪。就拿前面一句很简单的话来说：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>在高强度坐了一天火车后没有早八实在是一件令人欢喜的事。</p>
 </blockquote>
 <p>这话怎么听都不像是地道的中文表达，带有明显的翻译腔，至少非常不口语化。然而事实是小氯是地道的中文本族语者，没有任何表达能力障碍，更没有用英语写 blog 然后翻译成中文（<del>真有那个水平就好了</del>）。</p>
@@ -2354,8 +2302,7 @@ my voice, the hum of machines.</p>
 <p>从理性的角度看，园子的运营成本（指显性成本，也就是会计成本）只有一个域名的价格（可能还要算上为了保备案的服务器费用，但是这不算是园子的成本，因为没有它园子也能运行，放弃备案就是了），小氯再缺钱也没必要为了这点钱去污染园子的游览体验。就算就算是小氯想污染，就凭园子这点流量，也没有什么商家愿意在这里打广告，就像没人会在鲁滨逊的荒岛上拉横幅一样。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>没那个能力知道吗？——范志毅</p>
 </blockquote>
 <p>从感性的角度看，小氯也不希望园子沾染上这样的气息。世间没有桃源，但是在互联网的海洋里造一个近似的还是能做到的。</p>
@@ -2372,8 +2319,7 @@ my voice, the hum of machines.</p>
 <p>但是小氯觉得，这个问题没那么简单。如果要深挖，这实际上是一个很哲学的问题：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我们为什么要写博客？或者是博客的意义在哪？</p>
 </blockquote>
 <p>这个问题可以写一本书。或许等到园子周年的时候，小氯会专门写篇文章讨论一下吧（<code>画大饼.gif</code>）。</p>
@@ -2428,8 +2374,7 @@ if (element) {
 <p>让我仔细看看。那个 CSS 极长，里面有一大堆的东西，像什么 <code>a[href=&quot;/e/member/register/index.php?tobind=0&amp;groupid=1&quot;]</code>，什么 <code>a[onclick$=&quot;'clicked', 'ad');&quot;]</code>，一堆不可描述的网站，还有一些<del>牢朋友</del>老朋友，比如说 Google 和 Facebook。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Suddenly, at that very instant, I had an epiphany.</p>
 </blockquote>
 <p>既然这个 CSS 费这么大劲把这些东西设置成了不可见，而且这些看起来似乎是广告和恶意链接，那这<strong>会不会是我的广告屏蔽插件？</strong></p>
@@ -2583,15 +2528,13 @@ if (element) {
 <p>然后我就开始动手查阅资料。很遗憾，答案是还没有。但是确实存在一些类似的平台，比如基于 Mastodon 的 <a href="https://pawoo.net">Pawoo</a>。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Pawoo（パウー）は The Social Coop Limited が運営するMastodonのインスタンス（サーバー）です。 「創作活動や自由なコミュニケーションを楽しめる場」として、どなたにも幅広く使っていただけます。</p>
 </blockquote>
 <p>机翻后的版本：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Pawoo 是由 The Social Coop Limited 运营的一个 Mastodon 实例（服务器）。每个人都可以将其作为「享受创意活动和自由交流的场所」。</p>
 </blockquote>
 <p>但是从技术上来说，有 Mastodon 为代表的 ActivityPub、LBRY、Matrix 等优秀的非中心化社区珠玉在前，写一个这样的去中心化（或者联邦化）的平台在技术上并不是不可完成的。在我看来，可能需要认真考虑的就是两件事：海量图片的存储以及约稿的支付事宜。前者可以借助 AVIF 等高效格式和 IPFS 等去中心化存储系统，后者则可以从 Steemit 等已有的社区中获取灵感。毕竟，都用非中心化插画社区了，应该也不会排斥收取一些去中心化代币作为约稿的报酬吧。</p>
@@ -2621,8 +2564,7 @@ if (element) {
 <p>最后，有一句话，送给那些极端自由主义者们：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>In no system that could be rationally defended would the state just do nothing.</p>
 <p>——F.A.Hayek</p>
 </blockquote>
@@ -2676,8 +2618,7 @@ swup.hooks.on('page:view', () =&gt; init());
 <p>最后，心力交瘁之下，我想到了一位大神曾经说的：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>99% 的 JavaScript 问题都可以用 <code>async</code> 和 <code>defer</code> 解决。</p>
 </blockquote>
 <p>这俩货我听过，但是由于不会前端，我不太懂这到底是什么意思。问了下 AI，得知二者都是异步加载的脚本。前者在加载后立即执行，后者则等到 HTML 完全加载后才执行。</p>
@@ -2755,15 +2696,13 @@ swup.hooks.on('page:view', () =&gt; init());
 <p>事情的起因其实是我编辑我的 GitHub Profile i18n 的时候，更改了我的中文 profile。然后我在英语和西语方面遇到了一点麻烦。简单来说，我的 profile 里面有一句：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>你好，我是 Chlorine，来自清华大学。你可以叫我小氯，或者这个名字的任何友好的变体。</p>
 </blockquote>
 <p>如果翻译成「Hello, I&rsquo;m Chlorine &hellip; You can call me Chlorine」，那实在是有点某度（要么是某歌）英语翻译我北的简介的时候的风范了：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Peking University, referred to as Peking University</p>
 </blockquote>
 <p><em>注：现在这个问题已经修复</em></p>
@@ -2899,8 +2838,7 @@ sudo apt upgrade
 <p>在<a href="https://zen-browser.app">他们的官网</a>上，开发者高调地宣称：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Zen is the best way to browse the web.</p>
 </blockquote>
 <p>虽然比不上 Arc 的「改变整个互联网」这么自信，但是这个宣传语也已经够让人眼前一<del>黑</del>亮了。于是我下载了这个浏览器，并将其作为主力使用了一段时间。</p>
@@ -2988,8 +2926,7 @@ volumes:
 <p>越喝我的情绪越不稳定，到最后内心只剩一个想法：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我到底在这干什么？这不就是在浪费生命吗？</p>
 </blockquote>
 <p>没错，完完全全就是浪费生命。把本来可以认认真真写代码，或者去和老友畅谈文事共叙旧谊丰富人生体验，或者只是在紫操走一走吹吹风听听歌的时间花在一场结束后不会对我有任何技能价值或情绪价值的会议上，顺便还会导致我今天睡得不好。</p>
@@ -3104,8 +3041,7 @@ services:
 <p>直到我想起我和娘亲的一段对话：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>——儿子，你回去上学了会想家吗？</p>
 <p>——会啊。</p>
 <p>——那怎么办？</p>
@@ -3114,16 +3050,14 @@ services:
 <p>这款软件不完美，不等于它不能用。既然我还没到「能自己写一个完全满意的工具」的程度，那也只好先从现在能用的资源里挑个最好的。于是我暂时放下了追求完美的念头，继续用我的 Obsidian。我甚至都没完全使用其功能去构建什么工作流，只是用。Apple Notes 和 Memos 这些辅助工具也用，我也没想着去做什么大的整合，一方面做不到，另一方面没必要，「又不是不能用」。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%.
 —— Donald Knuth</p>
 </blockquote>
 <p>以及我很喜欢说的一句话：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>PKM（个人知识管理）的前提，是你有知识。</p>
 </blockquote>
 <h2 id="接一个-pre">接一个 Pre</h2>
@@ -3276,8 +3210,7 @@ grep &quot;Invalid user&quot; $LOGIN_RECORD_FILE | awk '{print $10}' | sort -u &
 <p>这个目录改得我几乎红温。我原本是直接采用 Hugo 的 <code>{{ .Page.TableOfContents }}</code> 模板，但是其样式令人一言难尽。而且可能是因为 Swup 的原因，目录是没办法随着文章同步更新的。于是，在深思熟虑后，我决定暂时将其去掉。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>《fix bug by removing the feature》</p>
 </blockquote>
 <h3 id="公告">公告</h3>
@@ -3345,8 +3278,7 @@ before:absolute before:left-[-16px] before:top-[5.5px]&quot;&gt;
 <h2 id="hello109chan">Hello，109chan</h2>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>《hello 宇宙最新力作》</p>
 </blockquote>
 <h3 id="前言">前言</h3>
@@ -3913,17 +3845,16 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/dreamhunter2333/cloudflare_temp_email" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>dreamhunter2333/cloudflare_temp_email</span>
         </a>
@@ -3931,12 +3862,12 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         CloudFlare free temp domain email 免费收发 临时域名邮箱 支持附件 IMAP SMTP TelegramBot
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -3948,7 +3879,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3238</span>
+            <span class="tabular-nums">3239</span>
         </div>
 
         
@@ -3982,17 +3913,16 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/OwO-Network/DeepLX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>OwO-Network/DeepLX</span>
         </a>
@@ -4000,12 +3930,12 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         Powerful Free DeepL API, No Token Required
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -4017,7 +3947,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7211</span>
+            <span class="tabular-nums">7212</span>
         </div>
 
         
@@ -4102,17 +4032,16 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/LegendLeo/deeplx-serverless" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>LegendLeo/deeplx-serverless</span>
         </a>
@@ -4120,12 +4049,12 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         DeepLX Free API for Serverless
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -4162,17 +4091,16 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/chlorine3545/deeplx-faas" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>chlorine3545/deeplx-faas</span>
         </a>
@@ -4180,12 +4108,12 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         可在 Vercel/Netlify 部署的 DeepLX API。DeepLX Free API for FaaS like Vercel and Netlify.
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -4312,15 +4240,13 @@ sudo ufw allow 114514
 <p>之前<a href="https://dusays.com">杜老师</a>曾经在评论区问：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>才注意到，境外平台也能做备案吗？</p>
 </blockquote>
 <p>我回复说：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>其实是不能的，但是当时用优惠券白嫖了一台境内的服务器，所以就可以拿来备案了</p>
 </blockquote>
 <p>颇有些扬扬自得。</p>
@@ -4374,8 +4300,7 @@ sudo ufw allow 114514
 <p>起因是我看到了<a href="https://www.wikimoe.com">广树大佬</a>和<a href="https://www.chitudexiaozhi.com/">小智大佬</a>的友链页面，感觉很有意思。这个友链页面叫作「女子寮」（中文：女生宿舍）。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>更正：事实上应该是从广树大佬的友链一路看过去的，感谢广树大佬的更正 OωO</p>
 </blockquote>
 <p>嗯，友链嘛，不就是赛博邻居吗？很合理啊（只是我很好奇，这样男生还能申请友链吗？）。</p>
@@ -4395,8 +4320,7 @@ sudo ufw allow 114514
 <p>然后我在高铁上花了一点时间，写了一个新的友链界面须知。由于当时的精神状态也不是很健康，偶尔也会有一些《不是那么合理》的句子，比方说：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>请勿将电动车电池、集束炸弹、氢氧化钠、火星、混凝土搅拌机、王水、数据结构、沈阳大街、3-甲基吲哚、钋 210、某些互联网大厂、蘑菇蛋、波尔布特等危险物品带入公寓。</p>
 </blockquote>
 <p>大家可以在紫荆公寓的公示板（<a href="https://www.yoghurtlee.com/links">这里</a>）查看完整的公示内容，另外，也欢迎老友们入住紫荆公寓 OωO</p>
@@ -4630,8 +4554,7 @@ sudo ufw allow 114514
 <p>先做个科普（from Wikipedia）：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>RSS（英文全称：RDF Site Summary 或 Really Simple Syndication），中文译作简易信息聚合，也称聚合内容，是一种消息来源格式规范，用以聚合多个网站更新的内容并自动通知网站订阅者。使用 RSS 后，网站订阅者便无需再手动查看网站是否有新的内容，同时 RSS 可将多个网站更新的内容进行整合，以摘要的形式呈现，有助于订阅者快速获取重要信息，并选择性地点阅查看。</p>
 </blockquote>
 <p>RSS 基于 XML 语言，是一种标准化的数据格式（由于我 OOP 的大作业写的就是 TinyXML2，Java 大作业更是天天用 XML 写布局，我对这个货相对还比较熟悉。简单来说相当于自定义标签和属性的 HTML）。 RSS Feed 文件包含了一系列的 <code>&lt;item&gt;</code> 元素，每个 <code>&lt;item&gt;</code> 代表一篇更新内容。RSS 阅读器可以解析 XML 文件，提取其中的关键信息并展示给用户。</p>
@@ -4652,8 +4575,7 @@ sudo ufw allow 114514
 <p>为什么呢？</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我不到啊！</p>
 </blockquote>
 <p>没错，我还真不怎么知道。大家就姑且认为我精力过剩了吧。反正我现在觉得 RSS 是个蛮好的东西。</p>
@@ -4674,16 +4596,14 @@ sudo ufw allow 114514
 <p>我感觉很有趣，下滑看看评论区，不同的博友们都开开心心地提着自己的见解。我忍不住也打了条应景的评论：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>感觉独立博客做到杜老师这么出色，已经是整个博友圈的共同宝藏了。</p>
 </blockquote>
 <p>是啊，共同的宝藏。就我有限的认识，独立博客的读者许多（甚至可以说是大部分？）也是独立博主，不同的见解、知识、经历和体验以 Hypertext Transfer Protocol 为载体在不同的个体之间流动，形成一个小众、冷清但又热闹的圈子。大家的身份不同、生活不同、喜好不同，但是既然都在做这些事情，那至少是有一部分共鸣的。那么，组成一个汪洋大海中的群岛，平时各自打理，时常互通有无，不好吗？</p>
 <p>这应该也是我开始努力「对外航行」的原因。从「开往」的友链接力项目，到友链的扩列，到开始积极地「走街串巷」，去赛博拜访同样做着独立博客的老友们（老友是我的一个习惯用语，即使我们只认识了一分钟，如果灵魂相通，那也都是 friends that haven&rsquo;t met before）。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我的岛屿之上，荒无人烟。<br>
 我捡拾山石的苔藓，<br>
 焚烧风干的枯枝落叶，<br>
@@ -4877,8 +4797,7 @@ swup.hooks.on(&quot;page:view&quot;, ()=&gt;init())
 <p>以下内容来自 <a href="https://zh.wikipedia.org/wiki/GnuPG">Wikipedia</a>：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>GNU Privacy Guard（GnuPG 或 GPG）是一个密码学软件，用于加密、签名通信内容及管理非对称密码学的密钥。GnuPG 是自由软件，遵循 IETF 订定的 OpenPGP 技术标准设计，并与 PGP 保持兼容。</p>
 </blockquote>
 <p>嗯，好像懂了，又好像没懂，听君一席话，如听一席话。</p>
@@ -4886,15 +4805,13 @@ swup.hooks.on(&quot;page:view&quot;, ()=&gt;init())
 <p>这玩意有什么用呢？比方说，你给你的朋友写了一封邮件并且使用 GPG 进行了加密，内容是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>今天下午天气不错，要不一起去紫荆园吃个饭？听说三楼的酸菜鱼出了新的番茄锅底！</p>
 </blockquote>
 <p>有了加密，即使是你的邮件被截获了，截获者打开一看，由于没有「钥匙」，只能看到里面写的是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>玛卡，巴卡，阿卡，哇卡，米卡，玛卡，呣！ 玛卡， 巴卡，阿巴，雅卡，伊卡，阿卡，噢！ 哈姆，达姆，阿卡嗙，咿呀呦~ 玛卡，巴卡，阿卡，哇卡，米卡，玛卡，呣！</p>
 </blockquote>
 <p>监管者：？（<code>黑人问号.webp</code>）</p>
@@ -4999,8 +4916,7 @@ int main()
 <p>继续。我照着教程的代码一点点敲下来，中间不断地魔改，来适应作业的要求和我自己的审美。随着作业进程的推进，我写得越发得心应手，常常一天更新四五个功能，很多部分实际上已经完全是自己在独立开发了。用我报告的话来说，就是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>从看着什么都没有的用户界面直龇牙，到开始细致地考虑美工和设计；从什么都需要翻 CheatSheet、查教程、问 AI，到能为别人解惑答疑；从「做出来就行」到「做个还行的就行」到「必须得做个好的」</p>
 </blockquote>
 <p>最终，我花了六天左右的时间，完成了这份看起来极其恐怖的作业，以及用心到让人无法直视的报告（上万字，导出为 PDF 整整一百页，这个长度在整个 Java 课程历史上应该可以空前绝后了）。我将最终的产品取名为「衔书」（Xianshu 或 Tsira News）。</p>
@@ -5101,8 +5017,7 @@ int main()
 <p>注：后来看到了 Twikoo 官网的备注：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>连接字符串包含了连接到 MongoDB 数据库的所有信息，一旦泄露会导致评论被任何人添加、修改、删除，并有可能获取你的 SMTP、图床 token 等信息。请妥善记录这一字符串，之后需要填入到 Twikoo 的部署平台里。</p>
 </blockquote>
 <p>好像有点合理，但是又不合理……</p>
@@ -5111,8 +5026,7 @@ int main()
 <p>然后，自然是没有然后啊。MongoDB Compass 啥也导不出来，MongoDB Atlas CLI 倒是一次成功了，但是导出的是空的（我真傻，真的，我早该想到的，前端面板都看不见，MongoDB 怎么可能有有效数据？）。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>事已至此，先吃席吧。——我的微积分助教 PWK 学长</p>
 </blockquote>
 <p>然后我就摆烂了。算了，丢了就丢了吧。大不了从头再来，还可以趁机换个评论系统（此处容我吐槽一下，Twikoo 的加载慢得不像人）。</p>
@@ -5121,8 +5035,7 @@ int main()
 <p>原来，事实上，我的两个云函数共享着同一份数据库。言语已经不能形容我此刻的心情了。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>多中心备份配享太庙！</p>
 </blockquote>
 <h2 id="后续">后续</h2>
@@ -5192,8 +5105,7 @@ int main()
 <h2 id="备案">备案</h2>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>打今儿个起，咱也有了旗籍了！</p>
 </blockquote>
 <p>兜兜转转，备案终于是批下来了。实际上也没用几天，办事效率还是可以的。毕竟我这就是一个个人网站，遵纪守法，态度良好，没有不通过的理由不是（Doge）。</p>
@@ -5218,8 +5130,7 @@ int main()
         </figure>
         
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>《期末考试后的报复式更新》</p>
 </blockquote>
 <p>芜湖，各位老友们好啊，我是 Chlorine。</p>
@@ -5348,8 +5259,7 @@ int main()
 <h3 id="listmonk">Listmonk</h3>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>万物皆可开源。——小氯酱</p>
 </blockquote>
 <p>没错，一个 Newsletter 服务，自托管，免费，开源。</p>
@@ -5367,8 +5277,7 @@ int main()
 <p>什么是 Quail？援引官网的 First Line：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>建立一个会员社区，与你的追随者保持连接，为你的创作筹集资金。</p>
 </blockquote>
 <p>简单来说，和 Substack 有点像，但是对大陆友好，且对 Obsidian 兼容。</p>
@@ -5885,8 +5794,7 @@ cursorSpecialEffects.init()
 <p>这太可怕了。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Stay Dreaming, Stay Lucid.</p>
 </blockquote>
 <p>清醒地痛苦，也比糊涂地幸福要好得多。</p>
@@ -5958,8 +5866,7 @@ cursorSpecialEffects.init()
 <p>这是一句歌词，出自我很喜欢的一首歌——《向告别飞驰吧》。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我躺在忧伤的黄昏</p>
 <p>看光明，正分神</p>
 <p>看每个恍惚的路人</p>
@@ -6002,17 +5909,16 @@ cursorSpecialEffects.init()
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/kkbt0/Hugo-Landscape" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>kkbt0/Hugo-Landscape</span>
         </a>
@@ -6020,12 +5926,12 @@ cursorSpecialEffects.init()
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         Hugo Theme Unocss &#43; Swup
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -6215,8 +6121,7 @@ help:
 <p>搬运 Wiki：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>联邦宇宙（英语：Fediverse，简称Fedi）在英文中是“联邦”（Federation）和“宇宙”（Universe）的混成词。联邦宇宙由一系列自由软件组成，有一组互联的服务器（用户自建或第三方托管），一起提供网络发布（如社交媒体、微博、博客或者网站）或者文件托管功能。虽然各个服务器是独立运行的，且各个实例繁多，内容多样， 但服务器之间可以彼此互通。在不同的服务器（实例）上，用户可以创建不同帐号。这些帐号能够跨越实例边界而通信，因为服务器上运行的软件支持一种或多种遵循开放标准的通信协议。 用户通过联邦宇宙中的帐号，可以发布文本或者其他媒体文件，也可以关注其他用户。在某些情况下，用户可以公布或分享数据（如音频、视频、文本文件等），使其对所有或部分人开放并允许他们共同编辑内容（例如日历和黄页）。</p>
 <p>联邦宇宙的目的是建立在网络社交巨头公司之外， 提供另一种交流方式。与在单一服务器上运行的传统社交网络相比，联邦宇宙的运行方式更开放。 其服务器的分散性，使联邦宇宙更安全可靠。</p>
 </blockquote>
@@ -6587,17 +6492,16 @@ help:
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/saicaca/fuwari" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>saicaca/fuwari</span>
         </a>
@@ -6605,12 +6509,12 @@ help:
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         ✨A static blog template built with Astro. 
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -6650,17 +6554,16 @@ help:
 
 
 
-<div class="plain-link p-6 rounded-xl
-    bg-card/50 dark:bg-card-dark/50 backdrop-blur
-    shadow-md shadow-accent/10 dark:shadow-accent-dark/10
-    ring-1 ring-accent/20 dark:ring-accent-dark/20
-    hover:(ring-accent/30 dark:ring-accent-dark/30
-    shadow-lg shadow-accent/20 dark:shadow-accent-dark/20
-    bg-card/70 dark:bg-card-dark/70
-    transition duration-300)">
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
     <div class="flex items-center justify-between mb-3">
         <a href="https://github.com/kkbt0/Hugo-Landscape" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
-            text-foreground hover:text-primary transition-colors">
+            text-foreground transition-colors plain-link">
             <div class="i-carbon-logo-github w-5 h-5"></div>
             <span>kkbt0/Hugo-Landscape</span>
         </a>
@@ -6668,12 +6571,12 @@ help:
     </div>
 
     
-    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80 dark:text-foreground-dark/80">
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
         Hugo Theme Unocss &#43; Swup
     </p>
     
 
-    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60 dark:text-foreground-dark/60">
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
         
         <div class="inline-flex items-center gap-1.5">
             <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
@@ -6724,8 +6627,7 @@ help:
 <p>我个人非常喜欢这个词。生命如蜉蝣般转瞬即逝，只是历史长河中微不足道的一缕微光。我们所能做的，唯有追寻自我，照亮他人。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Como el viento.</p>
 <p>像风一样。</p>
 </blockquote>
@@ -6765,8 +6667,7 @@ help:
 <p>我们来复习一下 MIT 许可证的内容：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 </blockquote>
 <p>如各位所见，MIT 许可证允许任何人使用、复制、修改、合并、发布、分发、再授权和销售软件副本。<strong>这里的「任何人」，自然也包括 Microsoft。</strong></p>
@@ -6774,8 +6675,7 @@ help:
 <p>下面是微软的一位工程师 <a href="https://github.com/chrisdias">Chris Dias</a> 在 VS Code 源码的 GitHub 仓库中 issue #60 的解释：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Thanks for the interest in this topic and I apologize for not commenting sooner, I’ve been on vacation and just getting through my backlog. Let me try to provide more details behind our thinking here.</p>
 <p>When we set out to open source our code base, we looked for common practices to emulate for our scenario. We wanted to deliver a Microsoft branded product, built on top of an open source code base that the community could explore and contribute to.</p>
 <p>We observed a number of branded products being released under a custom product license, while making the underlying source code available to the community under an open source license. For example, Chrome is built on Chromium, the Oracle JDK is built from OpenJDK, Xamarin Studio is built on MonoDevelop, and JetBrains products are built on top of the IntelliJ platform. Those branded products come with their own custom license terms, but are built on top of a code base that’s been open sourced.</p>
@@ -6791,8 +6691,7 @@ help:
 <p>但是，用户很可能不会愿意被收集数据，尤其是那些极其看重隐私的用户。虽然微软给出了关闭遥测的方法，但是他们也堂而皇之地说：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>The software may collect information about you and your use of the software, and send that to Microsoft. Microsoft may use this information to provide services and improve our products and services. <strong>You may opt-out of many of these scenarios, but not all,</strong> as described in the product documentation located at <a href="https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting">https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting</a>.</p>
 </blockquote>
 <p>那难道我们真要自己从头编译 VS Code 的源码吗？毫无疑问，99%的人是做不到这一点的。</p>
@@ -6801,8 +6700,7 @@ help:
 <p>VSCodium 的官网上如是介绍自己：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>VSCodium is a community-driven, freely-licensed binary distribution of Microsoft’s editor VS Code.</p>
 </blockquote>
 <p>好的，已经把事情说清楚了。</p>
@@ -6848,8 +6746,7 @@ mv ~/vscode-keybindings.json ~/Library/Application\ Support/VSCodium/User/keybin
 <p>这里没有什么很好的方案，推荐的方法就是使用替代品，例如同样受欢迎的 Codeium，以及我带清的几位学长开发的 Fitten code 等。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>更新：是可以使用的，方法见<a href="https://github.com/VSCodium/vscodium/discussions/1487">https://github.com/VSCodium/vscodium/discussions/1487</a></p>
 </blockquote>
 <h2 id="结语">结语</h2>
@@ -6914,8 +6811,7 @@ origin  https://github.com/ohmyzsh/ohmyzsh.git (push)
 <p>最难绷的是，它可以换图标，但是在启动的时候，图标就会换回去。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我去除了大部分的 Wind 的图标，但是我保留了一部分，我觉得保留了一部分 Wind 的图标才知道你用的是 Wind。</p>
 </blockquote>
 <h3 id="tabby">Tabby</h3>
@@ -7083,8 +6979,7 @@ with socketserver.TCPServer((&quot;&quot;, PORT), Handler) as httpd:
 <p>此外，既然校园网只会封端口但是没有 AP 隔离，那么，</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>NAS，启动！</p>
 </blockquote>
 <div class="footnotes" role="doc-endnotes">
@@ -7176,8 +7071,7 @@ int bell(int N)
 <p>当时我就心动了。Pursue，me。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>我不停奔跑，是为了追逐当年那个被寄予厚望的我。</p>
 </blockquote>
 <p>然后我当即决定抢一下。</p>
@@ -7202,22 +7096,19 @@ int bell(int N)
 <p>Cambridge dictionary 对「rime」 的定义是：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Frost (= the thin, white layer of ice that forms when the air temperature is below the freezing point of water, especially outside at night)</p>
 </blockquote>
 <p>简单来说：霜。结合 Rime 后续一些组件的命名，我们可以称其为「清霜」。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>腾蛟起凤，孟学士之词宗；紫电清霜，王将军之武库。</p>
 </blockquote>
 <p><a href="https://rime.im/">Rime 的官方网站</a> 则自我介绍道：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>聪明的输入法懂我心意</p>
 </blockquote>
 <p>严格来说，Rime 并不是输入法，而是「输入算法」或者说是「输入引擎」。它将输入法底层的配置提取出来，并编写为一系列的代码。我们可以通过修改 Rime 的资源库进行多种多样的自定义。这赋予了 Rime 极高的自由度，当然，还有极高的上手难度。</p>
@@ -7239,8 +7130,7 @@ int bell(int N)
 <p>下面才是 Rime 的重头戏。我目前懂得不多，先说几个我弄的。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>在任何调整过后，请点击状态栏-鼠须管图标-重新部署！</p>
 </blockquote>
 <h3 id="照抄">照抄</h3>
@@ -7255,8 +7145,7 @@ int bell(int N)
 <p>由于 Rime 自带进入特定程序切换输入法的功能，因此我们将右边的 shift 置为切换，以备不时之需，例如在 VS Code 中写中文注释。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>注：对于 YAML 的修改，Rime 官方推荐使用 patch，具体见 <a href="https://github.com/rime/home/wiki/CustomizationGuide">CustomizationGuide · rime/home Wiki (github.com)</a>。</p>
 </blockquote>
 <h3 id="自定义短语">自定义短语</h3>
@@ -7388,8 +7277,7 @@ int bell(int N)
 <p>在右下角找到 support，直接把问题扔进去。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Hi, I&rsquo;m currently trying to change my Notion account to an educational one, but unfortunately due to some e-mail network issues or something I couldn&rsquo;t receive the identification code. Is there any other way to finish the identification?</p>
 </blockquote>
 <p>立即就弹出来一个窗口，要求我输入邮箱和学校名称。</p>
@@ -7429,8 +7317,7 @@ int bell(int N)
 <h2 id="前言markdown-中的图片是什么样的">前言：Markdown 中的图片是什么样的？</h2>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯。它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的 XHTML（或者 HTML）文档。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性。</p>
 <p>——Wikipedia</p>
 </blockquote>
@@ -7505,8 +7392,7 @@ int bell(int N)
 <h2 id="这是一个过渡">这是一个过渡</h2>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>图乌片，启一动！</p>
 </blockquote>
 <h2 id="附件文件夹存储">附件文件夹存储</h2>
@@ -7519,8 +7405,7 @@ int bell(int N)
 <p>搬运 Wiki：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>WebP（发音：weppy）是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式。
 ……
 WebP 的设计目标是在减少文件大小的同时，达到和 JPG、PNG、GIF 格式相同的图片质量，并希望借此能够减少图片档在网络上的发送时间。</p>
@@ -7803,8 +7688,7 @@ WebP 的设计目标是在减少文件大小的同时，达到和 JPG、PNG、GI
 <p>这是我最近折腾出来的新玩意。简单来说，将一个本地文件夹作为图床，并且将文件夹使用某种协议向外暴露，使得 Markdown 编辑器能够进行读取。优点是既保留了本地的隐私性，又满足了不同 Markdown 编辑器之间的同步需求；缺点是只能本机访问，需要进行一定的配置才能转化为局域网可访问，要想转化为公开图床则需要很复杂的配置。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>瘟锌锑逝</p>
 <p>此处讨论的不是局域网图床。下面的配置仅限在本机使用，局域网图床的配置可以参考<a href="https://zhuanlan.zhihu.com/p/349707695">这里</a>。</p>
 <p>对于拥有 NAS 或者长时间开机的设备，并且有同步需求的老友来说，局域网图床是一个好选择。</p>
@@ -7828,8 +7712,7 @@ WebP 的设计目标是在减少文件大小的同时，达到和 JPG、PNG、GI
 <p>这个方案实在是太简单了，简单到折腾了一天的本理性人都开始痛惜我的沉没成本。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>瘟锌锑逝</p>
 <ol>
 <li>Windows 上的默认文件路径分隔符是反斜杠，如果路径不对劲，可以同时试一下斜杠、反斜杠、双反斜杠。</li>
@@ -7952,8 +7835,7 @@ if file and allowed_file (file. filename):
 <p>当时我留了一段言：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>后缀的话，其实 .com/. org/. net/. me 都可以。. com 最正规，就是可能带点商业气息（？）如果让我根据内容推荐的话，其实 .org 不错，非盈利性组织的后缀，而且一般比 .com 便宜（确信）
 个人意见，仅供参考 awa</p>
 </blockquote>
@@ -7961,8 +7843,7 @@ if file and allowed_file (file. filename):
 <p>正巧，最近在博主<a href="https://yinji.org/">青山</a>的博客闲逛的时候，发现在他上次换域名的时候的文章中，有一点对域名后缀的看法：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>微信群里大伙在聊 .net 域名，希望能捡个漏。相比于 .com 域名，我其实更喜欢 .net，寓意为“网络”，感觉更符合博客，而 .com 则显得有点商业化。</p>
 </blockquote>
 <p>原文链接：<a href="https://yinji.org/5030.html">Hello，今是昨非！ | 印记 (yinji.org)</a></p>
@@ -8039,8 +7920,7 @@ if file and allowed_file (file. filename):
 <p>短暂懵了一下后，联想到我从 NotionNext 换到 Hugo 的时候，明明没有做任何迁移，我的 now 页面的评论却还在，我瞬间想到了一种可能：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Twikoo 后台的数据是按照文章链接进行对应的，只要链接不变，文章的评论就在，否则就找不到。</p>
 </blockquote>
 <p>那只要能修改 Twikoo 后台的数据，就可以完成迁移了。</p>
@@ -8059,8 +7939,7 @@ if file and allowed_file (file. filename):
 </code></pre>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p><strong>瘟锌锑逝</strong>
 有些教程不会带前面的 <code>./</code>，但是由于我们没有配环境变量，这样会报错。所以我们直接加 <code>./</code>，方便。</p>
 </blockquote>
@@ -8209,8 +8088,7 @@ $$<p>其真实效果应该是：</p>
         <p>各位老友们好，我是 Chlorine。本期继续我们的数字博物馆搭建之旅。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>本期的内容技术性比较强，大家可以不必完全理解，会用即可。我本身对这些概念也不算熟悉。</p>
 </blockquote>
 <h2 id="博客系统">博客系统</h2>
@@ -8351,8 +8229,7 @@ $$<p>其真实效果应该是：</p>
 <p>我们下面会以 Vercel 为例进行讲解。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>如果你想使用 GitHub pages 或者 Gitee pages 来省一个域名的话，那么后续的 Twikoo 评论等推荐使用 Netlify 进行部署。</p>
 </blockquote>
 <h3 id="vercel-部署项目流程">Vercel 部署项目流程</h3>
@@ -8473,8 +8350,7 @@ $$<p>其真实效果应该是：</p>
 </figure></p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>一定一定要把所有 CloudFlare DNS 的那个 CDN（橙色云朵）关掉！</p>
 </blockquote>
 <h3 id="a-记录和-cname-记录">A 记录和 CNAME 记录</h3>
@@ -8507,8 +8383,7 @@ $$<p>其真实效果应该是：</p>
 <p>搬运 <a href="https://zh.wikipedia.org/wiki/Markdown">Wiki</a>：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯。它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的 XHTML（或者 HTML）文档。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性。</p>
 </blockquote>
 <p>说白了，Markdown 就是一种使用特殊记号对文本进行样式标记（给文本赋予特定的样式，例如斜体、粗体等）的语言。</p>
@@ -8680,8 +8555,7 @@ $$<p>更新：在修改 MongoDB 数据库之后，链接正常了（</p>
 <p>下面我会使用“数字博物馆”这个比喻，将搭建博客的每一步都尽可能讲清楚，希望能够给大家带来一些帮助。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>独立博客，启动！</p>
 </blockquote>
 
@@ -8718,8 +8592,7 @@ $$<p>更新：在修改 MongoDB 数据库之后，链接正常了（</p>
 <p>谢谢各位老友，肯陪着小氯，陪着小氯的小站一起成长。新的一年，「Here&rsquo;s to growing together and building something great in the world of open source!」</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>为往圣继绝学！</p>
 <p>Carry Forward the Legacy of Open Wisdom!</p>
 </blockquote>
@@ -8828,16 +8701,14 @@ export default function PostHeader({ post, siteInfo }) {
 <p>本期的主要内容是讲述我更新 MinGW 的痛苦经历，寄术力不高，大佬轻喷。引用一句<a href="https://zhuanlan.zhihu.com/p/137332644">某乎上的话</a>:</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>知识就是这样的，也许一个问题在老鸟看来是一颗土坷垃，但对于初学者却是一座大山。</p>
 </blockquote>
 <h2 id="历史遗留问题">历史遗留问题</h2>
 <p>当年我们在学递归之后，老师布置了一个上机作业，要求原文如下:</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>以汉诺塔源程序为对象，参照 PPT 上关于阶乘示例的递归调用与返回过程的示意图，在集成开发环境中，以单步跟踪方式，打开汇编代码和机器代码显示功能，观察函数调用栈（内存）的变化情况，观察程序执行时“当前待执行机器指令”随着单步执行的变化情况。在发生递归调用时，记录函数实参和形参的地址与内容，记录函数调用结束后的返回点指令地址。</p>
 </blockquote>
 <p>这其实是个简单得离谱的任务，更不用提写上机报告一向是我引以为豪的能力（期末成绩，上机报告部分 99.9 分，扣掉的 0.1 是因为第一篇是用 Obsidian 写的，导出的时候标题没居中）。</p>
@@ -9377,8 +9248,7 @@ hr {
 <p>最近发现了不少有意思的网站，本来打算在周报里提一下就可以了，奈何有点太多了，因此决定单独写一篇。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p><strong>宇宙安全声明</strong></p>
 <p>我所指的“有意思”标准比较个人化，同时对于常用的实用网站和一些适合摸鱼的网站基本没有收录，大家也不必较真什么叫有意思，你杠你对。</p>
 </blockquote>
@@ -9523,8 +9393,7 @@ hr {
 <p>感觉在这点上，博主<a href="https://yinji.org/">青山</a>说得蛮好的：</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>上周没有更新周报，回顾一周，并没有值得记录的事情，而我不想为了写而写，必须是要记录一些对我有意义的内容。这其实也涉及一个话题，我们写博客是为了写我们想记录的内容，还是为了写希望读者阅读的内容？过去我可能是后者，打着“每日一博”的旗号坚持更新，希望获得阅读量、评论和反馈，现在我是前者，希望记录有意义的内容，如果恰巧能让读者也喜欢，不胜荣幸。</p>
 </blockquote>
 <p>原文链接：<a href="https://yinji.org/5195.html">周报 #07 – 铲屎官、内容与外表、新闻女王 | 印记 (yinji.org)</a></p>
@@ -9533,8 +9402,7 @@ hr {
 <p>这个问题的哲学浓度有点超标，不过，忘记在哪听过一个说法：中国古代似乎没有专职的哲学家，因为在中国古代，读哲学是为了让人成为人，而不是成为某种特殊的人。</p>
 
 
-<blockquote class="my-6 border-l-4 border-border/60 dark:border-border-dark/60 pl-4 
-    bg-card/20 dark:bg-card-dark/20">
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>人不一定应当是宗教的，但他一定应当是哲学的。
 —— 冯友兰《中国哲学简史》</p>
 </blockquote>
