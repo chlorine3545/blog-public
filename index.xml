@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 24 Feb 2025 14:58:40 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 24 Feb 2025 15:00:58 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
         <p>各位老友，晚上好。这里是 Chlorine。</p>
 <p>摸鱼了一节计量，终于把这个奇奇怪怪的问题解决了。遂作文以记之。</p>
 <p>小氯之前的 UnoCSS 配置是从还在写 Efímero 的时候继承下来的，或者说直接点就是基本从<a href="https://www.ftls.xyz/">恐咖兵糖</a>大佬那抄下来的。为数不多的改动也就是加了图标导入的 <code>IconifyJSON</code> 类型，以及一些对 ALERT 短代码有好处的预制颜色类。在写 Hermeneutics 的时候，也就图省事，除了一个 <code>IconifyJSON</code> 之外什么都没改。</p>
@@ -1170,7 +1170,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3252</span>
+            <span class="tabular-nums">3253</span>
         </div>
 
         
@@ -4492,7 +4492,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3252</span>
+            <span class="tabular-nums">3253</span>
         </div>
 
         
