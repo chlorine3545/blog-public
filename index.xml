@@ -1,4 +1,165 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 24 Feb 2025 13:20:31 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十五）</title><link>https://chlor.me/weekly-15/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-15/</guid><category>Rime</category><category>Memos</category><category>OpenPGP</category><category>数据安全</category><description>本文是作者周报《岁时录》的第十五期。作者首先说明了周报的更名事宜，随后详述了深夜乘廉价航班返校的经历。面对新学期高达40学分的学业压力，作者通过策略性退课将学分调整至25分左右，着重保留相对轻松的经济金融类课程。技术探索部分涉及输入法升级至白霜拼音方案、从全拼转向小鹤双拼的学习历程，以及重启Memos碎片化记录系统的尝试。在密码学实践方面，作者重构了GPG密钥体系，采用主密钥与功能子密钥分离的架构，并反思了过度工程化带来的时间损耗。针对苹果公司计划引入国内厂商合作的系统级AI功能，作者表达了强烈隐私忧虑，认为本地化加密与开源方案才是可信的技术承诺。全文贯穿对校园生活与技术偏好的双重记录，既呈现了理工科学子的课业重负，也展现了数字原住民在工具选择与隐私保护方面的执着态度。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 24 Feb 2025 14:58:40 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
+        <p>各位老友，晚上好。这里是 Chlorine。</p>
+<p>摸鱼了一节计量，终于把这个奇奇怪怪的问题解决了。遂作文以记之。</p>
+<p>小氯之前的 UnoCSS 配置是从还在写 Efímero 的时候继承下来的，或者说直接点就是基本从<a href="https://www.ftls.xyz/">恐咖兵糖</a>大佬那抄下来的。为数不多的改动也就是加了图标导入的 <code>IconifyJSON</code> 类型，以及一些对 ALERT 短代码有好处的预制颜色类。在写 Hermeneutics 的时候，也就图省事，除了一个 <code>IconifyJSON</code> 之外什么都没改。</p>
+<p>同时，虽然说 npm 包的版本问题就像是飞天面条大神给这个宇宙的报应，但是由于小氯实在是太菜了（用得也实在是太简单了），同时由于小氯喜欢一直保持新版本，所以把 <code>bun update</code> 当成 <code>sudo pacman -Syu</code> 玩几乎是家常便饭，也一直没什么问题。</p>
+<p>然而今天事情不一样了。</p>
+<p>事情大概是：小氯闲着没事 refactor 了一下 AI Summary 的部分，拿 HTML + CSS 写了个比以前的 JS 版本还顺滑的摘要框。心情非常良好的小氯就更新了一下包版本，就在打算 <code>bun run build</code> 之后就交差时，出事了。</p>
+<p>当时的截图小氯没有留下来，具体来说，除了一个：</p>
+<pre><code class="language-txt">(node:33920) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+</code></pre>
+<p>之外，就只有一个「退出码为 1」的提示。这段话显然不是报错的根源，而退出码 1 等于什么都没说。</p>
+<p>按说小氯酱也不是没见过这种场面，加一个参数 debug 一下：</p>
+<pre><code class="language-bash">bun run dev --verbose
+</code></pre>
+<p>很好，这下连退出码为 1 都没有了，降本增效了属于是。</p>
+<p>然后小氯尝试了很多方法，例如手动指定 config file 等，然而不能说是硕果累累吧，至少可以说是一无所获。</p>
+<p>再试一下换个执行方式：</p>
+<pre><code class="language-bash"># 直接使用路径
+./node_modules/.bin/unocss &quot;layouts/**/*.html&quot; -o assets/css/uno.css --watch
+
+# 换一个执行器
+npx run dev
+</code></pre>
+<p>没用。</p>
+<p>既然没有信息，那么检查一下是哪个文件的问题呢？</p>
+<pre><code class="language-bash">#!/usr/bin/env zsh
+
+# 配置区
+TARGET_GLOB=&quot;layouts/**/*.html&quot;
+ERROR_LOG=&quot;unocss_errors.log&quot;
+OUTPUT_CSS=&quot;test.css&quot;
+
+rm -f &quot;$ERROR_LOG&quot;
+
+setopt extended_glob
+setopt null_glob
+
+# 计数器
+total_files=0
+error_files=0
+
+echo &quot;Starting UnoCSS batch processing...&quot;
+echo &quot;----------------------------------&quot;
+
+for file in ${~TARGET_GLOB}; do
+    # 跳过非文件
+    [[ -f &quot;$file&quot; ]] || continue
+
+    ((total_files++))
+
+    echo -n &quot;Processing $file ... &quot;
+
+    # 执行UnoCSS并抑制输出
+    if npx unocss &quot;$file&quot; --out-file &quot;$OUTPUT_CSS&quot; &gt;/dev/null 2&gt;&amp;1; then
+        echo &quot;✅&quot;
+    else
+        echo &quot;❌&quot;
+        echo &quot;$file&quot; &gt;&gt; &quot;$ERROR_LOG&quot;
+        ((error_files++))
+
+        # 保留错误现场
+        mkdir -p error_dumps
+        cp &quot;$file&quot; &quot;error_dumps/$(date +%s)_${file:t}&quot; # 使用 Zsh 的修饰符 :t 获取文件名
+    fi
+done
+
+echo &quot;----------------------------------&quot;
+echo &quot;Processed $total_files files&quot;
+echo &quot;Found $error_files problematic files&quot;
+[[ $error_files -gt 0 ]] &amp;&amp; echo &quot;Error log saved to $ERROR_LOG&quot;
+
+if [[ -f &quot;$ERROR_LOG&quot; ]]; then
+    echo &quot;\nError Summary:&quot;
+    cat &quot;$ERROR_LOG&quot;
+fi
+</code></pre>
+<p>执行。非常地漂亮，全报错了。</p>
+<p>既然得不到任何有效信息，那么就要秉承着「计算机科学是一门玄学」的理念了。</p>
+<p>我们先降级一下。降回 <code>65.4.0</code> 自然是可以解决问题的，但是 <code>65.5.0</code> 就不行了。去翻 UnoCSS 更新日志，没有任何发现。</p>
+<p>按照直觉，下一步我们就该把主意打到 <code>node_modules</code> 上了。清掉缓存，清掉已有模块，重装。小氯还顺便发现 Bun 的 lockfile 变 <code>bun.lock</code> 了，以前是 <code>bun.lockb</code> 来着。不知道为什么。</p>
+<p>然而重装没有任何作用。清除其他包，单独安装，没用。</p>
+<p>那我们做一个最小化的构建试一下：</p>
+<pre><code class="language-bash">echo '&lt;div class=&quot;bg-red-500&quot;&gt;&lt;/div&gt;' | bun run build --stdin
+</code></pre>
+<p>报错。</p>
+<p>坏了，这下不得不认真对待了（</p>
+<p>看来应该是 UnoCSS config 的问题了。之前小氯一直没怀疑这个，因为从没出过问题嘛。<del>但是，以前是以前，现在是现在</del>。</p>
+<p>看一眼 <code>uno.config.ts</code> ……嗯哼？<code>presetUno</code>，deprecated。</p>
+<p>按理说 deprecated 其实一般也不是不能用，但是我们还是更新一下的好。</p>
+<p>换成最新的 <code>presetWind3</code>，问题依然存在。</p>
+<p>会不会是 <code>presetUno</code> 的类名不兼容呢？不太可能。按小氯的经验，不兼容的类名顶多不被识别，不可能导致报错。</p>
+<p>那我们就单独找一下每个部分的问题好了。先开个沙盒鼓捣鼓捣：</p>
+<pre><code class="language-bash">mkdir uno-debug &amp;&amp; codium $_
+bun i unocss
+</code></pre>
+<p>写个极简版的 <code>index.html</code> 和 <code>uno.config.ts</code>：</p>
+<pre><code class="language-html">&lt;div class=&quot;bg-red-500&quot;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="language-ts">import { defineConfig } from 'unocss'
+
+export default defineConfig({
+  rules: [
+    ['m-1', { margin: '1px' }],
+  ],
+})
+</code></pre>
+<p>构建，没问题。这至少说明 UnoCSS 本身没问题（<del>废话</del>）。</p>
+<p>加一个预设：</p>
+<pre><code class="language-ts">import { defineConfig, presetWind3 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind3(),
+  ],
+})
+</code></pre>
+<p>随便找一个 HTML 放进去，构建。成功。</p>
+<p>然后小氯开始一点点地把过去的 config 往回加，加到三个图标包，出事了。去掉两个，只留一个最兼容的 carbon，还是报错。</p>
+<p>看来就是图标部分的问题了。</p>
+<p>这下小氯没办法自己鼓捣了，于是小氯翻开了几乎从没有翻开过的 UnoCSS 文档（</p>
+<p>然后在图标部分找到了官方案例：</p>
+<pre><code class="language-ts">import presetIcons from '@unocss/preset-icons/browser'
+
+export default defineConfig({
+  presets: [
+    presetIcons({
+      collections: {
+        carbon: () =&gt; import('@iconify-json/carbon/icons.json').then(i =&gt; i.default),
+        mdi: () =&gt; import('@iconify-json/mdi/icons.json').then(i =&gt; i.default),
+        logos: () =&gt; import('@iconify-json/logos/icons.json').then(i =&gt; i.default),
+      }
+    })
+  ]
+})
+</code></pre>
+<p>好吧，我改。</p>
+<p>结果出现了错误：</p>
+<pre><code class="language-txt">Failed to load custom icon &quot;screen&quot; in &quot;carbon&quot;: TypeError [ERR_IMPORT_ATTRIBUTE_MISSING]: Module &quot;file:///Users/chlorine/Dev/Frontend/hermeneutics/node_modules/@iconify-json/carbon/icons.json&quot; needs an import attribute of &quot;type: json&quot;
+</code></pre>
+<p>好吧好吧，我加上还不行吗……</p>
+<pre><code class="language-ts">carbon: () =&gt; import('@iconify-json/carbon/icons.json', { assert: { type: 'json' } }).then(i =&gt; i.default),
+</code></pre>
+<p>然而并没有用。</p>
+<p>邪了门了（小氯の疑惑）。</p>
+<p>再回去看文档……</p>
+
+
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
+    <p>In <code>Node.js</code> the preset will search for the installed iconify dataset automatically, so you don&rsquo;t need to register the <code>iconify</code> collections.</p>
+</blockquote>
+<p>Bun 和 Node 应该也差不多，那把 collections 都去了试试……</p>
+<p>正常了。</p>
+<p>……你人还怪好的嘞。</p>
+<p>下面把 mdi 和 simple icons 加回去吧……等会，我 simple icons 呢？我那么大一包 simple icons 呢？</p>
+<p>再回去看文档。Icons 其实就是小氯常用的 <a href="https://icones.js.org/">Icônes</a> 里面的那些，那咱们再去看看吧。</p>
+<p>……哦，原来人家叫 <code>i-simple-icons-xxxx</code>，不叫 <code>i-simple-xxxx</code>。这个别名是之前的写法规定的。</p>
+<p>问题解决。</p>
+<hr>
+<p>总结一下，就是过去不规范的 <code>presetIcons</code> 语法和 UnoCSS 的最新标准不兼容，导致 UnoCSS 报错。至于为什么没有报错信息……小氯也不知道哦。</p>
+
+      ]]></content:encoded></item><item><title>岁时录（十五）</title><link>https://chlor.me/weekly-15/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-15/</guid><category>Rime</category><category>Memos</category><category>OpenPGP</category><category>数据安全</category><description>本文是作者周报《岁时录》的第十五期。作者首先说明了周报的更名事宜，随后详述了深夜乘廉价航班返校的经历。面对新学期高达40学分的学业压力，作者通过策略性退课将学分调整至25分左右，着重保留相对轻松的经济金融类课程。技术探索部分涉及输入法升级至白霜拼音方案、从全拼转向小鹤双拼的学习历程，以及重启Memos碎片化记录系统的尝试。在密码学实践方面，作者重构了GPG密钥体系，采用主密钥与功能子密钥分离的架构，并反思了过度工程化带来的时间损耗。针对苹果公司计划引入国内厂商合作的系统级AI功能，作者表达了强烈隐私忧虑，认为本地化加密与开源方案才是可信的技术承诺。全文贯穿对校园生活与技术偏好的双重记录，既呈现了理工科学子的课业重负，也展现了数字原住民在工具选择与隐私保护方面的执着态度。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-15-cover.webp" alt="岁时录（十五）" />
         </figure>
@@ -92,7 +253,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10761</span>
+            <span class="tabular-nums">10762</span>
         </div>
 
         
@@ -1009,7 +1170,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3250</span>
+            <span class="tabular-nums">3252</span>
         </div>
 
         
@@ -4331,7 +4492,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3250</span>
+            <span class="tabular-nums">3252</span>
         </div>
 
         
@@ -4399,7 +4560,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7224</span>
+            <span class="tabular-nums">7223</span>
         </div>
 
         
@@ -6978,7 +7139,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1909</span>
+            <span class="tabular-nums">1911</span>
         </div>
 
         
