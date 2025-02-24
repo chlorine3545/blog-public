@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sun, 23 Feb 2025 15:04:07 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十五）</title><link>https://chlor.me/weekly-15/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-15/</guid><category>Rime</category><category>Memos</category><category>OpenPGP</category><category>数据安全</category><description>本文是作者周报《岁时录》的第十五期。作者首先说明了周报的更名事宜，随后详述了深夜乘廉价航班返校的经历。面对新学期高达40学分的学业压力，作者通过策略性退课将学分调整至25分左右，着重保留相对轻松的经济金融类课程。技术探索部分涉及输入法升级至白霜拼音方案、从全拼转向小鹤双拼的学习历程，以及重启Memos碎片化记录系统的尝试。在密码学实践方面，作者重构了GPG密钥体系，采用主密钥与功能子密钥分离的架构，并反思了过度工程化带来的时间损耗。针对苹果公司计划引入国内厂商合作的系统级AI功能，作者表达了强烈隐私忧虑，认为本地化加密与开源方案才是可信的技术承诺。全文贯穿对校园生活与技术偏好的双重记录，既呈现了理工科学子的课业重负，也展现了数字原住民在工具选择与隐私保护方面的执着态度。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 24 Feb 2025 03:04:11 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十五）</title><link>https://chlor.me/weekly-15/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-15/</guid><category>Rime</category><category>Memos</category><category>OpenPGP</category><category>数据安全</category><description>本文是作者周报《岁时录》的第十五期。作者首先说明了周报的更名事宜，随后详述了深夜乘廉价航班返校的经历。面对新学期高达40学分的学业压力，作者通过策略性退课将学分调整至25分左右，着重保留相对轻松的经济金融类课程。技术探索部分涉及输入法升级至白霜拼音方案、从全拼转向小鹤双拼的学习历程，以及重启Memos碎片化记录系统的尝试。在密码学实践方面，作者重构了GPG密钥体系，采用主密钥与功能子密钥分离的架构，并反思了过度工程化带来的时间损耗。针对苹果公司计划引入国内厂商合作的系统级AI功能，作者表达了强烈隐私忧虑，认为本地化加密与开源方案才是可信的技术承诺。全文贯穿对校园生活与技术偏好的双重记录，既呈现了理工科学子的课业重负，也展现了数字原住民在工具选择与隐私保护方面的执着态度。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-15-cover.webp" alt="岁时录（十五）" />
         </figure>
@@ -92,7 +92,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10754</span>
+            <span class="tabular-nums">10757</span>
         </div>
 
         
@@ -104,7 +104,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-20</span>
+            <span class="tabular-nums">2025-02-23</span>
         </div>
     </div>
 </div>
@@ -152,7 +152,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1828</span>
+            <span class="tabular-nums">1833</span>
         </div>
 
         
@@ -596,7 +596,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">320</span>
+            <span class="tabular-nums">321</span>
         </div>
 
         
@@ -657,7 +657,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">391</span>
+            <span class="tabular-nums">393</span>
         </div>
 
         
@@ -1009,7 +1009,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3248</span>
+            <span class="tabular-nums">3249</span>
         </div>
 
         
@@ -4331,7 +4331,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3248</span>
+            <span class="tabular-nums">3249</span>
         </div>
 
         
@@ -6978,7 +6978,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1901</span>
+            <span class="tabular-nums">1906</span>
         </div>
 
         
