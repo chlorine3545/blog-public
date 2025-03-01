@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Tue, 25 Feb 2025 11:37:38 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 01 Mar 2025 11:52:24 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
         <p>各位老友，晚上好。这里是 Chlorine。</p>
 <p>摸鱼了一节计量，终于把这个奇奇怪怪的问题解决了。遂作文以记之。</p>
 <p>小氯之前的 UnoCSS 配置是从还在写 Efímero 的时候继承下来的，或者说直接点就是基本从<a href="https://www.ftls.xyz/">恐咖兵糖</a>大佬那抄下来的。为数不多的改动也就是加了图标导入的 <code>IconifyJSON</code> 类型，以及一些对 ALERT 短代码有好处的预制颜色类。在写 Hermeneutics 的时候，也就图省事，除了一个 <code>IconifyJSON</code> 之外什么都没改。</p>
@@ -253,7 +253,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10767</span>
+            <span class="tabular-nums">10785</span>
         </div>
 
         
@@ -313,7 +313,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1837</span>
+            <span class="tabular-nums">1848</span>
         </div>
 
         
@@ -757,7 +757,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">325</span>
+            <span class="tabular-nums">327</span>
         </div>
 
         
@@ -769,7 +769,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-18</span>
+            <span class="tabular-nums">2025-02-27</span>
         </div>
     </div>
 </div>
@@ -818,7 +818,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">393</span>
+            <span class="tabular-nums">395</span>
         </div>
 
         
@@ -1170,7 +1170,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3264</span>
+            <span class="tabular-nums">3286</span>
         </div>
 
         
@@ -1182,7 +1182,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-22</span>
+            <span class="tabular-nums">2025-02-26</span>
         </div>
     </div>
 </div>
@@ -1266,6 +1266,63 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 <p>说好考完试要爆更，结果既没爆也没更，除了一篇成何体统的开发日志之外什么都没憋出来，连年终总结都没写（悲）。</p>
 <p>所以，水一篇小小的文章吧，讲讲最近拿到的一个新玩具，一个对小氯来说用处不大不小的 self-hosted service。</p>
 <p><a href="https://forgejo.org">Forgejo</a>。</p>
+
+
+
+
+
+
+
+<div class="p-8 rounded-xl
+    backdrop-blur
+    shadow-md shadow-accent/10
+    ring-1 ring-accent/10
+    hover:ring-accent/30
+    hover:shadow-lg hover:shadow-accent/20
+    hover:transition hover:duration-300">
+    <div class="flex items-center justify-between mb-3">
+        <a href="https://codeberg.org/forgejo/forgejo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-medium 
+        text-foreground transition-colors plain-link">
+            <div class="i-simple-icons-codeberg w-5 h-5"></div>
+            <span>forgejo/forgejo</span>
+        </a>
+        
+    </div>
+
+    
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
+        Beyond coding. We forge.
+    </p>
+    
+
+    <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
+        
+        <div class="inline-flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full ring-1 ring-black/5 dark:ring-white/5"
+                style="background-color: #00ADD8">
+            </span>
+            <span>Go</span>
+        </div>
+        
+
+        <div class="inline-flex items-center gap-1.5" title="Star 数">
+            <div class="i-carbon-star w-4 h-4"></div>
+            <span class="tabular-nums">2032</span>
+        </div>
+
+        <div class="inline-flex items-center gap-1.5" title="Fork 数">
+            <div class="i-carbon-fork w-4 h-4"></div>
+            <span class="tabular-nums">336</span>
+        </div>
+
+        
+
+        <div class="inline-flex items-center gap-1.5" title="最后更新时间">
+            <div class="i-carbon-time w-4 h-4"></div>
+            <span class="tabular-nums">2025-03-01</span>
+        </div>
+    </div>
+</div>
 <h2 id="从-gitea-说起">从 Gitea 说起</h2>
 <p>大家应该都知道 <a href="https://gitea.com">Gitea</a>，Git with a cup of tea。小氯很喜欢这个名字，有趣且闲适的 Git 服务。当然，因为喜欢名字就去部署一个服务听着像个憨憨，所幸 Gitea 还是很争气的，给了我们更加充足的理由去用它：资源占用少——随便找一台树莓派就足够运行了，爱来自 Golang；功能齐全——GitHub 和 GitLab 有的它基本都有，不管是基本的仓库，还是 issue、PR、Wiki、Project 抑或是 CI/CD。截至小氯写这篇文章，Gitea 已经有了超过 40 万次安装（数据来源：Gitea 官网），堪称最受个人和小型团队欢迎的开源自托管 Git 服务之一。</p>
 <p>当然，根据园子第一定律，既然小氯在写这篇文章了，就肯定是 Gitea 的某些地方让小氯不满意了。能是哪里？总不可能是小氯觉得应该用<del>高贵的</del> Rust 把 Gitea 重写一遍吧？</p>
@@ -4492,7 +4549,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3264</span>
+            <span class="tabular-nums">3286</span>
         </div>
 
         
@@ -4504,7 +4561,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-22</span>
+            <span class="tabular-nums">2025-02-26</span>
         </div>
     </div>
 </div>
@@ -4560,7 +4617,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7236</span>
+            <span class="tabular-nums">7270</span>
         </div>
 
         
@@ -4572,7 +4629,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-10</span>
+            <span class="tabular-nums">2025-03-01</span>
         </div>
     </div>
 </div>
@@ -4679,7 +4736,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">144</span>
+            <span class="tabular-nums">143</span>
         </div>
 
         
@@ -5116,8 +5173,7 @@ sudo ufw allow 114514
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-4-cover.avif" alt="Ephemeralis-Weekly（4）：缝隙之间" />
         </figure>
-        <h1 id="ephemeralis-weekly4缝隙之间">Ephemeralis-Weekly（4）：缝隙之间</h1>
-<p>各位老友们好，我是 Chlorine。</p>
+        <p>各位老友们好，我是 Chlorine。</p>
 <p>现在其实不是写周报的时间，但是考虑到下面几天的经历几乎一定会和这几天严重割裂，所以提前（延后）写一下周报，总结一下这几天令人一言难尽的小假期。</p>
 <p>本文为园子周报——Ephemeralis Weekly（浮生散记）的第四期，日期范围为公历 2024 年 7 月 23 日至 7 月 2 日。祝食用愉快。</p>
 <h2 id="缝隙中的假期">缝隙中的假期</h2>
@@ -7139,7 +7195,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1916</span>
+            <span class="tabular-nums">1935</span>
         </div>
 
         
@@ -7605,8 +7661,7 @@ with socketserver.TCPServer((&quot;&quot;, PORT), Handler) as httpd:
 </div>
 
       ]]></content:encoded></item><item><title>离散数学——Bell数</title><link>https://chlor.me/bell-number/</link><pubDate>Sat, 27 Apr 2024 07:12:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/bell-number/</guid><category>离散数学</category><description>本文介绍了离散数学中的 Bell 数。作者介绍了集合的划分，然后引出了 Bell 数的定义并指出其比想象中复杂，并给出了一个递归表达式。最后作者给出了一份计算 Bell 数的 C++ 代码。</description><content:encoded><![CDATA[
-        <h1 id="离散数学bell数">离散数学——Bell数</h1>
-<p>最近复习离散数学的时候想到一个问题，记录一下。</p>
+        <p>最近复习离散数学的时候想到一个问题，记录一下。</p>
 <p>首先科普一下 <strong>集合的划分</strong> 的知识：</p>
 <p>对于集族 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mo stretchy="false">{</mo><mi>x</mi><mo>∣</mo><mi>x</mi><mtext> is a subset of A and satisfies some conditions</mtext><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\pi =\{ x \mid x \ \text{is a subset of A and satisfies some conditions} \}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mspace"> </span><span class="mord text"><span class="mord">is a subset of A and satisfies some conditions</span></span><span class="mclose">}</span></span></span></span> （奇妙定义法），如果其满足以下条件：</p>
 <ol>
@@ -7666,8 +7721,7 @@ int bell(int N)
 </code></pre>
 
       ]]></content:encoded></item><item><title>新域名（2）</title><link>https://chlor.me/new-domain-2/</link><pubDate>Sun, 21 Apr 2024 19:31:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/new-domain-2/</guid><category>域名</category><category>折腾</category><description>这篇文章讲述了作者为部署多个服务而购买新域名的过程。由于不想在主域名 `yoghurtlee.com` 上堆积二级域名，也不想用新买的 `pursuing.me`，作者决定购买一个便宜的 `.top` 域名。最终，作者在华为云上购买了 `chlorinechan.top`，完成实名认证后将其挂到了 CloudFlare 上。</description><content:encoded><![CDATA[
-        <h1 id="新域名2">新域名（2）</h1>
-<p>起因是，在我有了虚拟机并部署 Memos 之后，我想部署几个其他的服务，比如 <a href="https://github.com/xhongc/music-tag-web">Music Tag Web</a>。</p>
+        <p>起因是，在我有了虚拟机并部署 Memos 之后，我想部署几个其他的服务，比如 <a href="https://github.com/xhongc/music-tag-web">Music Tag Web</a>。</p>
 <p>然后我就想到，<a href="https://yoghurtlee.com">https://yoghurtlee.com</a> 毕竟是我的主域名，堆一大堆二级域名疑似有点不太好，而新买的 <a href="https://pursuing.me">https://pursuing.me</a> 我还比较喜欢，排除掉。</p>
 <p>那么似乎就只有一个选择了，那就是再买一个专门堆服务的域名。</p>
 <p>既然是专门堆服务的，也不用考虑什么 SEO，那就哪个便宜买哪个。放眼天下，最便宜的 TLD 应该就是 <code>.top</code> 了。</p>
@@ -7680,7 +7734,7 @@ int bell(int N)
         <p>各位老友们好，我是 Chlorine。</p>
 <p>昨天晚上突发奇想（其实是看宣传片看激动了），想去找找前缀是 <code>hello world</code> 的域名。当然了，这么好的前缀肯定注册的人挺多，比如不出我所料有 <code>helloworld.org</code>，收录了各种语言的 hello-world。</p>
 <p>然后我开始在 Dynadot 上闲逛，找一些和代码相关的域名，然后就越跑越远……</p>
-<p>直到我看到了这个域名：&lt;pursuing.me&gt;。</p>
+<p>直到我看到了这个域名：<code>pursuing.me</code>。</p>
 <p>当时我就心动了。Pursue，me。</p>
 
 
@@ -7911,11 +7965,6 @@ int bell(int N)
 <p>这次来的倒是快，直接输入验证码，然后就成功切换为教育邮箱了。</p>
 <p>然后在 Upgrade 界面中划到最底下，点击切换为教育计划即可。</p>
 <p>然后就可以快乐白嫖了 ～</p>
-<p><figure class="my-8">
-    <img src="https://img.clnya.fun/IMG-20240401162521.webp" alt="" 
-        class="mx-auto rounded-lg block" loading="lazy"  />
-    
-</figure></p>
 <p>说起来，感觉现在对 Notion 这样的 All-in-one 软件越来越青睐了。Notion 除了不能离线之外，几乎没毛病 <del>对数学公式的支持除外</del> 。现在的替代品，像 Anytype，Affine 和对 Markdown 支持非常好的思源笔记都还可以，等去研究下。</p>
 
       ]]></content:encoded></item><item><title>唔，博客 100 天了</title><link>https://chlor.me/blog-100-days/</link><pubDate>Tue, 26 Mar 2024 07:56:06 +0800</pubDate><author>Chlorine</author><guid>https://chlor.me/blog-100-days/</guid><category>公告</category><description>这么短的文章还要摘要吗……109 酱表示不能理解！</description><content:encoded><![CDATA[
