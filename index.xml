@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sun, 02 Mar 2025 13:24:31 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>教学</category><category>域名</category><category>去中心化</category><category>博客</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sun, 02 Mar 2025 15:20:48 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>教学</category><category>域名</category><category>去中心化</category><category>博客</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-16-cover.webp" alt="岁时录（十六）" />
         </figure>
@@ -616,7 +616,7 @@ https://zh.wikipedia.org/*/*
 <blockquote class="my-6 border-l-4 border-border/60 pl-4">
     <p>但是我认为 github 重在社区，而不是他本身的功能</p>
 </blockquote>
-<p>这话说得太对了。论功能，Forgejo 根本不比 GitHub 差多少。GitHub 能够把目前的 Gitea 和 Forgejo 按在地上锤，可不完全是因为牢软的钱包厚度，而是其 issue 模板、Actions 流水线、Pages 托管、Projects 看板、代码搜索构成的协作生态，早已形成技术领域的「拜占庭式行会体系」。</p>
+<p>这话说得太对了。论功能，Forgejo 根本不比 GitHub 差多少。GitHub 能够把目前的 Gitea 和 Forgejo 按在地上锤，可不完全是因为牢软的钱包厚度，而是其 issue 模板、Actions 流水线、Pages 托管、Projects 看板、代码搜索构成的协作生态和庞大的开发者群体以及用户构成的社区规模，早已形成技术领域的「拜占庭式行会体系」。</p>
 <p><strong>是了，生态</strong>。</p>
 <p>你有心从 VX 迁移到 Matrix，却发现你的亲朋好友和同事老板连 Matrix 是什么都不知道；你希望把项目搬到 Forgejo，却发现在 GitHub 用了几年的工作流早就成了九层之台起于累土。每个划时代平台的崛起，本质上都是对资源集中度与用户协作成本的暴力优化。既没有资源，又没有生态，你怎么和人家争啊。</p>
 <p>而且，生态不仅是技术用户的事，在非技术群体中，这一差距更是判若云泥。当我们在 Matrix 频道讨论「如何用 Rust 重写核心模块」时，99.9 % 的用户正在微信群里用「拍一拍」功能互相调情。这种割裂不完全是技术鸿沟，而更像是<strong>认知代差</strong>的具象化——就像维多利亚时代的博物学家试图向非洲部落讲解进化论。我们幻想中的「全世界用户，联合起来」，在现实中往往演变为技术神父 / 政委与小白用户的永恒割裂。就像试图用《资本论》指导 Tik Tok 网红做直播带货——理论完美，实操荒诞。毕竟，对于我们亲爱的广大用户们，那些在 Reddit 追番、用 Pixiv 存图、靠 Stack Overflow 续命的「数据无产阶级」们，真的在乎 Nitter 实例是否遵循 AGPLv 3 吗？当某个自由前端因 API 变更突然暴毙时，他们只会默默切回官方 app，顺手给 Play Store 打五星。这不是背叛，而是<strong>生存理性对理想主义的血腥处决</strong>。</p>
@@ -1829,7 +1829,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3296</span>
+            <span class="tabular-nums">3297</span>
         </div>
 
         
@@ -1966,7 +1966,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2036</span>
+            <span class="tabular-nums">2037</span>
         </div>
 
         <div class="inline-flex items-center gap-1.5" title="Fork 数">
@@ -5208,7 +5208,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3296</span>
+            <span class="tabular-nums">3297</span>
         </div>
 
         
@@ -5276,7 +5276,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7273</span>
+            <span class="tabular-nums">7272</span>
         </div>
 
         
