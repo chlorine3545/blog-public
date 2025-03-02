@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 01 Mar 2025 11:52:24 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sun, 02 Mar 2025 04:14:04 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>解决UnoCSS更新后的奇怪报错</title><link>https://chlor.me/fix-unocss-66-error/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/fix-unocss-66-error/</guid><category>博客</category><category>UnoCSS</category><description>本文讲述了作者在使用UnoCSS过程中因版本更新引发的配置兼容性问题及其解决过程。作者原本沿用旧版配置方案，但在更新依赖包后遭遇构建失败却无明确报错信息，通过逐步排查发现新版UnoCSS对图标预设语法要求更严格。经查阅文档发现原配置中图标集合的手动注册方式已不兼容，转而采用自动检测机制后问题得以解决。最终确认问题根源在于presetIcons模块的调用方式未遵循最新规范。该案例凸显了依赖版本管理的重要性，同时展示了通过最小化测试与官方文档对照排查技术问题的典型思路。</description><content:encoded><![CDATA[
         <p>各位老友，晚上好。这里是 Chlorine。</p>
 <p>摸鱼了一节计量，终于把这个奇奇怪怪的问题解决了。遂作文以记之。</p>
 <p>小氯之前的 UnoCSS 配置是从还在写 Efímero 的时候继承下来的，或者说直接点就是基本从<a href="https://www.ftls.xyz/">恐咖兵糖</a>大佬那抄下来的。为数不多的改动也就是加了图标导入的 <code>IconifyJSON</code> 类型，以及一些对 ALERT 短代码有好处的预制颜色类。在写 Hermeneutics 的时候，也就图省事，除了一个 <code>IconifyJSON</code> 之外什么都没改。</p>
@@ -253,7 +253,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10785</span>
+            <span class="tabular-nums">10790</span>
         </div>
 
         
@@ -313,7 +313,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1848</span>
+            <span class="tabular-nums">1850</span>
         </div>
 
         
@@ -377,7 +377,7 @@ export default defineConfig({
 <h2 id="gpg-key-的调整">GPG Key 的调整</h2>
 <p>准确来说，这东西应该叫 OpenPGP Key，或者是 OpenPGP Key Set。因为 OpenPGP 是一个协议，而 GPG 是其的一种（最流行的）实现。</p>
 <p>小氯之前不太懂 GPG，创建了一大堆密钥。由于最近的《现代密码学》课程以及对 CypherPunk 的兴趣，小氯开始琢磨着把密钥归拢归拢，这也符合最佳实践。</p>
-<p>归拢密钥不难，小氯很快把原本的 SC - E 密钥拆成了 CSAE 结构。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>不过在处理 Git 密钥时，小氯遇到了点问题。</p>
+<p>归拢密钥不难，小氯很快把原本的 SC - E 密钥拆成了 C-S-A-E 结构。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>不过在处理 Git 密钥时，小氯遇到了点问题。</p>
 <p>具体来说，小氯原本是使用一个单独的主密钥给 Git 提交签名的，但是这样疑似有点不太好，因为 GPG 的最佳实践其实是一个绝对隐私的主密钥 + 若干个日用子密钥。小氯的理解是：一个 OpenPGP Key Set，就是一个身份。如果你希望你做某件事的身份和原本是泾渭分明的，那么就加一个新的 Set。那么小氯现在的各个用途代表的身份需要分开吗？显然不需要。</p>
 <p>从职责分离的角度看，最好的方案应该是在主密钥下单独创建一个新的签名子密钥。这样不是不行，但是分不清哪个是哪个还好说，GPG Agent 经常弄不清用哪个子密钥签名，手动指定也没用，这样交叉污染还不如只用一个子密钥呢。</p>
 <p>小氯一直是个很内耗的人，这件事几乎内耗了我一天的大好时光。然后，在即将睡觉的时候，小氯实在是忍不了了。</p>
@@ -405,7 +405,7 @@ export default defineConfig({
 <hr>
 <ol>
 <li id="fn:1">
-<p>这里的字母是指密钥的四个功能：认证（Certification）、签名（Signing）、加密（Encryption）和验证（Authentication）。SC - E 就是主密钥兼有签名和认证功能，同时有一个仅加密的子密钥；而 CSAE 就是全分离架构，即主密钥只负责 C，S、A、E 全部由相应的子密钥负责。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>这里的字母是指密钥的四个功能：认证（Certification）、签名（Signing）、加密（Encryption）和验证（Authentication）。SC - E 就是主密钥兼有签名和认证功能，同时有一个仅加密的子密钥；而 C-S-A-E 就是全分离架构，即主密钥只负责 C，S、A、E 全部由相应的子密钥负责。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -757,7 +757,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">327</span>
+            <span class="tabular-nums">329</span>
         </div>
 
         
@@ -1170,7 +1170,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3286</span>
+            <span class="tabular-nums">3294</span>
         </div>
 
         
@@ -1307,19 +1307,19 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2032</span>
+            <span class="tabular-nums">2035</span>
         </div>
 
         <div class="inline-flex items-center gap-1.5" title="Fork 数">
             <div class="i-carbon-fork w-4 h-4"></div>
-            <span class="tabular-nums">336</span>
+            <span class="tabular-nums">339</span>
         </div>
 
         
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-03-01</span>
+            <span class="tabular-nums">2025-03-02</span>
         </div>
     </div>
 </div>
@@ -4549,7 +4549,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3286</span>
+            <span class="tabular-nums">3294</span>
         </div>
 
         
@@ -4617,7 +4617,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7270</span>
+            <span class="tabular-nums">7272</span>
         </div>
 
         
@@ -7195,7 +7195,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1935</span>
+            <span class="tabular-nums">1937</span>
         </div>
 
         
