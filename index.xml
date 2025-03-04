@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Mon, 03 Mar 2025 02:57:42 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>博客</category><category>日常</category><category>域名</category><category>去中心化</category><category>Marxism</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Tue, 04 Mar 2025 08:55:08 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>博客</category><category>日常</category><category>域名</category><category>去中心化</category><category>Marxism</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-16-cover.webp" alt="岁时录（十六）" />
         </figure>
@@ -473,7 +473,7 @@ https://zh.wikipedia.org/*/*
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-08</span>
+            <span class="tabular-nums">2025-03-03</span>
         </div>
     </div>
 </div>
@@ -912,7 +912,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10793</span>
+            <span class="tabular-nums">10809</span>
         </div>
 
         
@@ -972,7 +972,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1849</span>
+            <span class="tabular-nums">1854</span>
         </div>
 
         
@@ -1201,7 +1201,7 @@ export default defineConfig({
 <h4 id="半通用-cctld">半通用 ccTLD</h4>
 <p>这些 ccTLD 已经极度普遍，以至于脱离了其原始的国家和地区含义，而被赋予了新的意义。我们举几个例子。</p>
 <h5 id="me"><code>.me</code></h5>
-<p>来自黑山。由于和 <code>.me</code> 高度重合，因此广泛用于个人网站，例如我很喜欢举的例子，Anthology Fu 大佬的域名 <code>antfu.me</code>。园子目前的主域名也是 <code>.me</code>。</p>
+<p>来自黑山。由于和 <code>.me</code> 高度重合，因此广泛用于个人网站，例如我很喜欢举的例子，Anthony Fu 大佬的域名 <code>antfu.me</code>。园子目前的主域名也是 <code>.me</code>。</p>
 <h5 id="tv"><code>.tv</code></h5>
 <p>来自图瓦卢。没什么可说的，电视，因此用于电视、视频、流媒体，如 Bilibili 的短链 <code>b23.tv</code>，Bangumi 的 <code>bangumi.tv</code>。</p>
 <h5 id="fm"><code>.fm</code></h5>
@@ -1829,7 +1829,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3299</span>
+            <span class="tabular-nums">3303</span>
         </div>
 
         
@@ -1966,7 +1966,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2040</span>
+            <span class="tabular-nums">2044</span>
         </div>
 
         <div class="inline-flex items-center gap-1.5" title="Fork 数">
@@ -1978,7 +1978,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-03-03</span>
+            <span class="tabular-nums">2025-03-04</span>
         </div>
     </div>
 </div>
@@ -5208,7 +5208,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3299</span>
+            <span class="tabular-nums">3303</span>
         </div>
 
         
@@ -5276,7 +5276,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7273</span>
+            <span class="tabular-nums">7277</span>
         </div>
 
         
@@ -7854,7 +7854,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1940</span>
+            <span class="tabular-nums">1946</span>
         </div>
 
         
