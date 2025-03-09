@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Tue, 04 Mar 2025 08:55:08 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>博客</category><category>日常</category><category>域名</category><category>去中心化</category><category>Marxism</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sun, 09 Mar 2025 06:32:49 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>博客</category><category>日常</category><category>域名</category><category>去中心化</category><category>Marxism</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-16-cover.webp" alt="岁时录（十六）" />
         </figure>
@@ -385,7 +385,7 @@
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">192</span>
+            <span class="tabular-nums">194</span>
         </div>
 
         
@@ -528,6 +528,10 @@ https://zh.wikipedia.org/*/*
         
     </div>
 
+    
+    <p class="mb-4 text-[15px] leading-relaxed text-foreground/80">
+        A Pixiv Img Proxy on Deno.
+    </p>
     
 
     <div class="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
@@ -912,7 +916,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10809</span>
+            <span class="tabular-nums">10846</span>
         </div>
 
         
@@ -924,7 +928,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-23</span>
+            <span class="tabular-nums">2025-03-07</span>
         </div>
     </div>
 </div>
@@ -972,7 +976,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1854</span>
+            <span class="tabular-nums">1870</span>
         </div>
 
         
@@ -1416,7 +1420,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">330</span>
+            <span class="tabular-nums">335</span>
         </div>
 
         
@@ -1477,7 +1481,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">396</span>
+            <span class="tabular-nums">398</span>
         </div>
 
         
@@ -1829,7 +1833,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3303</span>
+            <span class="tabular-nums">3327</span>
         </div>
 
         
@@ -1841,7 +1845,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-26</span>
+            <span class="tabular-nums">2025-03-08</span>
         </div>
     </div>
 </div>
@@ -1966,19 +1970,19 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2044</span>
+            <span class="tabular-nums">2061</span>
         </div>
 
         <div class="inline-flex items-center gap-1.5" title="Fork 数">
             <div class="i-carbon-fork w-4 h-4"></div>
-            <span class="tabular-nums">340</span>
+            <span class="tabular-nums">343</span>
         </div>
 
         
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-03-04</span>
+            <span class="tabular-nums">2025-03-09</span>
         </div>
     </div>
 </div>
@@ -2415,7 +2419,7 @@ gpg: problem with fast path key listing: IPC parameter error - ignored
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2</span>
+            <span class="tabular-nums">3</span>
         </div>
 
         
@@ -5208,7 +5212,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3303</span>
+            <span class="tabular-nums">3327</span>
         </div>
 
         
@@ -5220,7 +5224,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-26</span>
+            <span class="tabular-nums">2025-03-08</span>
         </div>
     </div>
 </div>
@@ -5276,7 +5280,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7277</span>
+            <span class="tabular-nums">7300</span>
         </div>
 
         
@@ -5646,13 +5650,7 @@ sudo ufw allow 114514
 <p>正好我这几天对于独博有了一些别的不成熟的感触（见<a href="/weekly-4/">我的上一期周报</a>），于是我动了借（chāo）鉴（xí）的念头。</p>
 <h2 id="装修友链页面">装修友链页面</h2>
 <p>我打算直接照抄大佬们的创意。当然不能叫女子寮，既然我的博客叫「园子里的日光」，园子就是清华园，那么干脆就叫紫荆公寓好了。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<p>然后我在高铁上花了一点时间，写了一个新的友链界面须知。由于当时的精神状态也不是很健康，偶尔也会有一些《不是那么合理》的句子，比方说：</p>
-
-
-<blockquote class="my-6 border-l-4 border-border/60 pl-4">
-    <p>请勿将电动车电池、集束炸弹、氢氧化钠、火星、混凝土搅拌机、王水、数据结构、沈阳大街、3-甲基吲哚、钋 210、某些互联网大厂、蘑菇蛋、波尔布特等危险物品带入公寓。</p>
-</blockquote>
-<p>大家可以在紫荆公寓的公示板（<a href="https://www.yoghurtlee.com/links">这里</a>）查看完整的公示内容，另外，也欢迎老友们入住紫荆公寓 OωO</p>
+<p>然后我在高铁上花了一点时间，写了一个新的友链界面须知。大家可以在紫荆公寓的公示板（<a href="/links">这里</a>）查看完整的公示内容，另外，也欢迎老友们入住紫荆公寓 OωO</p>
 <h3 id="房间号">房间号</h3>
 <p>紫荆公寓的所有房间都是相同的，因此不存在房间种类的问题。不过房间号倒是可以搞一个。</p>
 <p>目前列出来的老友们的房间号大都是随机写的，如果有老友希望换房间，请尽管留言。</p>
@@ -5815,7 +5813,7 @@ sudo ufw allow 114514
 <p>后来我又试了下阿里云的免费企业邮箱，支持 50 个用户，每个用户 5G 空间。<del>没想到套路云还有这种羊毛可以薅</del>这次的体验倒是很好，没有出任何岔子。只需要注意一点：在配置 Twikoo 评论的时候，「用户名」一定要把后缀也带上，不然又会报错。（不知道之前飞书的报错能不能用这个方法解决）</p>
 <p>现在我用阿里云的企业邮箱注册了我的个人邮箱（me）、Info 酱的邮箱（infochan）和一个 Git 提交邮箱（git），由于服务器在国内，速度非常可观。cons 可能就是需要绑定手机号，以及国内大厂对于用户隐私的良好尊重了。</p>
 <p>反正目前我用着还行，这个羊毛能薅一天是一天，实在不行转战飞书+Mailgun 或者 Mail Ru，天下这么大，总会有白嫖怪的容身之地的（bushi）。</p>
-<p>以后大家就可以使用 <code>me#yoghurtlee.com</code>（请把 <code>#</code> 替换为 <code>@</code>）联系我了。我的 GPG 公钥是 <code>96359FF161D5E8BC</code>，已上传至 <a href="https://pgp.mit.edu"> MIT 公钥服务器</a>。</p>
+<p>以后大家就可以使用 <code>me#yoghurtlee.com</code>（请把 <code>#</code> 替换为 <code>@</code>）联系我了。</p>
 <p>此外，多说一句，之前我用的是 <code>clmoe.top</code>，结果在 Mail Tester 检测满分的情况下在我测试的时候被认定为垃圾邮件了 qaq 就欺负 <code>.top</code> 钓鱼邮件多呗<del>Info 酱那么可爱你是怎么舍得的啊</del></p>
 <h2 id="结语">结语</h2>
 <p>兜兜转转也算是简单把园子装修了一下。以后再继续慢慢装，反正我离敲不动键盘还剩好多年呢。</p>
@@ -5907,7 +5905,7 @@ sudo ufw allow 114514
     <p>我不到啊！</p>
 </blockquote>
 <p>没错，我还真不怎么知道。大家就姑且认为我精力过剩了吧。反正我现在觉得 RSS 是个蛮好的东西。</p>
-<p>如果大家希望通过 RSS 订阅我的博客：<a href="https://www.yoghurtlee.com/index.xml">https://www.yoghurtlee.com/index.xml</a>。</p>
+<p>如果大家希望通过 RSS 订阅我的博客：<a href="https://chlor.me/index.xml">https://chlor.me/index.xml</a>。</p>
 <h2 id="缝隙中的人">缝隙中的人</h2>
 <p>我们接着 RSS 讲。在今天刚刚搞好 RSS 的时候，我突然想起了当初和<a href="https://clf3.org">孙哥</a>的对话：</p>
 <p><figure class="my-8">
@@ -5957,15 +5955,16 @@ sudo ufw allow 114514
 <p>最近在重拾 TypeScript（<del>小氯你到底还要开多少个语言的坑啊</del>），同时热衷于薅带善人 CloudFlare 的羊毛，于是盯上了 CloudFlare Workers&amp;Pages，然后找到了一个有趣的项目：<a href="https://sink.cool">Sink</a>。</p>
 <h2 id="简介">简介</h2>
 <p>Sink 是一个完全基于 CloudFlare 的短链接（shortURL）项目，支持数据分析和链接截止日期等多种功能。</p>
-<p>啥是短链接？简单来说，如果你觉得小氯的文章<a href="https://www.yoghurtlee.com/swup-modifying">解决Swup导致的JavaScript加载失效问题</a>写得不错（<del>行了我知道你并不这么觉得</del>），希望分享给朋友，你很可能会把这个链接直接粘贴给你的朋友：</p>
-<pre><code class="language-txt">https://www.yoghurtlee.com/swup-modifying
+<p>啥是短链接？简单来说，如果你觉得小氯的文章<a href="https://chlor.me/swup-modifying">解决Swup导致的JavaScript加载失效问题</a>写得不错（<del>行了我知道你并不这么觉得</del>），希望分享给朋友，你很可能会把这个链接直接粘贴给你的朋友：</p>
+<pre><code class="language-txt">https://chlor.me/swup-modifying
 </code></pre>
 <p>看着还行，不是吗？但是假如小氯的链接是：</p>
-<pre><code class="language-txt">https://ameaninglessprefix.averylongurlforyoghurtlee.ameaninglesstldthatdoesntevenexist/ameaninglessdirthatstandsformyposts/anothermeaninglessprefix/2024/07/26/qwertyuiopasdfghjklzxcvbnm1234567890/swup-modifying
+<pre><code class="language-txt">https://ameaninglessprefix.averylongurlforchlorinechan.ameaninglesstldthatdoesntevenexist/ameaninglessdirthatstandsformyposts/anothermeaninglessprefix/2024/07/26/qwertyuiopasdfghjklzxcvbnm1234567890/swup-modifying
 </code></pre>
 <p>我敢打赌你的朋友看到这个链接就会汗流浃背。</p>
 <p>但是如果现在你贴心地告诉朋友，这个链接也是一样的：</p>
-<pre><code class="language-txt">https://s.clmoe.top/fmf94q
+<pre><code class="language-txt"># 注：我瞎编的
+https://cl.tld/swup
 </code></pre>
 <p>我相信你们之间的友谊会得到相当程度的强化。</p>
 <p>概括一下，就是说有时候一个链接实在是太长了，不便于分享和发送，我们就想办法造出一个短链接来，使得这个短链接指向原本长链接一样的位置。</p>
@@ -7854,7 +7853,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1946</span>
+            <span class="tabular-nums">1970</span>
         </div>
 
         
