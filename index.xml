@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Thu, 13 Mar 2025 13:47:17 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>博客</category><category>日常</category><category>域名</category><category>去中心化</category><category>Marxism</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Fri, 14 Mar 2025 09:36:44 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>我把Vaultwarden主密码搞丢了</title><link>https://chlor.me/i-locked-myself-out-of-vaultwarden/</link><pubDate>Wed, 12 Mar 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/i-locked-myself-out-of-vaultwarden/</guid><category>Vaultwarden</category><category>灾备</category><category>自托管</category><description>本文介绍了作者在修改Vaultwarden邮箱地址时，因操作不当导致无法访问密码库的经历。作者将主密码存放在Vaultwarden内部，又没有备份，结果因Vaultwarden的端到端加密特性而无法恢复约400个密码。文章同时记录了作者重新部署Vaultwarden的过程，以及按重要性分为三级的密码恢复策略。作者通过自嘲幽默的方式分享了这次事件，并在结尾强调了备份的重要性和"人"是系统最大安全漏洞的观点。</description><content:encoded><![CDATA[
+        <p>各位老友，晚上好。这里是 Chlorine。</p>
+<p>本期给大家分享一下，这只笨蛋 zako 元素娘干过的迄今为止最蠢的事情。当事元素娘觉得世界上不可能还有人比自己还蠢了。</p>
+<p><figure class="my-8">
+    <img src="https://img.clnya.fun/20250314-i-am-the-biggest-idiot.avif" alt="i-am-the-biggest-idiot" 
+        class="mx-auto rounded-lg block" loading="lazy" width="319"  />
+    
+</figure></p>
+<h2 id="改邮箱引发的惨剧">改邮箱引发的惨剧</h2>
+<p>事情是这样的。</p>
+<p>Vaultwarden 这个东西呢，有一个「虚假」的邮箱选项。之所以说是「虚假」的，是因为如果你没有配置 SMTP，这个邮箱就只起一个用户标识符功能。如果你想更改邮箱，那么那个验证码随便写就可以了。</p>
+<p>小氯最初托管的 Vaultwarden 邮箱是过去的域名邮箱，最近一直希望换成现在的域名邮箱。而在搜索到了上面的信息后，小氯兴冲冲地去改了邮箱，还颇有恶趣味地把验证码写成了 114514。</p>
+<p>然后自然是被踢出登录了。重新登录……咦？我的扩展也退出登录了？</p>
+<p>坏了。</p>
+<p>容我解释一二：由于我比较贪图方便，我采取了一个很离奇的策略：<strong>把主密码也存放在 Vaultwarden 内</strong>。这大概相当于，我把钥匙落在了家里。</p>
+<p>那么找找备用钥匙？很遗憾，由于小氯使用的主密码堪称社工学噩梦，所以小氯并没有做什么备份（<del>难道这种情况不是更应该备份吗</del>）。找了一圈之后宣告失败。</p>
+<p>那么能否换把锁呢？或者说，通过管理员权限重置主密码。小氯没有找到这样的方法，Vaultwarden 官方也表示这并不可行。</p>
+<p>那么只剩暴力开锁一条路了。</p>
+<p>很遗憾，这做不到。由于 Vaultwarden 的端到端加密，目前地球上还没有方法能够解开加密的数据库。虽然说理论上由于我把 Bitwarden 浏览器扩展的过期时间设置为了「从不」，因此应该在某个位置存放了一份解密的密钥，但是这显然已经远远超出了小氯的能力范围。</p>
+<p>于是，小氯就这么栽在了一次手贱上。</p>
+<h2 id="清点损失">清点损失</h2>
+<p>如果按照一个条目一个密码来算的话，根据 SQLite 内部的情况，小氯大概丢失了四百个密码。不过有一些密码是回收站里面的，因此实际数目应该比这个数小。</p>
+<h2 id="build-from-scratch">Build From Scratch</h2>
+<p>下面自然是备份好之前的遗产，然后重新部署 Vaultwarden。</p>
+<p>不过这里出现了一个问题：即使我已经明确把环境变量设置为允许注册，还是出现了无法注册的问题，清除缓存也不行，不知道这台虚拟机中了什么邪。</p>
+<p>不过，反正就虚拟机那个连个 SSH 都没病走两步的情况，小氯已经抓狂了不知道多久了。于是，小氯把自己的 Vaultwarden 迁移到了 VPS 上。这样连接起来就比较顺畅了。小氯倒是不担心密码被 VPS 服务商访问，先不说这样的情况极少见，就算是能，他们也只能看到管理员 token 这样的数据，最多也只是能删除我的账户而已。毕竟，Vaultwarden 已经向小氯证明了，E2EE，实在是太、安、全、了、啊（咬牙切齿）。</p>
+<p>当然，这也只是适用于小氯当前的密级要求。如果再高一些的话，最好使用独立服务器，或者是自有设备。</p>
+<h2 id="恢复密码">恢复密码</h2>
+<p>下面的任务自然是把每一个网站的密码都改掉或者找回来。由于这次的受灾面实在是太大，小氯制定了如下策略：</p>
+<h3 id="第一级关键服务和身份">第一级：关键服务和身份</h3>
+<p>这些网站和服务的密码最为关键，涉及到小氯的整个数字生活和数字身份的问题。比如说：</p>
+<ul>
+<li>代码托管：GitHub、Codeberg 等</li>
+<li>基础服务：Google、Microsoft、Apple 等</li>
+<li>社交账户：Bluesky、Fediverse 等</li>
+<li>域名和 VPS 服务商：Spaceship、RackNerd 等</li>
+</ul>
+<p>总体而言，恢复工作还算顺利。Apple 在恢复密码时电脑的 Apple Account 会卡住，需要等一段时间才能恢复；Owu Social G 需要联系管理员通知帮忙重置密码；Spaceship 由于用的是之前的临时域名邮箱，同时小氯好似不似地把这个域名从 Cloudflare 删了导致接不到邮件，都去联系客服了，结果又能收到了，属实是抽象到家了。</p>
+<p>此外，小氯还把几个比较实名的账号都注销掉了，改成了更加匿名化的账户，同时把服务转移到了新的账户名下。</p>
+<p>此外，唯一没有受到任何影响的，是小氯的清华 ID。因为为了当牢助教讲课的时候登录教室的设备联网，小氯把密码成了一个自己能记住的字符串（笑哭）。</p>
+<h3 id="第二级次重要服务">第二级：次重要服务</h3>
+<p>这些服务比较重要，但是也没那么重要。比如说发邮件的 Resend、不再使用的阿里邮箱、学信网、各个服务器的面板之类的。</p>
+<h3 id="第三级可抛弃服务和无维护服务">第三级：可抛弃服务和无维护服务</h3>
+<p>像 ChatGPT、Grok 之类的服务，小氯完全不在乎，反正也是隔一段时间注销了再注册一个。丢了就丢了吧。</p>
+<p>还有一些服务比较难以恢复，但是平时也不太需要登录，或者叫所谓的无维护服务。比如说 Algolia 不能在开启 2FA 的情况下恢复密码（难以理解），但小氯的 Algolia Docsearch 其实不需要任何形式的维护，除非小氯再换域名；再比如网易，小氯保留网易邮箱基本上只是为了兼容性，只要应用密码不失效就可以一直鸽。</p>
+<h2 id="后续">后续</h2>
+<p>后续？没后续了。说是丢了四百多个，其实恢复出来到现在，也就用了几十个而已。后面的遇到了再慢慢搞吧。</p>
+<p>最后是当事元素娘的一点感想：</p>
+
+
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
+    <p>系统最大的漏洞永远是人的漏洞，世界上最有效的攻击永远是社工学攻击。</p>
+</blockquote>
+
+
+<blockquote class="my-6 border-l-4 border-border/60 pl-4">
+    <p>Self Host 不备份，崩溃两行泪。</p>
+</blockquote>
+
+      ]]></content:encoded></item><item><title>岁时录（十六）</title><link>https://chlor.me/weekly-16/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/weekly-16/</guid><category>博客</category><category>日常</category><category>域名</category><category>去中心化</category><category>Marxism</category><description>本文是作者周报的第十六期，记录了作者近期在技术、教学和开源方面的经历与思考。作者首先分享了担任助教的体验，并反思了教学方法。随后，为了提升博客在禁用JavaScript时的体验，作者对博客进行了多项技术改造，如利用Checkbox Hack和Hugo内置功能优化特定模块。此外，作者还购买了新域名`foss.moe`，并借此探讨了开源文化与萌文化的交融。文章重点讨论了自由前端（替代前端）的部署与使用，作者介绍了多个自建的自由前端项目，并分享了相关配置技巧和对特定项目（如PixivFE）的优化。更进一步，作者深入剖析了自由前端背后的深层含义，指出了其存在的矛盾性——既是对抗互联网巨头监控的工具，又是中心化现实的体现。文章批判了中心化平台的垄断，分析了去中心化平台（如Fediverse）面临的困境，强调了“生态”的重要性以及技术社区与大众之间的认知差距。最后，作者呼吁技术社区联合起来，建立更强大的基础设施，积极与大众沟通，并做出必要的妥协，以推动非中心化互联网的实现。</description><content:encoded><![CDATA[
         <figure>
           <img src="https://img.clnya.fun/cover/weekly-16-cover.webp" alt="岁时录（十六）" />
         </figure>
@@ -916,7 +975,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10915</span>
+            <span class="tabular-nums">10930</span>
         </div>
 
         
@@ -976,7 +1035,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1894</span>
+            <span class="tabular-nums">1899</span>
         </div>
 
         
@@ -1420,7 +1479,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">338</span>
+            <span class="tabular-nums">340</span>
         </div>
 
         
@@ -1481,7 +1540,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">399</span>
+            <span class="tabular-nums">400</span>
         </div>
 
         
@@ -1833,7 +1892,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3366</span>
+            <span class="tabular-nums">3374</span>
         </div>
 
         
@@ -1970,19 +2029,19 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2076</span>
+            <span class="tabular-nums">2077</span>
         </div>
 
         <div class="inline-flex items-center gap-1.5" title="Fork 数">
             <div class="i-carbon-fork w-4 h-4"></div>
-            <span class="tabular-nums">347</span>
+            <span class="tabular-nums">348</span>
         </div>
 
         
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-03-13</span>
+            <span class="tabular-nums">2025-03-14</span>
         </div>
     </div>
 </div>
@@ -5212,7 +5271,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3366</span>
+            <span class="tabular-nums">3374</span>
         </div>
 
         
@@ -5280,7 +5339,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7326</span>
+            <span class="tabular-nums">7335</span>
         </div>
 
         
@@ -7853,7 +7912,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1991</span>
+            <span class="tabular-nums">1993</span>
         </div>
 
         
