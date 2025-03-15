@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Fri, 14 Mar 2025 09:36:44 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>我把Vaultwarden主密码搞丢了</title><link>https://chlor.me/i-locked-myself-out-of-vaultwarden/</link><pubDate>Wed, 12 Mar 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/i-locked-myself-out-of-vaultwarden/</guid><category>Vaultwarden</category><category>灾备</category><category>自托管</category><description>本文介绍了作者在修改Vaultwarden邮箱地址时，因操作不当导致无法访问密码库的经历。作者将主密码存放在Vaultwarden内部，又没有备份，结果因Vaultwarden的端到端加密特性而无法恢复约400个密码。文章同时记录了作者重新部署Vaultwarden的过程，以及按重要性分为三级的密码恢复策略。作者通过自嘲幽默的方式分享了这次事件，并在结尾强调了备份的重要性和"人"是系统最大安全漏洞的观点。</description><content:encoded><![CDATA[
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>园子里的日光</title><link>https://chlor.me/</link><description/><language>zh-CN</language><managingEditor>Chlorine</managingEditor><webMaster>Chlorine</webMaster><copyright/><lastBuildDate>Sat, 15 Mar 2025 06:21:34 +0000</lastBuildDate><category>Blog</category><generator>Hugo -- gohugo.io</generator><atom:link href="https://chlor.me/index.xml" rel="self" type="application/rss+xml"/><item><title>我把Vaultwarden主密码搞丢了</title><link>https://chlor.me/i-locked-myself-out-of-vaultwarden/</link><pubDate>Wed, 12 Mar 2025 00:00:00 +0000</pubDate><author>Chlorine</author><guid>https://chlor.me/i-locked-myself-out-of-vaultwarden/</guid><category>Vaultwarden</category><category>灾备</category><category>自托管</category><description>本文介绍了作者在修改Vaultwarden邮箱地址时，因操作不当导致无法访问密码库的经历。作者将主密码存放在Vaultwarden内部，又没有备份，结果因Vaultwarden的端到端加密特性而无法恢复约400个密码。文章同时记录了作者重新部署Vaultwarden的过程，以及按重要性分为三级的密码恢复策略。作者通过自嘲幽默的方式分享了这次事件，并在结尾强调了备份的重要性和"人"是系统最大安全漏洞的观点。</description><content:encoded><![CDATA[
         <p>各位老友，晚上好。这里是 Chlorine。</p>
 <p>本期给大家分享一下，这只笨蛋 zako 元素娘干过的迄今为止最蠢的事情。当事元素娘觉得世界上不可能还有人比自己还蠢了。</p>
 <p><figure class="my-8">
@@ -975,7 +975,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">10930</span>
+            <span class="tabular-nums">10934</span>
         </div>
 
         
@@ -1491,7 +1491,7 @@ export default defineConfig({
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-02-27</span>
+            <span class="tabular-nums">2025-03-14</span>
         </div>
     </div>
 </div>
@@ -1892,7 +1892,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3374</span>
+            <span class="tabular-nums">3377</span>
         </div>
 
         
@@ -2029,7 +2029,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">2077</span>
+            <span class="tabular-nums">2081</span>
         </div>
 
         <div class="inline-flex items-center gap-1.5" title="Fork 数">
@@ -2041,7 +2041,7 @@ upyun login {{_UPYUN_SERVICE_NAME}} {{_UPYUN_OPERATOR}} {{_UPYUN_SECRET}}
 
         <div class="inline-flex items-center gap-1.5" title="最后更新时间">
             <div class="i-carbon-time w-4 h-4"></div>
-            <span class="tabular-nums">2025-03-14</span>
+            <span class="tabular-nums">2025-03-15</span>
         </div>
     </div>
 </div>
@@ -5271,7 +5271,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">3374</span>
+            <span class="tabular-nums">3377</span>
         </div>
 
         
@@ -5339,7 +5339,7 @@ nano ~/Library/LaunchAgents/com.user.trackers-list.plist
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">7335</span>
+            <span class="tabular-nums">7340</span>
         </div>
 
         
@@ -7912,7 +7912,7 @@ help:
 
         <div class="inline-flex items-center gap-1.5" title="Star 数">
             <div class="i-carbon-star w-4 h-4"></div>
-            <span class="tabular-nums">1993</span>
+            <span class="tabular-nums">1998</span>
         </div>
 
         
